@@ -477,6 +477,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .footswitch.active { background:linear-gradient(#2d8d68,#14533d); border-color:#59c99b; }
 .footswitch.tap { background:linear-gradient(#315e88,#1b3550); }
 .footswitch.tap:active { transform:translateY(2px); }
+.tap-control { display:flex; flex-direction:column; gap:7px; min-width:0; }
+.rhythm-select { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
+.rhythm-option { min-width:0; padding:5px 2px; border:1px solid #4a5662; border-radius:7px; color:#dce3e9; background:linear-gradient(#343d46,#20262d); font-size:1rem; font-weight:800; line-height:1.1; }
+.rhythm-option small { display:block; margin-top:3px; color:#aeb8c2; font-size:.48rem; letter-spacing:.02em; white-space:nowrap; }
+.rhythm-option.active { color:#17120a; background:linear-gradient(#d6a64d,#8f6424); border-color:#f2c36a; }
+.rhythm-option.active small { color:#2b2111; }
+.tap-control .footswitch { min-height:52px; }
 .tap-readout { text-align:center; color:#c4ccd4; font-size:.75rem; padding-top:9px; min-height:25px; }
 .patch-selector-wrapper { margin-top:14px; }
 .patch-nav-buttons { display:none; }
@@ -522,7 +529,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             </div>
             <div class="footswitch-row">
                 <button type="button" class="footswitch" id="delayFootswitch" disabled>DELAY <small id="delayFootswitchState">OFF</small></button>
-                <button type="button" class="footswitch tap" id="tapFootswitch" disabled>TAP TEMPO <small>COLCHEIA PONTUADA</small></button>
+                <div class="tap-control">
+                    <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo">
+                        <button type="button" class="rhythm-option" data-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
+                        <button type="button" class="rhythm-option" data-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
+                        <button type="button" class="rhythm-option active" data-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
+                    </div>
+                    <button type="button" class="footswitch tap" id="tapFootswitch" disabled>TAP TEMPO</button>
+                </div>
             </div>
             <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO no ritmo da música</div>
         </section>
@@ -676,6 +690,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.preset)));
             });
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
+            document.querySelectorAll('.rhythm-option').forEach(btn => {
+                btn.addEventListener('click', () => setTapSubdivision(btn.dataset.subdivision));
+            });
+            setTapSubdivision(tapSubdivision);
             document.getElementById('delayFootswitch').addEventListener('click', () => {
                 const next = !deviceState.blocks.dly?.enabled;
                 sendBlockStatus(7, next ? 1 : 0);
@@ -1580,6 +1598,22 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
+let tapSubdivision = 'dottedEighth';
+
+function setTapSubdivision(subdivision) {
+    const factors = { quarter: 1, eighth: 0.5, dottedEighth: 0.75 };
+    if (!(subdivision in factors)) return;
+    tapSubdivision = subdivision;
+    document.querySelectorAll('.rhythm-option').forEach(btn => {
+        const selected = btn.dataset.subdivision === subdivision;
+        btn.classList.toggle('active', selected);
+        btn.setAttribute('aria-pressed', String(selected));
+    });
+    tapTimes = [];
+    lastTapMs = 0;
+    const labels = { quarter: 'semínima', eighth: 'colcheia', dottedEighth: 'colcheia pontuada' };
+    document.getElementById('tapReadout').textContent = 'Figura selecionada: ' + labels[subdivision] + '. Toque no TAP TEMPO.';
+}
 
 function updateQuickPresetButtons(preset) {
     document.querySelectorAll('.preset-pedal').forEach(btn => {
@@ -1613,13 +1647,15 @@ function quickTapTempo() {
         const intervals = tapTimes.slice(1).map((t,i)=>t-tapTimes[i]);
         const beatMs = intervals.reduce((a,b)=>a+b,0)/intervals.length;
         currentTapBpm = Math.round(60000/beatMs);
-        const dottedEighthMs = Math.round(beatMs * 0.75);
-        const safeMs = Math.max(20,Math.min(1000,dottedEighthMs));
+        const factors = { quarter: 1, eighth: 0.5, dottedEighth: 0.75 };
+        const labels = { quarter: 'semínima', eighth: 'colcheia', dottedEighth: 'colcheia pontuada' };
+        const delayMs = Math.round(beatMs * factors[tapSubdivision]);
+        const safeMs = Math.max(20,Math.min(1000,delayMs));
         document.getElementById('tapReadout').textContent =
-            currentTapBpm + ' BPM • colcheia pontuada: ' + safeMs + ' ms';
+            currentTapBpm + ' BPM • ' + labels[tapSubdivision] + ': ' + safeMs + ' ms';
         // Delay is block 7; Time parameter is index 1 in the Bluetooth SysEx configuration.
         sendParamChange(7, 1, safeMs);
-        log('Tap Tempo: ' + currentTapBpm + ' BPM → delay ' + safeMs + ' ms (colcheia pontuada)');
+        log('Tap Tempo: ' + currentTapBpm + ' BPM → delay ' + safeMs + ' ms (' + labels[tapSubdivision] + ')');
     } else {
         document.getElementById('tapReadout').textContent = 'Mais um toque para calcular o tempo…';
     }
