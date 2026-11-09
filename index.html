@@ -611,6 +611,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
     <section id="presetLibrary" style="margin:16px;padding:14px;background:#202a40;color:#fff;border:1px solid #52617d;border-radius:12px;">
         <h3 style="font-size:16px;margin:0 0 8px;">BIBLIOTECA DE EFEITOS — 100 PRESETS</h3>
         <p style="font-size:12px;color:#c5cfdd;margin:0 0 12px;">Leia os presets da GP5 em sequência por Bluetooth. A varredura troca temporariamente de preset e, ao terminar, tenta voltar ao preset inicial.</p>
+        <button id="readCurrentPresetButton" type="button" class="btn btn-info btn-sm" onclick="readCurrentPreset()">LER PRESET ATUAL</button>
         <button id="scanPresetsButton" type="button" class="btn btn-warning btn-sm" onclick="startPresetScan()">LER EFEITOS DOS 100 PRESETS</button>
         <button id="exportPresetLibraryButton" type="button" class="btn btn-outline-light btn-sm" onclick="exportPresetLibrary()" disabled>EXPORTAR JSON</button>
         <div id="presetScanStatus" style="font-size:12px;color:#dce3e9;margin-top:10px;">Aguardando conexão Bluetooth.</div>
@@ -1344,6 +1345,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         const gp5PacketDiagnostics = {};
         const presetLibrary = {};
         const presetScan = { active: false, restoring: false, processing: false, requestStarted: false, attempts: 0, retryTimer: null, expected: null, next: 0, original: 0, total: 100 };
+        const singlePresetRead = { active: false, patch: null };
 
         function formatPatchPacketRows(bytes) {
             const rows = [];
@@ -1387,7 +1389,15 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 clearTimeout(presetScan.retryTimer);
                 presetScan.retryTimer = null;
             }
-            if (presetScan.active) completePresetScanStep();
+            if (presetScan.active) {
+                completePresetScanStep();
+            } else if (singlePresetRead.active) {
+                singlePresetRead.active = false;
+                const button = document.getElementById('readCurrentPresetButton');
+                if (button) button.disabled = false;
+                log('Leitura individual concluída: preset ' + singlePresetRead.patch + '. Confira o painel DIAGNÓSTICO BLUETOOTH.');
+                singlePresetRead.patch = null;
+            }
         }
 
         function getCatalogEffectName(blockName, effectId) {
@@ -1504,6 +1514,40 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 presetScanDebug("Confirmação recebida; solicitação já iniciada para preset " + patchNumber + ".");
             }
         }
+        async function readCurrentPreset() {
+            if (!writeChar || connectionMode !== 'bluetooth') {
+                log('Conecte a GP5 por Bluetooth antes de ler o preset atual.', 'error');
+                return;
+            }
+            if (presetScan.active || singlePresetRead.active) {
+                log('Já existe uma leitura em andamento. Aguarde terminar.', 'info');
+                return;
+            }
+            const patchNumber = Number(deviceState.currentPatch);
+            if (!Number.isInteger(patchNumber) || patchNumber < 0 || patchNumber > 99) {
+                log('Não foi possível identificar o preset atual da GP5.', 'error');
+                return;
+            }
+            singlePresetRead.active = true;
+            singlePresetRead.patch = patchNumber;
+            deviceState.blocks = {};
+            deviceState.preEffectId = '';
+            gp5PacketDiagnostics.part2 = null;
+            gp5PacketDiagnostics.part3 = null;
+            gp5PacketDiagnostics.part4 = null;
+            gp5PacketDiagnostics.final = null;
+            const button = document.getElementById('readCurrentPresetButton');
+            if (button) button.disabled = true;
+            log('Lendo somente o preset atual: ' + patchNumber + ' — ' + (deviceState.patchNames[patchNumber] || 'sem nome') + '.');
+            try {
+                await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+            } catch (error) {
+                singlePresetRead.active = false;
+                if (button) button.disabled = false;
+                log('Falha ao solicitar o preset atual: ' + error.message, 'error');
+            }
+        }
+
         async function startPresetScan() {
             if (!writeChar || connectionMode !== 'bluetooth') {
                 log('Conecte a GP5 por Bluetooth antes de iniciar a leitura.', 'error');
@@ -1961,6 +2005,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.querySelectorAll('.preset-pedal').forEach(btn => { btn.disabled = !enabled; });
             document.getElementById('delayFootswitch').disabled = !enabled;
             document.getElementById('tapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
+            document.getElementById('readCurrentPresetButton').disabled = !enabled || connectionMode !== 'bluetooth' || presetScan.active || singlePresetRead.active;
         }
 
         function log(message, type = 'info') {
