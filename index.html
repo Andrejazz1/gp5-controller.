@@ -1426,7 +1426,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
         }
 
-        async function sendPresetScanReadRequest(patchNumber) {
+        async async function sendPresetScanReadRequest(patchNumber) {
             if (!presetScan.active || presetScan.expected !== patchNumber) return;
             if (presetScan.retryTimer) clearTimeout(presetScan.retryTimer);
             presetScan.requestStarted = true;
