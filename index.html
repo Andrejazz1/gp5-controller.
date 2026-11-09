@@ -1273,21 +1273,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 return blockName.toUpperCase() + ' [' + start + ']: ' + raw +
                     ' | código=' + code + ' | efeito=' + (matched ? matched.name : 'NÃO ENCONTRADO');
             });
-            const diagnosticPanel = document.getElementById('gp5Diagnostic');
-            const diagnosticText = document.getElementById('gp5DiagnosticText');
-            if (diagnosticPanel && diagnosticText) {
-                diagnosticPanel.style.display = 'block';
-                const fullPacketRows = [];
-                for (let i = 0; i < bytes.length; i += 16) {
-                    const hex = Array.from(bytes.slice(i, i + 16))
-                        .map(value => value.toString(16).padStart(2, '0')).join(' ');
-                    fullPacketRows.push(String(i).padStart(3, '0') + ': ' + hex);
-                }
-                diagnosticText.textContent = 'PARTE 2 — LEITURA ATUAL\\n' +
-                    diagnosticRows.join('\\n') +
-                    '\\n\\nPACOTE COMPLETO (índice: bytes)\\n' +
-                    fullPacketRows.join('\\n');
-            }
+            const fullPacketRows = formatPatchPacketRows(bytes);
+            gp5PacketDiagnostics.part2 = 'PARTE 2 — LEITURA ATUAL\\n' +
+                diagnosticRows.join('\\n') +
+                '\\n\\nPACOTE COMPLETO (índice: bytes)\\n' +
+                fullPacketRows;
+            renderGp5PacketDiagnostics();
             console.log('GP5 Bluetooth diagnostic:\n' + diagnosticRows.join('\n'));
 
             // Atualizar estado com os IDs dos efeitos
@@ -1312,19 +1303,47 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             });
         }
 
+        // Mantém as partes recebidas no painel para facilitar a cópia do diagnóstico.
+        const gp5PacketDiagnostics = {};
+
+        function formatPatchPacketRows(bytes) {
+            const rows = [];
+            for (let i = 0; i < bytes.length; i += 16) {
+                const hex = Array.from(bytes.slice(i, i + 16))
+                    .map(value => value.toString(16).padStart(2, '0')).join(' ');
+                rows.push(String(i).padStart(3, '0') + ': ' + hex);
+            }
+            return rows.join('\\n');
+        }
+
+        function renderGp5PacketDiagnostics() {
+            const panel = document.getElementById('gp5Diagnostic');
+            const output = document.getElementById('gp5DiagnosticText');
+            if (!panel || !output) return;
+            panel.style.display = 'block';
+            output.textContent = ['part2', 'part3', 'part4', 'final']
+                .filter(key => gp5PacketDiagnostics[key])
+                .map(key => gp5PacketDiagnostics[key])
+                .join('\\n\\n==============================\\n\\n');
+        }
+
+        function logPatchPacketPart(label, key, bytes) {
+            const heading = 'PARTE ' + label + ' — PACOTE COMPLETO (' + bytes.length + ' bytes)';
+            gp5PacketDiagnostics[key] = heading + '\\n' + formatPatchPacketRows(bytes);
+            renderGp5PacketDiagnostics();
+            console.log(gp5PacketDiagnostics[key]);
+        }
+
         function parsePatchData3(bytes) {
-            // Aqui podemos extrair parâmetros se necessário
-            console.log('Parsing patch data part 3');
+            logPatchPacketPart('3', 'part3', bytes);
         }
 
         function parsePatchData4(bytes) {
-            // Aqui podemos extrair mais parâmetros se necessário
-            console.log('Parsing patch data part 4');
+            logPatchPacketPart('4', 'part4', bytes);
         }
 
         function parsePatchDataFinal(bytes) {
-            // Dados finais do patch
-            console.log('Parsing final patch data');
+            logPatchPacketPart('FINAL', 'final', bytes);
         }
 
         // Os campos dos blocos na parte 2 não são contíguos:
