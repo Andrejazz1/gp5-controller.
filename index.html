@@ -1633,33 +1633,29 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         // Os campos dos blocos na parte 2 não são contíguos:
         // o identificador é formado pelo byte start+1, start+2, start+3 e start+7.
         function getPatchBlockEffectId(bytes, start) {
-            return [bytes[start + 1], bytes[start + 2], bytes[start + 3], bytes[start + 7]]
-                .map(value => value.toString(16).padStart(2, '0')).join('');
+            // O SysEx usa addzero: cada byte do código é armazenado como
+            // um nibble em um byte separado (ex.: 01 0a -> 1a).
+            // Reconstruir os 8 nibbles preserva o código completo de 4 bytes.
+            if (start + 7 >= bytes.length) return '';
+            return Array.from(bytes.slice(start, start + 8))
+                .map(value => (value & 0x0f).toString(16)).join('');
         }
 
         function getEffectId(bytes, start) {
-            // Cada código de efeito da GP-5 ocupa 4 bytes (8 caracteres hex).
-            // Ler 8 bytes juntava parte do campo seguinte e impedia encontrar
-            // a chave correspondente em ble_sysex.json.
+            // O PRE usa o mesmo formato addzero dos demais blocos:
+            // 8 bytes codificados representam 4 bytes do identificador.
             console.log(`Reading effect ID from position ${start}:`);
-            const rawBytes = [];
-            for (let i = 0; i < 8; i++) {
-                if (bytes[start + i] !== undefined) {
-                    rawBytes.push(bytes[start + i].toString(16).padStart(2, '0'));
-                }
-            }
+            const rawBytes = Array.from(bytes.slice(start, start + 8))
+                .map(value => value.toString(16).padStart(2, '0'));
             console.log('Raw bytes (8):', rawBytes.join(' '));
 
-            if (start + 3 >= bytes.length) {
+            if (start + 7 >= bytes.length) {
                 console.warn('Incomplete effect ID at position', start);
                 return '';
             }
 
-            let id = '';
-            for (let i = 0; i < 4; i++) {
-                id += bytes[start + i].toString(16).padStart(2, '0');
-            }
-            console.log('Effect ID (4 bytes):', id);
+            const id = rawBytes.map(value => (parseInt(value, 16) & 0x0f).toString(16)).join('');
+            console.log('Effect ID (decoded nibbles):', id);
             return id;
         }
 
