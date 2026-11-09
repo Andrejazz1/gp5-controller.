@@ -3904,6 +3904,36 @@
               "step": 1
             }
           ]
+        },
+        "0500000c": {
+          "id": 6,
+          "name": "Spring",
+          "parameters": [
+            {
+              "index": 0,
+              "name": "Mix",
+              "default": 30,
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "index": 1,
+              "name": "Decay",
+              "default": 50,
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "index": 2,
+              "name": "Trail",
+              "default": 0,
+              "min": 0,
+              "max": 1,
+              "step": 1
+            }
+          ]
         }
       }
     },
