@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="title" content="GP5 Controller - v0.3" />
-    <meta name="description" content="Advanced controller for Valeton GP5 using JSON config" />
+    <meta name="description" content="Pedalboard controller for Valeton GP5" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     
@@ -526,6 +526,19 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .block-btn .block-label { font-size:.82rem; margin:0; } .block-btn .block-effect { font-size:.68rem; color:#aeb8c2; } .block-btn.active .block-effect { color:#fff; }
 @media(max-width:520px) { .preset-pedals { grid-template-columns:repeat(3,minmax(0,1fr)); } .preset-pedal { min-height:98px; } .preset-switch { width:40px; height:40px; flex-basis:40px; } .gp5-brand h1 {font-size:1rem;} }
 
+    </style>
+
+    <style id="pedalboard-only-mode">
+        /* Interface enxuta: somente pedalboard e conexão */
+        .view-switch,
+        .editor-intro,
+        #presetLibrary,
+        #gp5Diagnostic,
+        .blocks-section,
+        #effectPanel,
+        .patch-selector-wrapper {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
