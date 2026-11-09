@@ -1231,10 +1231,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     if (presetScan.expected === newPatch && !presetScan.requestStarted) {
                         setTimeout(() => {
                             if (presetScan.active && presetScan.expected === newPatch && !presetScan.requestStarted) {
-                                presetScan.requestStarted = true;
-                                sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+                                sendPresetScanReadRequest(newPatch);
                             }
-                        }, 200);
+                        }, 250);
                     }
                 } else {
                     setTimeout(() => {
@@ -1333,7 +1332,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         // Mantém as partes recebidas no painel para facilitar a cópia do diagnóstico.
         const gp5PacketDiagnostics = {};
         const presetLibrary = {};
-        const presetScan = { active: false, restoring: false, processing: false, requestStarted: false, expected: null, next: 0, original: 0, total: 100 };
+        const presetScan = { active: false, restoring: false, processing: false, requestStarted: false, attempts: 0, retryTimer: null, expected: null, next: 0, original: 0, total: 100 };
 
         function formatPatchPacketRows(bytes) {
             const rows = [];
@@ -1373,6 +1372,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
         function parsePatchDataFinal(bytes) {
             logPatchPacketPart('FINAL', 'final', bytes);
+            if (presetScan.retryTimer) {
+                clearTimeout(presetScan.retryTimer);
+                presetScan.retryTimer = null;
+            }
             if (presetScan.active) completePresetScanStep();
         }
 
@@ -1423,16 +1426,42 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
         }
 
+        async function sendPresetScanReadRequest(patchNumber) {
+            if (!presetScan.active || presetScan.expected !== patchNumber) return;
+            if (presetScan.retryTimer) clearTimeout(presetScan.retryTimer);
+            presetScan.requestStarted = true;
+            presetScan.attempts += 1;
+            log('Solicitando dados do preset ' + patchNumber + ' (tentativa ' + presetScan.attempts + '/4).');
+            await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+            if (presetScan.attempts < 4) {
+                presetScan.retryTimer = setTimeout(() => {
+                    if (presetScan.active && presetScan.expected === patchNumber) {
+                        sendPresetScanReadRequest(patchNumber);
+                    }
+                }, 1800);
+            } else {
+                presetScan.retryTimer = setTimeout(() => {
+                    if (presetScan.active && presetScan.expected === patchNumber) {
+                        presetScan.active = false;
+                        document.getElementById('scanPresetsButton').disabled = false;
+                        document.getElementById('presetScanStatus').textContent = 'Leitura interrompida no preset ' + patchNumber + ': a GP5 não enviou o pacote completo. Tente novamente.';
+                        log('Leitura interrompida: preset ' + patchNumber + ' não respondeu após 4 solicitações.', 'error');
+                    }
+                }, 1800);
+            }
+        }
+
         async function requestPresetForScan(patchNumber) {
+            if (presetScan.retryTimer) clearTimeout(presetScan.retryTimer);
             presetScan.expected = patchNumber;
             presetScan.processing = false;
             presetScan.requestStarted = false;
+            presetScan.attempts = 0;
             document.getElementById('patchSelect').value = String(patchNumber);
             deviceState.blocks = {};
             deviceState.preEffectId = '';
             if (Number(deviceState.currentPatch) === patchNumber) {
-                presetScan.requestStarted = true;
-                await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+                await sendPresetScanReadRequest(patchNumber);
                 return;
             }
             const command = gp5Config.patch_commands.change_patch.command_template
@@ -1440,15 +1469,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const crc = crc8(hexStringToBytes(command));
             const final = addzero(crc.toString(16).padStart(2, '0').toUpperCase() + command);
             await sendSysex('8080F0' + final + 'F7');
-            // O evento de troca normalmente inicia a leitura. Este fallback cobre eventos perdidos.
-            await sleep(1000);
+            // Aguarda a confirmação de troca; se ela não iniciar a leitura, usa este fallback.
+            await sleep(900);
             if (presetScan.active && presetScan.expected === patchNumber && !presetScan.requestStarted) {
-                presetScan.requestStarted = true;
-                log('Confirmação de troca não recebida; solicitando dados do preset ' + patchNumber + ' novamente.', 'warning');
-                await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+                await sendPresetScanReadRequest(patchNumber);
             }
         }
-
         async function startPresetScan() {
             if (!writeChar || connectionMode !== 'bluetooth') {
                 log('Conecte a GP5 por Bluetooth antes de iniciar a leitura.', 'error');
