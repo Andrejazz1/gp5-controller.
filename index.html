@@ -457,7 +457,23 @@
     
 /* Custom compact pedalboard layer */
 /* Clean pedalboard view: hide effect-chain editor */
-.blocks-section, .effect-panel { display: none !important; }
+.blocks-section, .effect-panel, .editor-intro { display: none !important; }
+
+/* Separate pedalboard and editor views */
+.view-switch { display:flex; gap:8px; margin:0 0 14px; }
+.view-tab { flex:1; min-height:42px; border:1px solid #46515d; border-radius:9px; color:#aeb8c2; background:linear-gradient(#343d46,#20262d); font-size:.78rem; font-weight:800; letter-spacing:.1em; }
+.view-tab.active { color:#17120a; background:linear-gradient(#d6a64d,#8f6424); border-color:#f2c36a; }
+body.editor-mode .pedalboard { display:none; }
+body.editor-mode .editor-intro, body.editor-mode .blocks-section { display:block !important; }
+body.editor-mode .editor-intro { max-width:850px; margin:0 auto 12px; padding:16px; border:1px solid #343d47; border-radius:14px; background:linear-gradient(145deg,#252b32,#15191e); }
+.editor-heading { color:#f2c36a; font-size:.85rem; font-weight:900; letter-spacing:.14em; }
+.editor-intro p { margin:8px 0; color:#dce3e9; font-size:.9rem; }
+.editor-notice { padding:10px 12px; border-left:3px solid #d6a64d; border-radius:5px; background:#111820; color:#aeb8c2; font-size:.78rem; line-height:1.45; }
+body.editor-mode .effect-panel.active { display:block !important; }
+body.editor-mode .blocks-section { padding-bottom:90px; }
+body.editor-mode .blocks-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+@media(min-width:576px) { body.editor-mode .blocks-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(min-width:900px) { body.editor-mode .blocks-grid { grid-template-columns:repeat(5,minmax(0,1fr)); } }
 
 body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); color:#f3f4f6; }
 .app-header { background:linear-gradient(145deg,#171b20,#0e1115); border-bottom:1px solid #303943; }
@@ -514,6 +530,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <div class="gp5-brand">
             <div><h1>GP5 CONTROLLER</h1><small>VALetON • BLUETOOTH / USB MIDI</small></div>
         </div>
+        <div class="view-switch" role="tablist" aria-label="Modo de visualização">
+            <button type="button" class="view-tab active" id="viewPedalboardBtn" aria-selected="true">PEDALBOARD</button>
+            <button type="button" class="view-tab" id="viewEditorBtn" aria-selected="false">EDITOR</button>
+        </div>
         <section class="pedalboard" aria-label="Pedalboard controls">
             <div class="pedalboard-label">PRESETS • 00—08</div>
             <div class="preset-pedals">
@@ -553,9 +573,16 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         </div>
     </div>
 
+    <!-- Editor -->
+    <section class="editor-intro" id="editorIntro" aria-label="Editor de timbres">
+        <div class="editor-heading">EDITOR DE TIMBRES</div>
+        <p>Selecione um bloco da cadeia para abrir seus modelos e parâmetros.</p>
+        <div class="editor-notice">Conecte a GP5 via Bluetooth para editar. A leitura dos valores reais e a gravação serão habilitadas nas próximas etapas.</div>
+    </section>
+
     <!-- Blocks Grid -->
     <div class="blocks-section">
-        <div class="blocks-title">Effect Blocks</div>
+        <div class="blocks-title">CADEIA DE EFEITOS</div>
         <div class="blocks-grid" id="blocksContainer">
             <!-- Blocks will be inserted here -->
         </div>
@@ -682,6 +709,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     document.getElementById('statusText').textContent = `Mode: ${connectionMode.toUpperCase()}. Waiting for connection...`;
                 });
             }
+            document.getElementById('viewPedalboardBtn').addEventListener('click', () => setAppView('pedalboard'));
+            document.getElementById('viewEditorBtn').addEventListener('click', () => setAppView('editor'));
             document.getElementById('patchSelect').addEventListener('change', changePatch);
             document.getElementById('btnPrevPatch').addEventListener('click', () => navigatePatch(-1));
             document.getElementById('btnNextPatch').addEventListener('click', () => navigatePatch(1));
@@ -709,6 +738,16 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             });
         }
         
+        function setAppView(view) {
+            const editor = view === 'editor';
+            document.body.classList.toggle('editor-mode', editor);
+            document.getElementById('viewPedalboardBtn').classList.toggle('active', !editor);
+            document.getElementById('viewEditorBtn').classList.toggle('active', editor);
+            document.getElementById('viewPedalboardBtn').setAttribute('aria-selected', String(!editor));
+            document.getElementById('viewEditorBtn').setAttribute('aria-selected', String(editor));
+            if (!editor) closeEffectPanel();
+        }
+
         function closeEffectPanel() {
             document.getElementById('effectPanel').classList.remove('active');
         }
