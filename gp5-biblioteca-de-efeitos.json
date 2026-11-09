@@ -1,0 +1,6002 @@
+[
+  {
+    "number": 0,
+    "name": "clean sky",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "06000004",
+        "effectName": "ID 06000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 1,
+    "name": "chorusky \u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 2,
+    "name": "tremsky \u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 3,
+    "name": "vibsky \u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 4,
+    "name": "RV clean\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "06000004",
+        "effectName": "ID 06000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 5,
+    "name": "chorusRV\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 6,
+    "name": "tremRV\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "06000004",
+        "effectName": "ID 06000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 7,
+    "name": "vibRV\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 8,
+    "name": "Reverse\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0300000b",
+        "effectName": "Rev Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0200000f",
+        "effectName": "ID 0200000f"
+      }
+    },
+    "pre": {
+      "effectId": "02010000",
+      "effectName": "ID 02010000"
+    }
+  },
+  {
+    "number": 9,
+    "name": "drive\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "08000007",
+        "effectName": "ID 08000007"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": true,
+        "effectId": "0d00000f",
+        "effectName": "ID 0d00000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 10,
+    "name": "lead\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "08000007",
+        "effectName": "ID 08000007"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "06000001",
+        "effectName": "ID 06000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0300000b",
+        "effectName": "Rev Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": true,
+        "effectId": "0e00000f",
+        "effectName": "ID 0e00000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 11,
+    "name": "Flow\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "07000007",
+        "effectName": "ID 07000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "0f000004",
+        "effectName": "ID 0f000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0600000b",
+        "effectName": "Sweep Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0700000c",
+        "effectName": "Deepsea"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 12,
+    "name": "UK Fuzz\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "04000003",
+        "effectName": "ID 04000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0a000007",
+        "effectName": "ID 0a000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0300000a",
+        "effectName": "ID 0300000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 13,
+    "name": "UK Stack\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "05000007",
+        "effectName": "ID 05000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 14,
+    "name": "70 Britain",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0f000007",
+        "effectName": "ID 0f000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0200000b",
+        "effectName": "Tape Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0000000c",
+        "effectName": "Room"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 15,
+    "name": "US Lead\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "0b000003",
+        "effectName": "ID 0b000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "04000007",
+        "effectName": "Dark Twin"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 16,
+    "name": "Tweedy EC\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "01000004",
+        "effectName": "ID 01000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 17,
+    "name": "auto wah\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "07000007",
+        "effectName": "ID 07000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "06000004",
+        "effectName": "ID 06000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0b00000b",
+        "effectName": "Tube Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0c00000f",
+        "effectName": "ID 0c00000f"
+      }
+    },
+    "pre": {
+      "effectId": "01050000",
+      "effectName": "ID 01050000"
+    }
+  },
+  {
+    "number": 18,
+    "name": "Morse DP\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0f000007",
+        "effectName": "ID 0f000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0e00000a",
+        "effectName": "ID 0e00000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "05000004",
+        "effectName": "ID 05000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0200000c",
+        "effectName": "Church"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 19,
+    "name": "Metal Lica",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "08000007",
+        "effectName": "ID 08000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0f00000c",
+        "effectName": "Plate"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 20,
+    "name": "Bellman CL",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "03000007",
+        "effectName": "Bellman 59N"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0600000a",
+        "effectName": "ID 0600000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0000000c",
+        "effectName": "Room"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 21,
+    "name": "Eddie Solo",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0a000007",
+        "effectName": "ID 0a000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0000000a",
+        "effectName": "ID 0000000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "01000004",
+        "effectName": "ID 01000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0300000b",
+        "effectName": "Rev Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 22,
+    "name": "EV51 Riff\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0a000007",
+        "effectName": "ID 0a000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0000000a",
+        "effectName": "ID 0000000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 23,
+    "name": "Twin Clean",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "04000007",
+        "effectName": "Dark Twin"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0f00000c",
+        "effectName": "Plate"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 24,
+    "name": "OCT Fuzz\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "04000003",
+        "effectName": "ID 04000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "02010000",
+      "effectName": "ID 02010000"
+    }
+  },
+  {
+    "number": 25,
+    "name": "Old Time\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "09000007",
+        "effectName": "ID 09000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0900000a",
+        "effectName": "L-Star 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "01000004",
+        "effectName": "ID 01000004"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0200000b",
+        "effectName": "Tape Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 26,
+    "name": "SRV\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "03000007",
+        "effectName": "Bellman 59N"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0600000a",
+        "effectName": "ID 0600000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0000000c",
+        "effectName": "Room"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 27,
+    "name": "Luxury LD\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0d000007",
+        "effectName": "ID 0d000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0500000a",
+        "effectName": "ID 0500000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 28,
+    "name": "LuxuryRiff",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0d000007",
+        "effectName": "ID 0d000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0500000a",
+        "effectName": "ID 0500000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 29,
+    "name": "Twin TREM\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "0a000003",
+        "effectName": "ID 0a000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "04000007",
+        "effectName": "Dark Twin"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "01000004",
+        "effectName": "ID 01000004"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0000000c",
+        "effectName": "Room"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 30,
+    "name": "Ma.Freeman",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0f000007",
+        "effectName": "ID 0f000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0200000c",
+        "effectName": "Church"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "000f0000",
+      "effectName": "ID 000f0000"
+    }
+  },
+  {
+    "number": 31,
+    "name": "Red May\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "07000007",
+        "effectName": "ID 07000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 32,
+    "name": "Jazz 120CH",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "04000007",
+        "effectName": "Dark Twin"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 33,
+    "name": "Dizz Gain\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "05000007",
+        "effectName": "ID 05000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0e00000a",
+        "effectName": "ID 0e00000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 34,
+    "name": "UK Sound\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "08000004",
+        "effectName": "B-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0200000b",
+        "effectName": "Tape Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 35,
+    "name": "Gn'R DST\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "02000003",
+        "effectName": "Yellow OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "05000007",
+        "effectName": "ID 05000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 36,
+    "name": "Grunge\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "0a000003",
+        "effectName": "ID 0a000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "04000007",
+        "effectName": "Dark Twin"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0f00000c",
+        "effectName": "Plate"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 37,
+    "name": "Eagle Gain",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0f000007",
+        "effectName": "ID 0f000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0e00000a",
+        "effectName": "ID 0e00000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0200000c",
+        "effectName": "Church"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 38,
+    "name": "Candy\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "0a000003",
+        "effectName": "ID 0a000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0a000007",
+        "effectName": "ID 0a000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0600000c",
+        "effectName": "N-Star"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 39,
+    "name": "Lord'sLove",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "0a000003",
+        "effectName": "ID 0a000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "09000007",
+        "effectName": "ID 09000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 40,
+    "name": "ModernCore",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "09000007",
+        "effectName": "ID 09000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0400000c",
+        "effectName": "Spring"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 41,
+    "name": "Fire Solo\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "0d000007",
+        "effectName": "ID 0d000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0000000a",
+        "effectName": "ID 0000000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "08000004",
+        "effectName": "B-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0200000b",
+        "effectName": "Tape Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0100000c",
+        "effectName": "Hall"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 42,
+    "name": "Dual Rec V",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "08000007",
+        "effectName": "ID 08000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0400000a",
+        "effectName": "Dark VIT 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0d00000b",
+        "effectName": "Sweet Echo"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0f00000c",
+        "effectName": "Plate"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 43,
+    "name": "Nebula\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "04000007",
+        "effectName": "Dark Twin"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0200000a",
+        "effectName": "ID 0200000a"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": true,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": true,
+        "effectId": "0400000b",
+        "effectName": "Ping Pong"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0500000c",
+        "effectName": "Sweet Space"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "02090000",
+      "effectName": "ID 02090000"
+    }
+  },
+  {
+    "number": 44,
+    "name": "Fing. Bass",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "03000007",
+        "effectName": "Bellman 59N"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "0a000001",
+        "effectName": "ID 0a000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 45,
+    "name": "Pick Bass\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "05000007",
+        "effectName": "ID 05000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0600000a",
+        "effectName": "ID 0600000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "0a000001",
+        "effectName": "ID 0a000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 46,
+    "name": "Slap Bass\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "03000007",
+        "effectName": "Bellman 59N"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0600000a",
+        "effectName": "ID 0600000a"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "0a000001",
+        "effectName": "ID 0a000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00010000",
+      "effectName": "ID 00010000"
+    }
+  },
+  {
+    "number": 47,
+    "name": "Bass Drive",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "07000007",
+        "effectName": "ID 07000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "0c000001",
+        "effectName": "ID 0c000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "010a0000",
+      "effectName": "ID 010a0000"
+    }
+  },
+  {
+    "number": 48,
+    "name": "Muff Bass\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "04000003",
+        "effectName": "ID 04000003"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "03000007",
+        "effectName": "Bellman 59N"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": true,
+        "effectId": "0a000001",
+        "effectName": "ID 0a000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 49,
+    "name": "Bass T-Wah",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": true,
+        "effectId": "05000007",
+        "effectName": "ID 05000007"
+      },
+      "cab": {
+        "enabled": true,
+        "effectId": "0800000a",
+        "effectName": "Foxy 1x12"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "000f0000",
+      "effectName": "ID 000f0000"
+    }
+  },
+  {
+    "number": 50,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 51,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 52,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 53,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 54,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 55,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 56,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 57,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 58,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 59,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 60,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 61,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 62,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 63,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 64,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 65,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 66,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 67,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 68,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 69,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 70,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 71,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 72,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 73,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 74,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 75,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 76,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 77,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 78,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 79,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 80,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 81,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 82,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 83,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 84,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 85,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 86,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 87,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 88,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 89,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 90,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 91,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 92,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 93,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 94,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 95,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 96,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 97,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 98,
+    "name": "GP-5\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": false,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": false,
+        "effectId": "0b00000c",
+        "effectName": "Air"
+      },
+      "ns": {
+        "enabled": false,
+        "effectId": "0000000f",
+        "effectName": "ID 0000000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  },
+  {
+    "number": 99,
+    "name": "bass\u0000\u0000\u0000\u0000\u0000\u0000",
+    "blocks": {
+      "nr": {
+        "enabled": false,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "pre": {
+        "enabled": true,
+        "effectId": "",
+        "effectName": "—"
+      },
+      "dst": {
+        "enabled": true,
+        "effectId": "00000003",
+        "effectName": "Green OD"
+      },
+      "amp": {
+        "enabled": false,
+        "effectId": "01000007",
+        "effectName": "Tweedy"
+      },
+      "cab": {
+        "enabled": false,
+        "effectId": "0100000a",
+        "effectName": "TWD CP 1x8"
+      },
+      "eq": {
+        "enabled": false,
+        "effectId": "05000001",
+        "effectName": "ID 05000001"
+      },
+      "mod": {
+        "enabled": false,
+        "effectId": "00000004",
+        "effectName": "A-Chorus"
+      },
+      "dly": {
+        "enabled": false,
+        "effectId": "0000000b",
+        "effectName": "Pure Delay"
+      },
+      "rvb": {
+        "enabled": true,
+        "effectId": "0000000c",
+        "effectName": "Room"
+      },
+      "ns": {
+        "enabled": true,
+        "effectId": "0900000f",
+        "effectName": "ID 0900000f"
+      }
+    },
+    "pre": {
+      "effectId": "00000000",
+      "effectName": "COMP"
+    }
+  }
+]
