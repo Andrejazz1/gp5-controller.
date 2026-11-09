@@ -1421,6 +1421,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     deviceState.blocks[blockName] = {};
                 }
                 deviceState.blocks[blockName].effectId = effects[blockName];
+                const rawStart = ({dst:11, ns:67, amp:19, cab:27, eq:35, mod:43, dly:51, rvb:59})[blockName];
+                deviceState.blocks[blockName].rawBytes = Array.from(bytes.slice(rawStart, rawStart + 8))
+                    .map(value => value.toString(16).padStart(2, '0')).join(' ');
                 
                 // Encontrar o índice do efeito baseado no ID
                 const block = gp5Config.blocks.find(b => b.name === blockName);
@@ -1508,7 +1511,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             Object.keys(deviceState.blocks).forEach(name => {
                 const state = deviceState.blocks[name] || {};
                 const effectId = state.effectId || '';
-                blocks[name] = { enabled: Boolean(state.enabled), effectId, effectName: getCatalogEffectName(name, effectId) };
+                blocks[name] = {
+                    enabled: Boolean(state.enabled),
+                    effectId,
+                    effectName: getCatalogEffectName(name, effectId),
+                    rawBytes: state.rawBytes || ''
+                };
             });
             const preId = deviceState.preEffectId || '';
             presetLibrary[patchNumber] = {
@@ -1612,6 +1620,30 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             ).join('') || '<tr><td colspan="4">Nenhum efeito desconhecido. Todos os efeitos convencionais encontrados estão no catálogo.</td></tr>';
             panel.style.display = 'block';
 
+            const ampCabOffsets = {amp:19, cab:27};
+            const detailedPresetLines = entries.flatMap(preset => {
+                const lines = [
+                    '',
+                    'PRESET ' + String(preset.number).padStart(2, '0') + ' — ' + preset.name
+                ];
+                ['amp', 'cab'].forEach(blockName => {
+                    const item = (preset.blocks || {})[blockName] || {};
+                    const id = String(item.effectId || '').trim().toLowerCase();
+                    if (!id) {
+                        lines.push(blockName.toUpperCase() + ': sem identificador');
+                        return;
+                    }
+                    lines.push(
+                        blockName.toUpperCase() + ' [' + ampCabOffsets[blockName] + ']: ' +
+                        (item.rawBytes || 'bytes não armazenados') +
+                        ' | código=' + id +
+                        ' | efeito=' + (item.effectName || getCatalogEffectName(blockName, id)) +
+                        ' | estado=' + (item.enabled ? 'ON' : 'OFF')
+                    );
+                });
+                return lines;
+            });
+
             lastEffectCodeReport = [
                 'RELATÓRIO DE IDENTIFICAÇÃO DE EFEITOS — VALETON GP5',
                 'Presets analisados: ' + entries.length,
@@ -1632,7 +1664,11 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 ...(unknownRows.length ? unknownRows.map(row =>
                     blockLabels[row.block] + ' | ' + row.id + ' | ocorrências: ' + row.count +
                     ' | presets: ' + row.presets.join(', ')
-                ) : ['Nenhum'])
+                ) : ['Nenhum']),
+                '',
+                'DETALHAMENTO AMP E CAB — TODOS OS PRESETS',
+                'Os bytes abaixo são os bytes brutos recebidos na leitura Bluetooth.',
+                ...detailedPresetLines
             ].join('\\n');
             if (exportButton) exportButton.disabled = false;
             log('Análise concluída: ' + unknownRows.length + ' códigos ainda precisam de identificação.');
