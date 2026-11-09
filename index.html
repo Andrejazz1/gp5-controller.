@@ -616,6 +616,20 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <button id="exportPresetLibraryButton" type="button" class="btn btn-outline-light btn-sm" onclick="exportPresetLibrary()" disabled>EXPORTAR JSON</button>
         <div id="presetScanStatus" style="font-size:12px;color:#dce3e9;margin-top:10px;">Aguardando conexão Bluetooth.</div>
         <div id="presetScanDebug" style="font-size:11px;color:#b9d7ff;background:#172238;border:1px solid #405574;border-radius:8px;padding:8px;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere;">Diagnóstico da varredura: aguardando início.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+            <button id="analyzeEffectCodesButton" type="button" class="btn btn-success btn-sm" onclick="analyzeEffectCodes()" disabled>ANALISAR CÓDIGOS</button>
+            <button id="exportEffectCodeReportButton" type="button" class="btn btn-outline-info btn-sm" onclick="exportEffectCodeReport()" disabled>EXPORTAR RELATÓRIO</button>
+        </div>
+        <section id="effectCodeAnalysis" style="display:none;margin-top:12px;padding:12px;background:#111a28;border:1px solid #405574;border-radius:10px;">
+            <h4 style="font-size:14px;margin:0 0 6px;">IDENTIFICAÇÃO AUTOMÁTICA</h4>
+            <div id="effectCodeAnalysisSummary" style="font-size:12px;color:#dce3e9;margin-bottom:10px;"></div>
+            <div style="overflow-x:auto;">
+                <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:600px;margin-bottom:0;">
+                    <thead><tr><th>Bloco</th><th>Código</th><th>Ocorrências</th><th>Presets</th></tr></thead>
+                    <tbody id="effectCodeAnalysisRows"><tr><td colspan="4">Clique em ANALISAR CÓDIGOS.</td></tr></tbody>
+                </table>
+            </div>
+        </section>
         <div style="overflow-x:auto;margin-top:10px;">
             <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:760px;">
                 <thead><tr><th>Preset</th><th>NR</th><th>PRE</th><th>DST</th><th>NS</th><th>AMP</th><th>CAB</th><th>EQ</th><th>MOD</th><th>DLY</th><th>RVB</th></tr></thead>
@@ -1448,6 +1462,89 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     '</tr>';
             }).join('') || '<tr><td colspan="11">Nenhum preset lido ainda.</td></tr>';
             if (exportButton) exportButton.disabled = entries.length === 0;
+            const analyzeButton = document.getElementById('analyzeEffectCodesButton');
+            if (analyzeButton) analyzeButton.disabled = entries.length === 0;
+        }
+
+        let lastEffectCodeReport = '';
+
+        function analyzeEffectCodes() {
+            const entries = Object.values(presetLibrary).sort((a,b) => a.number-b.number);
+            if (!entries.length) {
+                log('Leia os presets antes de analisar os códigos.', 'error');
+                return;
+            }
+
+            const blockOrder = ['pre','dst','ns','amp','cab','eq','mod','dly','rvb','nr'];
+            const blockLabels = {pre:'PRE',dst:'DST',ns:'NS',amp:'AMP',cab:'CAB',eq:'EQ',mod:'MOD',dly:'DLY',rvb:'RVB',nr:'NR'};
+            const grouped = new Map();
+
+            entries.forEach(preset => {
+                blockOrder.forEach(blockName => {
+                    const item = blockName === 'pre' ? (preset.pre || {}) : ((preset.blocks || {})[blockName] || {});
+                    const id = String(item.effectId || '').trim().toLowerCase();
+                    if (!id) return;
+                    const key = blockName + '|' + id;
+                    if (!grouped.has(key)) {
+                        const block = gp5Config.blocks.find(candidate => candidate.name === blockName);
+                        const catalogItem = block && block.effects ? block.effects[id] : null;
+                        grouped.set(key, {
+                            block:blockName, id, name:catalogItem ? catalogItem.name : '',
+                            presets:[], count:0
+                        });
+                    }
+                    const row = grouped.get(key);
+                    row.count++;
+                    row.presets.push(String(preset.number).padStart(2,'0'));
+                });
+            });
+
+            const allRows = Array.from(grouped.values()).sort((a,b) =>
+                blockOrder.indexOf(a.block)-blockOrder.indexOf(b.block) || a.id.localeCompare(b.id)
+            );
+            const unknownRows = allRows.filter(row => !row.name);
+            const knownCount = allRows.length - unknownRows.length;
+            const panel = document.getElementById('effectCodeAnalysis');
+            const summary = document.getElementById('effectCodeAnalysisSummary');
+            const body = document.getElementById('effectCodeAnalysisRows');
+            const exportButton = document.getElementById('exportEffectCodeReportButton');
+
+            summary.textContent = entries.length + ' presets analisados • ' + allRows.length +
+                ' combinações únicas de bloco/código • ' + knownCount + ' reconhecidas • ' +
+                unknownRows.length + ' ainda não cadastradas.';
+            body.innerHTML = unknownRows.map(row =>
+                '<tr><td>' + blockLabels[row.block] + '</td><td><code>' + row.id + '</code></td>' +
+                '<td>' + row.count + '</td><td>' + row.presets.join(', ') + '</td></tr>'
+            ).join('') || '<tr><td colspan="4">Nenhum código desconhecido. Todos os efeitos encontrados estão no catálogo.</td></tr>';
+            panel.style.display = 'block';
+
+            lastEffectCodeReport = [
+                'RELATÓRIO DE IDENTIFICAÇÃO DE EFEITOS — VALETON GP5',
+                'Presets analisados: ' + entries.length,
+                'Combinações únicas: ' + allRows.length,
+                'Reconhecidas: ' + knownCount,
+                'Não cadastradas: ' + unknownRows.length,
+                '',
+                'CÓDIGOS NÃO CADASTRADOS',
+                ...(unknownRows.length ? unknownRows.map(row =>
+                    blockLabels[row.block] + ' | ' + row.id + ' | ocorrências: ' + row.count +
+                    ' | presets: ' + row.presets.join(', ')
+                ) : ['Nenhum'])
+            ].join('\n');
+            if (exportButton) exportButton.disabled = false;
+            log('Análise concluída: ' + unknownRows.length + ' códigos ainda precisam de identificação.');
+        }
+
+        function exportEffectCodeReport() {
+            if (!lastEffectCodeReport) analyzeEffectCodes();
+            if (!lastEffectCodeReport) return;
+            const blob = new Blob([lastEffectCodeReport], {type:'text/plain;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'gp5-codigos-nao-identificados.txt';
+            link.click();
+            URL.revokeObjectURL(url);
         }
 
         function escapeHtml(value) {
