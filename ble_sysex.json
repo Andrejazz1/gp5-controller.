@@ -3906,8 +3906,8 @@
           ]
         },
         "0500000c": {
-          "id": 6,
-          "name": "Spring",
+          "id": 9,
+          "name": "Sweet Space",
           "parameters": [
             {
               "index": 0,
@@ -3927,6 +3927,22 @@
             },
             {
               "index": 2,
+              "name": "Damp",
+              "default": 0,
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "index": 3,
+              "name": "Mod",
+              "default": 50,
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "index": 4,
               "name": "Trail",
               "default": 0,
               "min": 0,
