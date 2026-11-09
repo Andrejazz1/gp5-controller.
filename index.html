@@ -1375,6 +1375,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             // Exibir o código PRE no diagnóstico para identificação do modelo.
             const preRaw = Array.from(bytes.slice(203, 211))
                 .map(value => value.toString(16).padStart(2, '0')).join(' ');
+            deviceState.preRawBytes = preRaw;
             gp5PacketDiagnostics.pre = 'PRE [203]: ' + preRaw +
                 ' | código=' + preEffectId;
             renderGp5PacketDiagnostics();
@@ -1523,7 +1524,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 number: patchNumber,
                 name: deviceState.patchNames[patchNumber] || ('Preset ' + patchNumber),
                 blocks,
-                pre: { effectId: preId, effectName: getCatalogEffectName('pre', preId) }
+                pre: {
+                    effectId: preId,
+                    effectName: getCatalogEffectName('pre', preId),
+                    enabled: Boolean((deviceState.blocks.pre || {}).enabled),
+                    rawBytes: deviceState.preRawBytes || ''
+                }
             };
             renderPresetLibrary();
         }
@@ -1620,24 +1626,39 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             ).join('') || '<tr><td colspan="4">Nenhum efeito desconhecido. Todos os efeitos convencionais encontrados estão no catálogo.</td></tr>';
             panel.style.display = 'block';
 
-            const ampCabOffsets = {amp:19, cab:27};
+            const blockOffsets = {dst:11, ns:67, amp:19, cab:27, eq:35, mod:43, dly:51, rvb:59};
             const detailedPresetLines = entries.flatMap(preset => {
                 const lines = [
                     '',
                     'PRESET ' + String(preset.number).padStart(2, '0') + ' — ' + preset.name
                 ];
-                ['amp', 'cab'].forEach(blockName => {
+                // PRE é um efeito separado, armazenado na raiz do preset.
+                const pre = preset.pre || {};
+                lines.push(
+                    'PRE [203]: ' + (pre.rawBytes || 'bytes não armazenados') +
+                    ' | código=' + (pre.effectId || 'sem identificador') +
+                    ' | efeito=' + (pre.effectName || getCatalogEffectName('pre', pre.effectId)) +
+                    ' | estado=' + (pre.enabled ? 'ON' : 'OFF')
+                );
+                // NR tem estado no pacote, mas esta versão do parser ainda não extrai
+                // um identificador próprio para esse bloco.
+                const nr = (preset.blocks || {}).nr || {};
+                lines.push(
+                    'NR: ' + (nr.rawBytes || 'bytes/ID não extraídos pelo parser') +
+                    ' | código=' + (nr.effectId || 'não extraído') +
+                    ' | efeito=' + (nr.effectName || 'não identificado') +
+                    ' | estado=' + (nr.enabled ? 'ON' : 'OFF')
+                );
+                ['dst','ns','amp','cab','eq','mod','dly','rvb'].forEach(blockName => {
                     const item = (preset.blocks || {})[blockName] || {};
                     const id = String(item.effectId || '').trim().toLowerCase();
-                    if (!id) {
-                        lines.push(blockName.toUpperCase() + ': sem identificador');
-                        return;
-                    }
+                    const nam = blockName === 'ns' ? getNamCatalogEntry(id) : null;
+                    const effectName = nam ? nam.name : (item.effectName || getCatalogEffectName(blockName, id));
                     lines.push(
-                        blockName.toUpperCase() + ' [' + ampCabOffsets[blockName] + ']: ' +
+                        blockName.toUpperCase() + ' [' + blockOffsets[blockName] + ']: ' +
                         (item.rawBytes || 'bytes não armazenados') +
-                        ' | código=' + id +
-                        ' | efeito=' + (item.effectName || getCatalogEffectName(blockName, id)) +
+                        ' | código=' + (id || 'sem identificador') +
+                        ' | efeito=' + effectName +
                         ' | estado=' + (item.enabled ? 'ON' : 'OFF')
                     );
                 });
@@ -1666,8 +1687,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     ' | presets: ' + row.presets.join(', ')
                 ) : ['Nenhum']),
                 '',
-                'DETALHAMENTO AMP E CAB — TODOS OS PRESETS',
-                'Os bytes abaixo são os bytes brutos recebidos na leitura Bluetooth.',
+                'DETALHAMENTO DE TODOS OS BLOCOS — TODOS OS PRESETS',
+                'Os bytes brutos são os recebidos na leitura Bluetooth. PRE inclui o estado do slot.',
+                'NR: esta versão informa o estado, mas ainda não extrai código/bytes próprios desse bloco.',
                 ...detailedPresetLines
             ].join('\\n');
             if (exportButton) exportButton.disabled = false;
@@ -1681,7 +1703,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'gp5-codigos-nao-identificados.txt';
+            link.download = 'gp5-relatorio-completo-presets.txt';
             link.click();
             URL.revokeObjectURL(url);
         }
