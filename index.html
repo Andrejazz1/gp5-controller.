@@ -893,13 +893,18 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             if (effectSelect) {
                 effectSelect.addEventListener('change', (e) => {
                     const blockId = parseInt(e.target.dataset.blockId);
-                    const effectId = e.target.options[e.target.selectedIndex].dataset.effectId;
-                    
-                    // Clear stored parameters when changing effect
-                    if (deviceState.blocks[block.name]) {
-                        deviceState.blocks[block.name].parameters = [];
-                    }
-                    
+                    const selectedOption = e.target.options[e.target.selectedIndex];
+                    const effectId = selectedOption.dataset.effectId;
+                    const selectedEffectData = block.effects?.[effectId];
+
+                    // Update local editor state immediately so the panel does not
+                    // revert to the previous effect while the device processes the command.
+                    deviceState.blocks[block.name] = deviceState.blocks[block.name] || {};
+                    deviceState.blocks[block.name].effectId = effectId;
+                    deviceState.blocks[block.name].effect = Number(selectedOption.value);
+                    deviceState.blocks[block.name].effectName = selectedEffectData?.name || selectedOption.textContent.trim();
+                    deviceState.blocks[block.name].parameters = [];
+
                     sendBlockChange(blockId, effectId);
                     
                     // Refresh parameters with centered defaults
