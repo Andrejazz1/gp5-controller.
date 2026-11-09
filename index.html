@@ -486,9 +486,16 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .preset-count-control { display:flex; align-items:center; gap:7px; color:#aeb8c2; font-size:.72rem; font-weight:700; white-space:nowrap; }
 .preset-count-control select { background:#111820; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; padding:6px 8px; font-size:.75rem; }
 .preset-pedals { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:7px; }
-.preset-pedal { min-height:64px; border:1px solid #4a5662; border-bottom:4px solid #11161b; border-radius:9px; background:linear-gradient(#404a54,#252d35); color:#e8edf2; font-weight:800; font-size:1rem; box-shadow:0 3px 7px #0007; }
-.preset-pedal span { display:block; font-size:.55rem; color:#aeb8c2; letter-spacing:.08em; margin-top:4px; }
-.preset-pedal.active { background:linear-gradient(#d6a64d,#8f6424); color:#17120a; border-color:#f2c36a; box-shadow:0 0 14px #e8ad4c55; }
+.preset-pedal { min-width:0; min-height:104px; padding:5px 2px 0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; border:0; border-radius:0; background:transparent; color:#aeb8c2; font-weight:800; font-size:.62rem; box-shadow:none; }
+.preset-pedal .preset-number { color:#788491; font-size:.58rem; letter-spacing:.12em; }
+.preset-pedal .preset-name { display:block; width:100%; min-height:1.5em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#e8edf2; font-size:.65rem; letter-spacing:.03em; margin:0; }
+.preset-switch { position:relative; display:block; width:43px; height:43px; flex:0 0 43px; margin-top:2px; border:2px solid #77828c; border-radius:50%; background:radial-gradient(circle at 34% 27%,#f5f7f8 0%,#b9c0c6 20%,#737d86 48%,#343c44 72%,#171c21 100%); box-shadow:inset 0 2px 4px #fff9,inset 0 -5px 7px #000b,0 4px 0 #0b0e11,0 6px 9px #0009; transition:transform .12s,filter .12s,box-shadow .12s; }
+.preset-switch::before { content:''; position:absolute; inset:7px; border-radius:50%; border:1px solid #ffffff55; box-shadow:inset 0 1px 3px #0008; }
+.preset-pedal:active .preset-switch { transform:translateY(3px); box-shadow:inset 0 2px 5px #0009,0 1px 0 #0b0e11,0 2px 4px #0008; }
+.preset-pedal.active .preset-number { color:#f2c36a; }
+.preset-pedal.active .preset-name { color:#fff; }
+.preset-pedal.active .preset-switch { border-color:#e3bd78; filter:brightness(1.12); box-shadow:inset 0 2px 4px #fff9,inset 0 -5px 7px #000b,0 4px 0 #0b0e11,0 6px 9px #0009,0 0 15px #e8ad4c88; }
+.preset-pedal.active .preset-switch::after { content:''; position:absolute; width:7px; height:7px; top:-7px; left:50%; transform:translateX(-50%); border-radius:50%; background:#ffc95c; box-shadow:0 0 8px 3px #ffc95c99; }
 .preset-pedal:disabled,.footswitch:disabled { opacity:.35; }
 .footswitch-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
 .footswitch { min-height:74px; border:1px solid #4a5662; border-bottom:5px solid #101419; border-radius:11px; color:#f4f6f8; background:linear-gradient(#414b55,#252c33); font-weight:800; letter-spacing:.06em; }
@@ -517,7 +524,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .slot-ns { background:linear-gradient(145deg,#555c64,#292e34); } .slot-amp { background:linear-gradient(145deg,#e5a13c,#96571c); } .slot-cab { background:linear-gradient(145deg,#a77b3c,#59401f); }
 .slot-eq { background:linear-gradient(145deg,#e3bd54,#8e6c20); color:#211b0d; } .slot-mod { background:linear-gradient(145deg,#68717b,#343b43); } .slot-dly { background:linear-gradient(145deg,#d94f9a,#85265c); } .slot-rvb { background:linear-gradient(145deg,#398bdc,#174b91); }
 .block-btn .block-label { font-size:.82rem; margin:0; } .block-btn .block-effect { font-size:.68rem; color:#aeb8c2; } .block-btn.active .block-effect { color:#fff; }
-@media(max-width:520px) { .preset-pedals { grid-template-columns:repeat(3,minmax(0,1fr)); } .preset-pedal { min-height:58px; } .gp5-brand h1 {font-size:1rem;} }
+@media(max-width:520px) { .preset-pedals { grid-template-columns:repeat(3,minmax(0,1fr)); } .preset-pedal { min-height:98px; } .preset-switch { width:40px; height:40px; flex-basis:40px; } .gp5-brand h1 {font-size:1rem;} }
 
     </style>
 </head>
@@ -557,15 +564,15 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 </label>
             </div>
             <div class="preset-pedals">
-                <button type="button" class="preset-pedal" id="quickPreset1" data-preset="0" disabled>00<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset2" data-preset="1" disabled>01<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset3" data-preset="2" disabled>02<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset4" data-preset="3" disabled>03<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset5" data-preset="4" disabled>04<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset6" data-preset="5" disabled>05<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset7" data-preset="6" disabled>06<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset8" data-preset="7" disabled>07<span class="preset-name">PRESET</span></button>
-                <button type="button" class="preset-pedal" id="quickPreset9" data-preset="8" disabled>08<span class="preset-name">PRESET</span></button>
+                <button type="button" class="preset-pedal" id="quickPreset1" data-preset="0" disabled><span class="preset-number">00</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset2" data-preset="1" disabled><span class="preset-number">01</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset3" data-preset="2" disabled><span class="preset-number">02</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset4" data-preset="3" disabled><span class="preset-number">03</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset5" data-preset="4" disabled><span class="preset-number">04</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset6" data-preset="5" disabled><span class="preset-number">05</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset7" data-preset="6" disabled><span class="preset-number">06</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset8" data-preset="7" disabled><span class="preset-number">07</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                <button type="button" class="preset-pedal" id="quickPreset9" data-preset="8" disabled><span class="preset-number">08</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
             </div>
             <div class="footswitch-row">
                 <button type="button" class="footswitch" id="delayFootswitch" disabled>DELAY <small id="delayFootswitchState">OFF</small></button>
