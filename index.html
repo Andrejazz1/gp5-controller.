@@ -1230,11 +1230,11 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 if (presetScan.active && presetScan.expected !== newPatch) {
                     console.warn('Ignoring unexpected preset change during scan:', newPatch);
                 }
-                setTimeout(() => {
-                    if (!presetScan.active || presetScan.expected === newPatch) {
+                if (!presetScan.active) {
+                    setTimeout(() => {
                         sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
-                    }
-                }, 150);
+                    }, 150);
+                }
             }
         }
 
@@ -1432,7 +1432,11 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const crc = crc8(hexStringToBytes(command));
             const final = addzero(crc.toString(16).padStart(2, '0').toUpperCase() + command);
             await sendSysex('8080F0' + final + 'F7');
-            // A leitura será solicitada uma única vez quando a GP5 confirmar a troca.
+            // Solicita os dados após a troca; o evento de confirmação não fará outra solicitação durante a varredura.
+            await sleep(300);
+            if (presetScan.active && presetScan.expected === patchNumber) {
+                await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+            }
         }
 
         async function startPresetScan() {
