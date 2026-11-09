@@ -1227,9 +1227,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 document.getElementById('patchSelect').value = newPatch;
                 
                 log('Patch changed to ' + newPatch + ', loading data...');
+                if (presetScan.active && presetScan.expected !== newPatch) {
+                    console.warn('Ignoring unexpected preset change during scan:', newPatch);
+                }
                 setTimeout(() => {
-                    sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
-                }, 100);
+                    if (!presetScan.active || presetScan.expected === newPatch) {
+                        sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+                    }
+                }, 150);
             }
         }
 
@@ -1322,7 +1327,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         // Mantém as partes recebidas no painel para facilitar a cópia do diagnóstico.
         const gp5PacketDiagnostics = {};
         const presetLibrary = {};
-        const presetScan = { active: false, restoring: false, next: 0, original: 0, total: 100 };
+        const presetScan = { active: false, restoring: false, processing: false, expected: null, next: 0, original: 0, total: 100 };
 
         function formatPatchPacketRows(bytes) {
             const rows = [];
@@ -1413,10 +1418,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         async function requestPresetForScan(patchNumber) {
+            presetScan.expected = patchNumber;
+            presetScan.processing = false;
             document.getElementById('patchSelect').value = String(patchNumber);
+            deviceState.blocks = {};
+            deviceState.preEffectId = '';
             if (Number(deviceState.currentPatch) === patchNumber) {
-                deviceState.blocks = {};
-                deviceState.preEffectId = '';
                 await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
                 return;
             }
@@ -1424,12 +1431,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 .replace('{PATCH}', patchNumber.toString(16).padStart(2, '0'));
             const crc = crc8(hexStringToBytes(command));
             const final = addzero(crc.toString(16).padStart(2, '0').toUpperCase() + command);
-            deviceState.blocks = {};
-            deviceState.preEffectId = '';
-            deviceState.currentPatch = patchNumber;
             await sendSysex('8080F0' + final + 'F7');
-            await sleep(250);
-            await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+            // A leitura será solicitada uma única vez quando a GP5 confirmar a troca.
         }
 
         async function startPresetScan() {
@@ -1452,15 +1455,19 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         async function completePresetScanStep() {
-            if (!presetScan.active) return;
+            if (!presetScan.active || presetScan.processing) return;
+            const current = Number(deviceState.currentPatch);
+            if (presetScan.expected !== current) return;
+            presetScan.processing = true;
             if (presetScan.restoring) {
                 presetScan.active = false;
                 presetScan.restoring = false;
+                presetScan.processing = false;
+                presetScan.expected = null;
                 document.getElementById('scanPresetsButton').disabled = false;
                 document.getElementById('presetScanStatus').textContent = 'Concluído: ' + Object.keys(presetLibrary).length + ' presets lidos. Preset original restaurado.';
                 return;
             }
-            const current = Number(deviceState.currentPatch);
             saveCurrentPresetToLibrary(current);
             const count = Object.keys(presetLibrary).length;
             document.getElementById('presetScanStatus').textContent = 'Lidos ' + count + '/100 — último: ' + current + ' (' + (deviceState.patchNames[current] || 'sem nome') + ')';
