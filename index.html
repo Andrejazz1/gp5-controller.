@@ -508,8 +508,15 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .patch-nav-buttons { display:none; }
 .blocks-section { max-width:850px; margin:0 auto; }
 .blocks-title { color:#98a3ae; }
-.block-btn { background:linear-gradient(#343d46,#20262d); border-color:#46515d; border-bottom-width:4px; }
+.block-btn { background:linear-gradient(#343d46,#20262d); border-color:#46515d; border-bottom-width:4px; display:flex; flex-direction:column; align-items:center; gap:9px; padding:14px 8px; }
 .block-btn.active { background:linear-gradient(#2d8d68,#14533d); border-color:#59c99b; box-shadow:0 4px 15px #1c9b6c33; }
+.block-slot-icon { width:58px; height:58px; border-radius:11px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; color:#fff; box-shadow:inset 0 1px #ffffff40,0 3px 8px #0007; border:1px solid #ffffff25; }
+.block-slot-icon svg { width:27px; height:27px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.block-slot-icon b { font-size:.62rem; line-height:1; letter-spacing:.08em; }
+.slot-nr { background:linear-gradient(145deg,#438bd2,#174c85); } .slot-pre { background:linear-gradient(145deg,#707982,#3d454d); } .slot-dst { background:linear-gradient(145deg,#e34c58,#982b36); }
+.slot-ns { background:linear-gradient(145deg,#555c64,#292e34); } .slot-amp { background:linear-gradient(145deg,#e5a13c,#96571c); } .slot-cab { background:linear-gradient(145deg,#a77b3c,#59401f); }
+.slot-eq { background:linear-gradient(145deg,#e3bd54,#8e6c20); color:#211b0d; } .slot-mod { background:linear-gradient(145deg,#68717b,#343b43); } .slot-dly { background:linear-gradient(145deg,#d94f9a,#85265c); } .slot-rvb { background:linear-gradient(145deg,#398bdc,#174b91); }
+.block-btn .block-label { font-size:.82rem; margin:0; } .block-btn .block-effect { font-size:.68rem; color:#aeb8c2; } .block-btn.active .block-effect { color:#fff; }
 @media(max-width:520px) { .preset-pedals { grid-template-columns:repeat(3,minmax(0,1fr)); } .preset-pedal { min-height:58px; } .gp5-brand h1 {font-size:1rem;} }
 
     </style>
@@ -680,16 +687,31 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         function setupUI() {
             const blocksContainer = document.getElementById('blocksContainer');
             
-            gp5Config.blocks.forEach(block => {
+            const blockOrder = ['nr', 'ns', 'pre', 'dst', 'amp', 'cab', 'eq', 'mod', 'dly', 'rvb'];
+            const iconInfo = {
+                nr: {short:'NR', cls:'slot-nr', svg:'<path d="M5 19V9M10 19V5M15 19v-7M20 19V3"/><path d="M3 19h19"/>'},
+                pre: {short:'PRE', cls:'slot-pre', svg:'<rect x="4" y="5" width="16" height="14" rx="3"/><circle cx="9" cy="10" r="1.3"/><circle cx="15" cy="10" r="1.3"/><path d="M8 15h8"/>'},
+                dst: {short:'DST', cls:'slot-dst', svg:'<rect x="4" y="5" width="16" height="14" rx="3"/><path d="m7 13 3-3 2 3 3-4 2 2"/><circle cx="9" cy="16" r=".7"/>'},
+                ns: {short:'N>S', cls:'slot-ns', svg:'<path d="M3 13h3l2-7 4 14 3-10 2 3h4"/><path d="M4 4h16v16H4z"/>'},
+                amp: {short:'AMP', cls:'slot-amp', svg:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1"/><circle cx="13" cy="9" r="1"/><circle cx="18" cy="9" r="1"/><circle cx="12" cy="15" r="3"/>'},
+                cab: {short:'CAB', cls:'slot-cab', svg:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>'},
+                eq: {short:'EQ', cls:'slot-eq', svg:'<path d="M6 4v16M12 4v16M18 4v16"/><path d="M3 9h6M9 15h6M15 7h6"/>'},
+                mod: {short:'MOD', cls:'slot-mod', svg:'<path d="M3 12c3-8 6 8 9 0s6-8 9 0"/><path d="M3 18h18"/>'},
+                dly: {short:'DLY', cls:'slot-dly', svg:'<circle cx="12" cy="12" r="8"/><path d="M12 7v5l4 2"/><path d="M5 4 3 6"/>'},
+                rvb: {short:'RVB', cls:'slot-rvb', svg:'<path d="M12 3C9 7 6 10 6 14a6 6 0 0 0 12 0c0-4-3-7-6-11Z"/><path d="M9 15c.3 1.5 1.2 2.3 2.5 2.6"/>'}
+            };
+            const orderedBlocks = [...gp5Config.blocks].sort((a, b) => {
+                const ai = blockOrder.indexOf(a.name), bi = blockOrder.indexOf(b.name);
+                return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi);
+            });
+            orderedBlocks.forEach(block => {
                 const btn = document.createElement('button');
                 btn.className = 'block-btn';
                 btn.id = `block-${block.name}`;
                 btn.dataset.blockId = block.id;
                 btn.dataset.blockName = block.name;
-                btn.innerHTML = `
-                    <div class="block-label">${block.label}</div>
-                    <div class="block-effect">OFF</div>
-                `;
+                const icon = iconInfo[block.name] || {short:block.name.toUpperCase(), cls:'slot-ns', svg:'<circle cx="12" cy="12" r="8"/>'};
+                btn.innerHTML = `<div class="block-slot-icon ${icon.cls}" aria-hidden="true"><svg viewBox="0 0 24 24">${icon.svg}</svg><b>${icon.short}</b></div><div class="block-label">${block.label}</div><div class="block-effect">OFF</div>`;
                 btn.disabled = true;
                 
                 btn.addEventListener('click', () => {
