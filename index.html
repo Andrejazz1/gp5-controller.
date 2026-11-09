@@ -575,7 +575,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         </div>
         <section class="pedalboard" aria-label="Pedalboard controls">
             <div class="preset-list-toolbar">
-                <div class="pedalboard-label" id="presetPageLabel">PRESETS • 00—08</div>
+                <div class="pedalboard-label">PRESETS • 00—08</div>
                 <div class="preset-count-control">
                     <label for="presetVisibleCount">MOSTRAR</label>
                     <select id="presetVisibleCount" aria-label="Quantidade de presets visíveis">
@@ -584,10 +584,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                         <option value="9" selected>9</option>
                     </select>
                 </div>
-                <div class="preset-page-indicator" id="presetPageIndicator">PÁGINA 1/12</div>
             </div>
             <div class="preset-page-layout">
-                <button type="button" class="preset-page-btn" id="btnPrevPresetPage" aria-label="Mostrar os 9 presets anteriores" disabled>‹</button>
                 <div class="preset-pedals">
                 <button type="button" class="preset-pedal" id="quickPreset1" data-preset="0" disabled><span class="preset-number">00</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset2" data-preset="1" disabled><span class="preset-number">01</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
@@ -599,7 +597,6 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 <button type="button" class="preset-pedal" id="quickPreset8" data-preset="7" disabled><span class="preset-number">07</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset9" data-preset="8" disabled><span class="preset-number">08</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 </div>
-                <button type="button" class="preset-page-btn" id="btnNextPresetPage" aria-label="Mostrar os próximos 9 presets" disabled>›</button>
             </div>
             <div class="footswitch-row">
                 <button type="button" class="footswitch" id="delayFootswitch" disabled>DELAY <small id="delayFootswitchState">OFF</small></button>
@@ -902,8 +899,6 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.querySelectorAll('.preset-pedal').forEach(btn => {
                 btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.preset)));
             });
-            document.getElementById('btnPrevPresetPage').addEventListener('click', () => showPresetPage(presetPageStart - 9));
-            document.getElementById('btnNextPresetPage').addEventListener('click', () => showPresetPage(presetPageStart + 9));
             document.getElementById('presetVisibleCount').addEventListener('change', event => {
                 presetVisibleCount = Number(event.target.value);
                 showPresetPage(presetPageStart);
@@ -2353,8 +2348,6 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.getElementById('patchSelect').disabled = !enabled;
             document.getElementById('btnPrevPatch').disabled = !enabled;
             document.getElementById('btnNextPatch').disabled = !enabled;
-            document.getElementById('btnPrevPresetPage').disabled = !enabled || presetPageStart === 0;
-            document.getElementById('btnNextPresetPage').disabled = !enabled || presetPageStart + PRESETS_PER_PAGE >= TOTAL_PRESETS;
             
             document.querySelectorAll('.block-btn').forEach(btn => {
                 btn.disabled = !enabled;
@@ -2389,9 +2382,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
 
 // ==================== PEDALBOARD QUICK CONTROLS ====================
-let presetPageStart = 0;
-const PRESETS_PER_PAGE = 9;
-const TOTAL_PRESETS = 100;
+const TOTAL_QUICK_PRESETS = 9;
 let presetVisibleCount = 9;
 let tapTimes = [];
 let lastTapMs = 0;
@@ -2419,26 +2410,16 @@ function updateQuickPresetButtons(preset) {
     });
 }
 
-function showPresetPage(start) {
-    presetPageStart = Math.max(0, Math.min(99, Math.floor(start / PRESETS_PER_PAGE) * PRESETS_PER_PAGE));
+function showPresetPage() {
     const buttons = [...document.querySelectorAll('.preset-pedal')];
     const pedalContainer = document.querySelector('.preset-pedals');
     if (pedalContainer) pedalContainer.style.gridTemplateColumns = 'repeat(' + presetVisibleCount + ', minmax(0, 1fr))';
     buttons.forEach((btn, slot) => {
-        const preset = presetPageStart + slot;
         const number = btn.querySelector('.preset-number');
-        btn.dataset.preset = String(preset);
-        btn.hidden = slot >= presetVisibleCount || preset >= TOTAL_PRESETS;
-        if (number) number.textContent = String(preset).padStart(2, '0');
+        btn.dataset.preset = String(slot);
+        btn.hidden = slot >= presetVisibleCount || slot >= TOTAL_QUICK_PRESETS;
+        if (number) number.textContent = String(slot).padStart(2, '0');
     });
-
-    const lastPreset = Math.min(presetPageStart + PRESETS_PER_PAGE - 1, TOTAL_PRESETS - 1);
-    document.getElementById('presetPageLabel').textContent =
-        'PRESETS • ' + String(presetPageStart).padStart(2, '0') + '—' + String(lastPreset).padStart(2, '0');
-    document.getElementById('presetPageIndicator').textContent =
-        'PÁGINA ' + (Math.floor(presetPageStart / PRESETS_PER_PAGE) + 1) + '/12';
-    document.getElementById('btnPrevPresetPage').disabled = !deviceState.connected || presetPageStart === 0;
-    document.getElementById('btnNextPresetPage').disabled = !deviceState.connected || presetPageStart + PRESETS_PER_PAGE >= TOTAL_PRESETS;
 
     updateQuickPresetNames();
     updateQuickPresetButtons(deviceState.currentPatch);
