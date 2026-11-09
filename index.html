@@ -1250,7 +1250,25 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             };
             
             console.log('Effects extracted:', effects);
-            
+
+            // Diagnóstico temporário: exibir os bytes recebidos e os códigos
+            // interpretados pelo controlador na tela, para conferir os offsets.
+            const diagnosticRows = Object.entries(effects).map(([blockName, code]) => {
+                const start = ({dst:11, ns:67, amp:19, cab:27, eq:35, mod:43, dly:51, rvb:59})[blockName];
+                const raw = Array.from(bytes.slice(start, start + 8))
+                    .map(value => value.toString(16).padStart(2, '0')).join(' ');
+                const block = gp5Config.blocks.find(item => item.name === blockName);
+                const matched = block && block.effects ? block.effects[code] : null;
+                return blockName.toUpperCase() + ' [' + start + ']: ' + raw +
+                    ' | código=' + code + ' | efeito=' + (matched ? matched.name : 'NÃO ENCONTRADO');
+            });
+            const statusText = document.getElementById('statusText');
+            if (statusText) {
+                statusText.textContent = 'DIAGNÓSTICO BLUETOOTH — PARTE 2 DO PRESET\\n' +
+                    diagnosticRows.join('\\n');
+            }
+            console.log('GP5 Bluetooth diagnostic:\\n' + diagnosticRows.join('\\n'));
+
             // Atualizar estado com os IDs dos efeitos
             Object.keys(effects).forEach(blockName => {
                 if (!deviceState.blocks[blockName]) {
