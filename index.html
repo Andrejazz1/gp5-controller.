@@ -1250,14 +1250,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         function parsePatchData2(bytes) {
             // Extrair IDs dos efeitos
             const effects = {
-                dst: getEffectId(bytes, 11),
-                ns:  getEffectId(bytes, 67),
-                amp: getEffectId(bytes, 19),
-                cab: getEffectId(bytes, 27),
-                eq:  getEffectId(bytes, 35),
-                mod: getEffectId(bytes, 43),
-                dly: getEffectId(bytes, 51),
-                rvb: getEffectId(bytes, 59)
+                dst: getPatchBlockEffectId(bytes, 11),
+                ns:  getPatchBlockEffectId(bytes, 67),
+                amp: getPatchBlockEffectId(bytes, 19),
+                cab: getPatchBlockEffectId(bytes, 27),
+                eq:  getPatchBlockEffectId(bytes, 35),
+                mod: getPatchBlockEffectId(bytes, 43),
+                dly: getPatchBlockEffectId(bytes, 51),
+                rvb: getPatchBlockEffectId(bytes, 59)
             };
             
             console.log('Effects extracted:', effects);
@@ -1325,6 +1325,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         function parsePatchDataFinal(bytes) {
             // Dados finais do patch
             console.log('Parsing final patch data');
+        }
+
+        // Os campos dos blocos na parte 2 não são contíguos:
+        // o identificador é formado pelo byte start+1, start+2, start+3 e start+7.
+        function getPatchBlockEffectId(bytes, start) {
+            return [bytes[start + 1], bytes[start + 2], bytes[start + 3], bytes[start + 7]]
+                .map(value => value.toString(16).padStart(2, '0')).join('');
         }
 
         function getEffectId(bytes, start) {
