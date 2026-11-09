@@ -773,6 +773,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             currentPatch: 0,
             patchNames: [],
             blocks: {},
+            patchPacketParts: {},
             snaptoneNames: [],
             irNames: []
         };
@@ -1348,6 +1349,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
         // Funções para parsear dados do patch
         function parsePatchData1(bytes) {
+            // Inicia a captura bruta dos cinco segmentos do preset atual.
+            deviceState.patchPacketParts = {};
+            deviceState.patchPacketParts.part1 = Array.from(bytes);
             // Extrair status dos blocos (bytes 151-152, 154)
             const blockStatus = {
                 nr:  Boolean(bytes[152] & (1 << 0)),
@@ -1385,6 +1389,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         function parsePatchData2(bytes) {
+            deviceState.patchPacketParts = deviceState.patchPacketParts || {};
+            deviceState.patchPacketParts.part2 = Array.from(bytes);
             // Extrair IDs dos efeitos
             const effects = {
                 dst: getPatchBlockEffectId(bytes, 11),
@@ -1478,14 +1484,20 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         function parsePatchData3(bytes) {
+            deviceState.patchPacketParts = deviceState.patchPacketParts || {};
+            deviceState.patchPacketParts.part3 = Array.from(bytes);
             logPatchPacketPart('3', 'part3', bytes);
         }
 
         function parsePatchData4(bytes) {
+            deviceState.patchPacketParts = deviceState.patchPacketParts || {};
+            deviceState.patchPacketParts.part4 = Array.from(bytes);
             logPatchPacketPart('4', 'part4', bytes);
         }
 
         function parsePatchDataFinal(bytes) {
+            deviceState.patchPacketParts = deviceState.patchPacketParts || {};
+            deviceState.patchPacketParts.final = Array.from(bytes);
             logPatchPacketPart('FINAL', 'final', bytes);
             if (presetScan.retryTimer) {
                 clearTimeout(presetScan.retryTimer);
@@ -1526,6 +1538,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 number: patchNumber,
                 name: deviceState.patchNames[patchNumber] || ('Preset ' + patchNumber),
                 blocks,
+                packetParts: JSON.parse(JSON.stringify(deviceState.patchPacketParts || {})),
                 pre: {
                     effectId: preId,
                     effectName: getCatalogEffectName('pre', preId),
@@ -1692,7 +1705,21 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 'DETALHAMENTO DE TODOS OS BLOCOS — TODOS OS PRESETS',
                 'Os bytes brutos são os recebidos na leitura Bluetooth. PRE inclui o estado do slot.',
                 'NR: esta versão informa o estado, mas ainda não extrai código/bytes próprios desse bloco.',
-                ...detailedPresetLines
+                ...detailedPresetLines,
+                '',
+                'PACOTES BRUTOS PARA DECODIFICAÇÃO DE PARÂMETROS',
+                'Cada segmento abaixo é a resposta Bluetooth integral. Os valores ainda não são convertidos em controles até confirmar o mapeamento de bytes e a escala.',
+                ...entries.flatMap(preset => {
+                    const parts = preset.packetParts || {};
+                    return [
+                        '',
+                        'PRESET ' + String(preset.number).padStart(2, '0') + ' — ' + preset.name,
+                        ...['part1','part2','part3','part4','final'].map(key => {
+                            const bytes = parts[key];
+                            return key.toUpperCase() + ': ' + (Array.isArray(bytes) ? bytes.map(value => Number(value).toString(16).padStart(2,'0')).join(' ') : 'segmento não disponível');
+                        })
+                    ];
+                })
             ].join('\n');
             if (exportButton) exportButton.disabled = false;
             log('Análise concluída: ' + unknownRows.length + ' códigos ainda precisam de identificação.');
@@ -1908,6 +1935,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                             number,
                             name: String(preset.name || ('Preset ' + number)),
                             blocks: preset.blocks,
+                            packetParts: preset.packetParts || {},
                             pre: preset.pre || {effectId:'', effectName:'—', enabled:false, rawBytes:''}
                         };
                     });
