@@ -1289,24 +1289,28 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         function getEffectId(bytes, start) {
-            // Debug: mostrar os bytes brutos
+            // Cada código de efeito da GP-5 ocupa 4 bytes (8 caracteres hex).
+            // Ler 8 bytes juntava parte do campo seguinte e impedia encontrar
+            // a chave correspondente em ble_sysex.json.
             console.log(`Reading effect ID from position ${start}:`);
             const rawBytes = [];
-            for (let i = 0; i < 16; i++) {
+            for (let i = 0; i < 8; i++) {
                 if (bytes[start + i] !== undefined) {
                     rawBytes.push(bytes[start + i].toString(16).padStart(2, '0'));
                 }
             }
-            console.log('Raw bytes (16):', rawBytes.join(' '));
-            
-            let id = '';
-            // Tentar ler direto sem pular bytes
-            for (let i = 0; i < 8; i++) {
-                if (bytes[start + i] !== undefined) {
-                    id += bytes[start + i].toString(16).padStart(2, '0');
-                }
+            console.log('Raw bytes (8):', rawBytes.join(' '));
+
+            if (start + 3 >= bytes.length) {
+                console.warn('Incomplete effect ID at position', start);
+                return '';
             }
-            console.log('Effect ID:', id);
+
+            let id = '';
+            for (let i = 0; i < 4; i++) {
+                id += bytes[start + i].toString(16).padStart(2, '0');
+            }
+            console.log('Effect ID (4 bytes):', id);
             return id;
         }
 
