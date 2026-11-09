@@ -1227,10 +1227,16 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 document.getElementById('patchSelect').value = newPatch;
                 
                 log('Patch changed to ' + newPatch + ', loading data...');
-                if (presetScan.active && presetScan.expected !== newPatch) {
-                    console.warn('Ignoring unexpected preset change during scan:', newPatch);
-                }
-                if (!presetScan.active) {
+                if (presetScan.active) {
+                    if (presetScan.expected === newPatch && !presetScan.requestStarted) {
+                        setTimeout(() => {
+                            if (presetScan.active && presetScan.expected === newPatch && !presetScan.requestStarted) {
+                                presetScan.requestStarted = true;
+                                sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+                            }
+                        }, 200);
+                    }
+                } else {
                     setTimeout(() => {
                         sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
                     }, 150);
@@ -1327,7 +1333,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         // Mantém as partes recebidas no painel para facilitar a cópia do diagnóstico.
         const gp5PacketDiagnostics = {};
         const presetLibrary = {};
-        const presetScan = { active: false, restoring: false, processing: false, expected: null, next: 0, original: 0, total: 100 };
+        const presetScan = { active: false, restoring: false, processing: false, requestStarted: false, expected: null, next: 0, original: 0, total: 100 };
 
         function formatPatchPacketRows(bytes) {
             const rows = [];
@@ -1420,10 +1426,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         async function requestPresetForScan(patchNumber) {
             presetScan.expected = patchNumber;
             presetScan.processing = false;
+            presetScan.requestStarted = false;
             document.getElementById('patchSelect').value = String(patchNumber);
             deviceState.blocks = {};
             deviceState.preEffectId = '';
             if (Number(deviceState.currentPatch) === patchNumber) {
+                presetScan.requestStarted = true;
                 await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
                 return;
             }
@@ -1432,9 +1440,11 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const crc = crc8(hexStringToBytes(command));
             const final = addzero(crc.toString(16).padStart(2, '0').toUpperCase() + command);
             await sendSysex('8080F0' + final + 'F7');
-            // Solicita os dados após a troca; o evento de confirmação não fará outra solicitação durante a varredura.
-            await sleep(300);
-            if (presetScan.active && presetScan.expected === patchNumber) {
+            // O evento de troca normalmente inicia a leitura. Este fallback cobre eventos perdidos.
+            await sleep(1000);
+            if (presetScan.active && presetScan.expected === patchNumber && !presetScan.requestStarted) {
+                presetScan.requestStarted = true;
+                log('Confirmação de troca não recebida; solicitando dados do preset ' + patchNumber + ' novamente.', 'warning');
                 await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
             }
         }
