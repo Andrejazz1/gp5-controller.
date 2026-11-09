@@ -614,6 +614,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <button id="scanPresetsButton" type="button" class="btn btn-warning btn-sm" onclick="startPresetScan()">LER EFEITOS DOS 100 PRESETS</button>
         <button id="exportPresetLibraryButton" type="button" class="btn btn-outline-light btn-sm" onclick="exportPresetLibrary()" disabled>EXPORTAR JSON</button>
         <div id="presetScanStatus" style="font-size:12px;color:#dce3e9;margin-top:10px;">Aguardando conexão Bluetooth.</div>
+        <div id="presetScanDebug" style="font-size:11px;color:#b9d7ff;background:#172238;border:1px solid #405574;border-radius:8px;padding:8px;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere;">Diagnóstico da varredura: aguardando início.</div>
         <div style="overflow-x:auto;margin-top:10px;">
             <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:760px;">
                 <thead><tr><th>Preset</th><th>NR</th><th>PRE</th><th>DST</th><th>NS</th><th>AMP</th><th>CAB</th><th>EQ</th><th>MOD</th><th>DLY</th><th>RVB</th></tr></thead>
@@ -1165,6 +1166,15 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             console.log('Notification:', bytes.length, 'bytes - [5]:', bytes[5], '[6]:', bytes[6], '[7]:', bytes[7], '[8]:', bytes[8]);
             
             // Process different notification types
+            if (presetScan.active && bytes[5] === 0 && bytes[6] === 5) {
+                if (bytes.length === 212 && bytes[7] === 0 && bytes[8] >= 0 && bytes[8] <= 3) {
+                    presetScanDebug("Recebida parte " + (bytes[8] + 1) + "/4; preset esperado=" + presetScan.expected + ".");
+                } else if (bytes.length === 148 && bytes[7] === 0 && bytes[8] === 4) {
+                    presetScanDebug("Recebido pacote FINAL; preset esperado=" + presetScan.expected + ", GP5 atual=" + deviceState.currentPatch + ".");
+                } else {
+                    presetScanDebug("Pacote de dados inesperado: " + bytes.length + " bytes; bytes[7]=" + bytes[7] + ", bytes[8]=" + bytes[8] + ".");
+                }
+            }
             if (bytes[5] === 1 && bytes[6] === 5 && bytes.length === 212) {
                 // Patch list
                 parsePatchNames(bytes);
@@ -1220,6 +1230,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 // Patch changed on GP5
                 const newPatch = bytes[15] * 16 + bytes[16];
                 console.log('Patch changed on device to:', newPatch);
+                if (presetScan.active) presetScanDebug("GP5 confirmou mudança para preset " + newPatch + "; esperado=" + presetScan.expected + ".");
                 
                 // Clear previous state
                 deviceState.blocks = {};
@@ -1426,8 +1437,21 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
         }
 
+        function presetScanDebug(message) {
+            const panel = document.getElementById("presetScanDebug");
+            if (!panel) return;
+            if (!presetScan.debugLines) presetScan.debugLines = [];
+            presetScan.debugLines.push(new Date().toLocaleTimeString() + " — " + message);
+            if (presetScan.debugLines.length > 18) presetScan.debugLines.shift();
+            panel.textContent = presetScan.debugLines.join("\n");
+        }
+
         async function sendPresetScanReadRequest(patchNumber) {
-            if (!presetScan.active || presetScan.expected !== patchNumber) return;
+            if (!presetScan.active || presetScan.expected !== patchNumber) {
+                presetScanDebug("Solicitação ignorada: ativo=" + presetScan.active + ", esperado=" + presetScan.expected + ", pedido=" + patchNumber);
+                return;
+            }
+            presetScanDebug("Enviando solicitação de dados do preset " + patchNumber + ".");
             if (presetScan.retryTimer) clearTimeout(presetScan.retryTimer);
             presetScan.requestStarted = true;
             presetScan.attempts += 1;
@@ -1452,6 +1476,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         async function requestPresetForScan(patchNumber) {
+            presetScanDebug("Preparando preset " + patchNumber + "; GP5 informa atualmente " + deviceState.currentPatch + ".");
             if (presetScan.retryTimer) clearTimeout(presetScan.retryTimer);
             presetScan.expected = patchNumber;
             presetScan.processing = false;
@@ -1468,11 +1493,15 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 .replace('{PATCH}', patchNumber.toString(16).padStart(2, '0'));
             const crc = crc8(hexStringToBytes(command));
             const final = addzero(crc.toString(16).padStart(2, '0').toUpperCase() + command);
+            presetScanDebug("Comando de troca enviado para o preset " + patchNumber + ". Aguardando confirmação.");
             await sendSysex('8080F0' + final + 'F7');
             // Aguarda a confirmação de troca; se ela não iniciar a leitura, usa este fallback.
             await sleep(900);
             if (presetScan.active && presetScan.expected === patchNumber && !presetScan.requestStarted) {
+                presetScanDebug("Sem confirmação após 900 ms; acionando solicitação alternativa do preset " + patchNumber + ".");
                 await sendPresetScanReadRequest(patchNumber);
+            } else if (presetScan.active && presetScan.expected === patchNumber) {
+                presetScanDebug("Confirmação recebida; solicitação já iniciada para preset " + patchNumber + ".");
             }
         }
         async function startPresetScan() {
@@ -1482,6 +1511,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             }
             if (presetScan.active) return;
             presetScan.active = true;
+            presetScan.debugLines = [];
+            presetScanDebug("Varredura iniciada. Preset atual: " + deviceState.currentPatch + ".");
             presetScan.restoring = false;
             presetScan.original = Number(deviceState.currentPatch) || 0;
             presetScan.next = presetScan.original;
@@ -1495,9 +1526,16 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         async function completePresetScanStep() {
-            if (!presetScan.active || presetScan.processing) return;
+            if (!presetScan.active || presetScan.processing) {
+                presetScanDebug("FINAL recebido, mas avanço bloqueado: ativo=" + presetScan.active + ", processando=" + presetScan.processing + ".");
+                return;
+            }
             const current = Number(deviceState.currentPatch);
-            if (presetScan.expected !== current) return;
+            if (presetScan.expected !== current) {
+                presetScanDebug("FINAL recebido, mas preset não confere: esperado=" + presetScan.expected + ", atual=" + current + ".");
+                return;
+            }
+            presetScanDebug("FINAL aceito para preset " + current + "; salvando na biblioteca.");
             presetScan.processing = true;
             if (presetScan.restoring) {
                 presetScan.active = false;
@@ -1519,6 +1557,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             }
             const next = current + 1;
             presetScan.next = next;
+            presetScanDebug("Avanço concluído. Próximo preset: " + next + ".");
             await requestPresetForScan(next);
         }
 
