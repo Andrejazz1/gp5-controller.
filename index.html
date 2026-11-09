@@ -623,6 +623,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <section id="effectCodeAnalysis" style="display:none;margin-top:12px;padding:12px;background:#111a28;border:1px solid #405574;border-radius:10px;">
             <h4 style="font-size:14px;margin:0 0 6px;">IDENTIFICAÇÃO AUTOMÁTICA</h4>
             <div id="effectCodeAnalysisSummary" style="font-size:12px;color:#dce3e9;margin-bottom:10px;"></div>
+            <h5 style="font-size:12px;margin:10px 0 6px;">SLOTS NAM (IDENTIFICADOS PELO BLOCO NS)</h5>
+            <div style="overflow-x:auto;margin-bottom:12px;">
+                <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:600px;margin-bottom:0;">
+                    <thead><tr><th>Identificador NAM</th><th>Ocorrências</th><th>Presets</th></tr></thead>
+                    <tbody id="namCodeAnalysisRows"><tr><td colspan="3">Aguardando análise.</td></tr></tbody>
+                </table>
+            </div>
+            <h5 style="font-size:12px;margin:10px 0 6px;">EFEITOS NÃO IDENTIFICADOS NO CATÁLOGO</h5>
             <div style="overflow-x:auto;">
                 <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:600px;margin-bottom:0;">
                     <thead><tr><th>Bloco</th><th>Código</th><th>Ocorrências</th><th>Presets</th></tr></thead>
@@ -1502,35 +1510,48 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const allRows = Array.from(grouped.values()).sort((a,b) =>
                 blockOrder.indexOf(a.block)-blockOrder.indexOf(b.block) || a.id.localeCompare(b.id)
             );
-            const unknownRows = allRows.filter(row => !row.name);
-            const knownCount = allRows.length - unknownRows.length;
+            const namRows = allRows.filter(row => row.block === 'ns');
+            const unknownRows = allRows.filter(row => row.block !== 'ns' && !row.name);
+            const knownCount = allRows.length - namRows.length - unknownRows.length;
             const panel = document.getElementById('effectCodeAnalysis');
             const summary = document.getElementById('effectCodeAnalysisSummary');
             const body = document.getElementById('effectCodeAnalysisRows');
+            const namBody = document.getElementById('namCodeAnalysisRows');
             const exportButton = document.getElementById('exportEffectCodeReportButton');
 
             summary.textContent = entries.length + ' presets analisados • ' + allRows.length +
-                ' combinações únicas de bloco/código • ' + knownCount + ' reconhecidas • ' +
-                unknownRows.length + ' ainda não cadastradas.';
+                ' combinações únicas • ' + knownCount + ' efeitos reconhecidos • ' +
+                namRows.length + ' identificadores NAM • ' + unknownRows.length +
+                ' efeitos ainda não cadastrados.';
+            namBody.innerHTML = namRows.map(row =>
+                '<tr><td><code>' + row.id + '</code></td><td>' + row.count +
+                '</td><td>' + row.presets.join(', ') + '</td></tr>'
+            ).join('') || '<tr><td colspan="3">Nenhum identificador NAM encontrado.</td></tr>';
             body.innerHTML = unknownRows.map(row =>
                 '<tr><td>' + blockLabels[row.block] + '</td><td><code>' + row.id + '</code></td>' +
                 '<td>' + row.count + '</td><td>' + row.presets.join(', ') + '</td></tr>'
-            ).join('') || '<tr><td colspan="4">Nenhum código desconhecido. Todos os efeitos encontrados estão no catálogo.</td></tr>';
+            ).join('') || '<tr><td colspan="4">Nenhum efeito desconhecido. Todos os efeitos convencionais encontrados estão no catálogo.</td></tr>';
             panel.style.display = 'block';
 
             lastEffectCodeReport = [
                 'RELATÓRIO DE IDENTIFICAÇÃO DE EFEITOS — VALETON GP5',
                 'Presets analisados: ' + entries.length,
                 'Combinações únicas: ' + allRows.length,
-                'Reconhecidas: ' + knownCount,
-                'Não cadastradas: ' + unknownRows.length,
+                'Efeitos reconhecidos: ' + knownCount,
+                'Identificadores NAM: ' + namRows.length,
+                'Efeitos não cadastrados: ' + unknownRows.length,
                 '',
-                'CÓDIGOS NÃO CADASTRADOS',
+                'IDENTIFICADORES NAM (BLOCO NS)',
+                ...(namRows.length ? namRows.map(row =>
+                    row.id + ' | ocorrências: ' + row.count + ' | presets: ' + row.presets.join(', ')
+                ) : ['Nenhum']),
+                '',
+                'EFEITOS NÃO CADASTRADOS',
                 ...(unknownRows.length ? unknownRows.map(row =>
                     blockLabels[row.block] + ' | ' + row.id + ' | ocorrências: ' + row.count +
                     ' | presets: ' + row.presets.join(', ')
                 ) : ['Nenhum'])
-            ].join('\n');
+            ].join('\\n');
             if (exportButton) exportButton.disabled = false;
             log('Análise concluída: ' + unknownRows.length + ' códigos ainda precisam de identificação.');
         }
