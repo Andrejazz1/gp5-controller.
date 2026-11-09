@@ -630,6 +630,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     <tbody id="namCodeAnalysisRows"><tr><td colspan="5">Aguardando análise.</td></tr></tbody>
                 </table>
             </div>
+            <h5 style="font-size:12px;margin:10px 0 6px;">NAMs DE FÁBRICA LISTADOS NO MANUAL</h5>
+            <p style="font-size:11px;color:#aeb8c2;margin:0 0 8px;">Lista de referência do manual. Os códigos só são exibidos quando confirmados pela leitura.</p>
+            <div style="overflow-x:auto;margin-bottom:12px;">
+                <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:600px;margin-bottom:0;">
+                    <thead><tr><th>Categoria</th><th>Arquivo SnapTone</th><th>Equipamento de referência</th></tr></thead>
+                    <tbody id="factoryNamCatalogRows"><tr><td colspan="3">Aguardando análise.</td></tr></tbody>
+                </table>
+            </div>
             <h5 style="font-size:12px;margin:10px 0 6px;">EFEITOS NÃO IDENTIFICADOS NO CATÁLOGO</h5>
             <div style="overflow-x:auto;">
                 <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:600px;margin-bottom:0;">
@@ -699,6 +707,51 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         function getNamCatalogEntry(effectId) {
             return GP5_NAM_CATALOG[String(effectId || '').trim().toLowerCase()] || null;
         }
+
+        // Lista de referência da seção "Factory SnapTone Files" do manual.
+        // Não atribuir códigos a nomes sem correspondência confirmada.
+        const GP5_FACTORY_NAM_NAMES = [
+            ['Pedal','14 DST','Fortin NATAS'],
+            ['Pedal','Force OCD','Fulltone OCD V3 HP'],
+            ['Pedal','Revolt DST','Suhr Riot Natural'],
+            ['Pedal','SweetDrive','Mad Professor Sweet Honey'],
+            ['Pedal','FlagmanDST','Pedal britânico moderno high-gain'],
+            ['Clean Amp','Foxy 30','VOX AC30 2x12'],
+            ['Clean Amp','Twin RVB','Fender 65 Twin Reverb normal channel 2x12'],
+            ['Clean Amp','Match 30','Matchless DC-30 channel 1 2x12'],
+            ['Clean Amp','MessStar S','Mesa Boogie Lone Star Special 30W 1x12'],
+            ['Clean Amp','MessJP CH1','Mesa Boogie JP2C Ch.1 4x12'],
+            ['Clean Amp','Rock2 CL','Two-Rock Classic Reverb Signature 1x12'],
+            ['Clean Amp','Lany LH20','Laney Lionheart L20H clean 2x12'],
+            ['Clean Amp','SUPDual','Supro Dual-Tone CH1+2 clean 2x12'],
+            ['Clean Amp','BJ3 CL','Fender Blues Junior III clean 1x12'],
+            ['Clean Amp','UK BB CL','Marshall Bluesbreaker clean 2x12'],
+            ['Overdrive Amp','BJ3 OD','Fender Blues Junior III overdrive 1x12'],
+            ['Overdrive Amp','UK BB OD','Marshall Bluesbreaker overdrive 2x12'],
+            ['Overdrive Amp','UK 410 OD','Marshall JVM410 crunch channel 4x12'],
+            ['Overdrive Amp','Rock2 OD','Two-Rock Custom Reverb Signature 2x12'],
+            ['Overdrive Amp','HW100','Hiwatt Custom 100 DR103 4x12'],
+            ['Overdrive Amp','Juice CR N','Orange CR120 dirty channel 4x12'],
+            ['Distortion Amp','Foxy 30JMI','VOX JMI AC30 2x12'],
+            ['Distortion Amp','Bog DST','Bogner Ecstasy 101B CH3 4x12'],
+            ['Distortion Amp','CV XV','Carvin XV-212 Lead 2x12'],
+            ['Distortion Amp','MessJP CH2','Mesa Boogie JP2C Ch.2 4x12'],
+            ['Distortion Amp','MessJP CH3','Mesa Boogie JP2C Ch.3 4x12'],
+            ['Distortion Amp','UK 800','Marshall JCM800 4x12'],
+            ['Distortion Amp','UK SLP','Marshall 1959SLP 4x12'],
+            ['Distortion Amp','UK410 DST1','Marshall JVM410 OD1 channel red 4x12'],
+            ['Distortion Amp','UK410 DST2','Marshall JVM410 OD2 channel red 4x12'],
+            ['Distortion Amp','UK 900','Marshall JCM900 CH.B 4x12'],
+            ['Hi-Gain Amp','UK 2000','Marshall JCM2000 4x12'],
+            ['Hi-Gain Amp','UK DSL','Marshall DSL100H OD2 4x12'],
+            ['Hi-Gain Amp','Dizz VH','Diezel VH4 CH4 4x12'],
+            ['Hi-Gain Amp','Mess TriV','Mesa Boogie Triple Rectifier CH3 Vintage 4x12'],
+            ['Hi-Gain Amp','Mess TriM','Mesa Boogie Triple Rectifier CH3 Modern 4x12'],
+            ['Hi-Gain Amp','Mess 2C+','Mesa Boogie Mark IIC+ Lead 4x12'],
+            ['Hi-Gain Amp','Eagle Iron','ENGL Ironball E606 Lead 4x12'],
+            ['Hi-Gain Amp','H&K BLK200','Hughes & Kettner Black Spirit 200 Lead 4x12'],
+            ['Hi-Gain Amp','JuiceCRMAX','Orange CR120 dirty max 4x12']
+        ];
         let device = null;
         let writeChar = null;
         let notifyChar = null;
@@ -1546,6 +1599,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     escapeHtml(nam ? nam.origin : 'Origem desconhecida') + '</td><td>' + row.count +
                     '</td><td>' + row.presets.join(', ') + '</td></tr>';
             }).join('') || '<tr><td colspan="5">Nenhum identificador NAM encontrado.</td></tr>';
+            const factoryNamBody = document.getElementById('factoryNamCatalogRows');
+            if (factoryNamBody) {
+                factoryNamBody.innerHTML = GP5_FACTORY_NAM_NAMES.map(item =>
+                    '<tr><td>' + escapeHtml(item[0]) + '</td><td>' + escapeHtml(item[1]) +
+                    '</td><td>' + escapeHtml(item[2]) + '</td></tr>'
+                ).join('');
+            }
             body.innerHTML = unknownRows.map(row =>
                 '<tr><td>' + blockLabels[row.block] + '</td><td><code>' + row.id + '</code></td>' +
                 '<td>' + row.count + '</td><td>' + row.presets.join(', ') + '</td></tr>'
