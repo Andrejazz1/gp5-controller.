@@ -1282,7 +1282,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             // Extrair efeito PRE
             const preEffectId = getEffectId(bytes, 203);
             deviceState.preEffectId = preEffectId;
-            console.log('PRE Effect ID:', preEffectId);
+
+            // Exibir o código PRE no diagnóstico para identificação do modelo.
+            const preRaw = Array.from(bytes.slice(203, 211))
+                .map(value => value.toString(16).padStart(2, '0')).join(' ');
+            gp5PacketDiagnostics.pre = 'PRE [203]: ' + preRaw +
+                ' | código=' + preEffectId;
+            renderGp5PacketDiagnostics();
+            console.log('PRE Effect ID:', preEffectId, '| bytes:', preRaw);
         }
 
         function parsePatchData2(bytes) {
@@ -1362,7 +1369,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const output = document.getElementById('gp5DiagnosticText');
             if (!panel || !output) return;
             panel.style.display = 'block';
-            output.textContent = ['part2', 'part3', 'part4', 'final']
+            output.textContent = ['pre', 'part2', 'part3', 'part4', 'final']
                 .filter(key => gp5PacketDiagnostics[key])
                 .map(key => gp5PacketDiagnostics[key])
                 .join('\\n\\n==============================\\n\\n');
