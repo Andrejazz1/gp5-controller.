@@ -1428,7 +1428,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.getElementById('presetScanStatus').textContent = 'Lendo preset ' + presetScan.next + ' de 99…';
             deviceState.blocks = {};
             deviceState.preEffectId = '';
-            await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+            document.getElementById('patchSelect').value = '0';
+            await changePatch();
         }
 
         async function completePresetScanStep() {
