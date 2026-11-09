@@ -481,7 +481,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .gp5-brand h1 { font-size:1.15rem; letter-spacing:.12em; margin:0; font-weight:800; }
 .gp5-brand small { display:block; color:#89939e; font-size:.68rem; letter-spacing:.16em; margin-top:3px; }
 .pedalboard { max-width:850px; margin:0 auto; padding:14px; border:1px solid #343d47; border-radius:18px; background:linear-gradient(145deg,#252b32,#15191e); box-shadow:0 14px 35px #0008,inset 0 1px #ffffff12; }
-.pedalboard-label { color:#8d99a6; font-size:.68rem; letter-spacing:.18em; font-weight:800; margin:2px 0 10px; }
+.preset-list-toolbar { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:2px 0 10px; }
+.pedalboard-label { color:#8d99a6; font-size:.68rem; letter-spacing:.18em; font-weight:800; margin:0; }
+.preset-count-control { display:flex; align-items:center; gap:7px; color:#aeb8c2; font-size:.72rem; font-weight:700; white-space:nowrap; }
+.preset-count-control select { background:#111820; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; padding:6px 8px; font-size:.75rem; }
 .preset-pedals { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:7px; }
 .preset-pedal { min-height:64px; border:1px solid #4a5662; border-bottom:4px solid #11161b; border-radius:9px; background:linear-gradient(#404a54,#252d35); color:#e8edf2; font-weight:800; font-size:1rem; box-shadow:0 3px 7px #0007; }
 .preset-pedal span { display:block; font-size:.55rem; color:#aeb8c2; letter-spacing:.08em; margin-top:4px; }
@@ -535,7 +538,17 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             <button type="button" class="view-tab" id="viewEditorBtn" aria-selected="false">EDITOR</button>
         </div>
         <section class="pedalboard" aria-label="Pedalboard controls">
-            <div class="pedalboard-label">PRESETS • 00—08</div>
+            <div class="preset-list-toolbar">
+                <div class="pedalboard-label">PRESETS • 00—08</div>
+                <label class="preset-count-control" for="presetCountSelect">
+                    <span>Mostrar</span>
+                    <select id="presetCountSelect" aria-label="Quantidade de presets na tela">
+                        <option value="3">3 presets</option>
+                        <option value="6">6 presets</option>
+                        <option value="9" selected>9 presets</option>
+                    </select>
+                </label>
+            </div>
             <div class="preset-pedals">
                 <button type="button" class="preset-pedal" id="quickPreset1" data-preset="0" disabled>00<span class="preset-name">PRESET</span></button>
                 <button type="button" class="preset-pedal" id="quickPreset2" data-preset="1" disabled>01<span class="preset-name">PRESET</span></button>
@@ -718,6 +731,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.querySelectorAll('.preset-pedal').forEach(btn => {
                 btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.preset)));
             });
+            document.getElementById('presetCountSelect').addEventListener('change', updatePresetVisibility);
+            updatePresetVisibility();
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
             document.querySelectorAll('.rhythm-option').forEach(btn => {
                 btn.addEventListener('click', () => setTapSubdivision(btn.dataset.subdivision));
@@ -1534,6 +1549,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             
             updateQuickPresetNames();
             log(`${deviceState.patchNames.length} patches loaded`);
+        }
+
+        function updatePresetVisibility() {
+            const count = Number(document.getElementById('presetCountSelect').value) || 9;
+            document.querySelectorAll('.preset-pedal').forEach(btn => {
+                btn.hidden = Number(btn.dataset.preset) >= count;
+            });
         }
 
         function updateQuickPresetNames() {
