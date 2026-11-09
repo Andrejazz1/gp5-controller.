@@ -626,8 +626,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             <h5 style="font-size:12px;margin:10px 0 6px;">SLOTS NAM (IDENTIFICADOS PELO BLOCO NS)</h5>
             <div style="overflow-x:auto;margin-bottom:12px;">
                 <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:600px;margin-bottom:0;">
-                    <thead><tr><th>Identificador NAM</th><th>Ocorrências</th><th>Presets</th></tr></thead>
-                    <tbody id="namCodeAnalysisRows"><tr><td colspan="3">Aguardando análise.</td></tr></tbody>
+                    <thead><tr><th>NAM</th><th>Código</th><th>Origem</th><th>Ocorrências</th><th>Presets</th></tr></thead>
+                    <tbody id="namCodeAnalysisRows"><tr><td colspan="5">Aguardando análise.</td></tr></tbody>
                 </table>
             </div>
             <h5 style="font-size:12px;margin:10px 0 6px;">EFEITOS NÃO IDENTIFICADOS NO CATÁLOGO</h5>
@@ -685,6 +685,20 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
     <script>
         // ==================== CONFIGURAÇÃO ====================
         let gp5Config = null;
+
+        // Catálogo de NAMs confirmados pelo usuário (origem informada manualmente).
+        const GP5_NAM_CATALOG = {
+            '3200000f': { name: 'DividedC', origin: 'Externo' },
+            '3d00000f': { name: 'MatchCh2', origin: 'Externo' },
+            '3e00000f': { name: 'MatchBon', origin: 'Externo' },
+            '0000000f': { name: 'DST', origin: 'Fábrica' },
+            '0c00000f': { name: 'SupDual', origin: 'Fábrica' },
+            '2900000f': { name: 'AMPG 6 BS', origin: 'Fábrica' }
+        };
+
+        function getNamCatalogEntry(effectId) {
+            return GP5_NAM_CATALOG[String(effectId || '').trim().toLowerCase()] || null;
+        }
         let device = null;
         let writeChar = null;
         let notifyChar = null;
@@ -1461,7 +1475,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             body.innerHTML = entries.map(preset => {
                 const cell = name => {
                     const item = preset.blocks[name] || {};
-                    return (item.enabled ? '● ' : '○ ') + (item.effectName || '—');
+                    const nam = name === 'ns' ? getNamCatalogEntry(item.effectId) : null;
+                    const effectName = nam ? nam.name : (item.effectName || '—');
+                    return (item.enabled ? '● ' : '○ ') + effectName;
                 };
                 const pre = preset.pre && preset.pre.effectName ? preset.pre.effectName : '—';
                 return '<tr><td>' + String(preset.number).padStart(2,'0') + ' — ' + escapeHtml(preset.name) + '</td>' +
@@ -1523,10 +1539,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 ' combinações únicas • ' + knownCount + ' efeitos reconhecidos • ' +
                 namRows.length + ' identificadores NAM • ' + unknownRows.length +
                 ' efeitos ainda não cadastrados.';
-            namBody.innerHTML = namRows.map(row =>
-                '<tr><td><code>' + row.id + '</code></td><td>' + row.count +
-                '</td><td>' + row.presets.join(', ') + '</td></tr>'
-            ).join('') || '<tr><td colspan="3">Nenhum identificador NAM encontrado.</td></tr>';
+            namBody.innerHTML = namRows.map(row => {
+                const nam = getNamCatalogEntry(row.id);
+                return '<tr><td>' + escapeHtml(nam ? nam.name : 'NAM não identificado') +
+                    '</td><td><code>' + row.id + '</code></td><td>' +
+                    escapeHtml(nam ? nam.origin : 'Origem desconhecida') + '</td><td>' + row.count +
+                    '</td><td>' + row.presets.join(', ') + '</td></tr>';
+            }).join('') || '<tr><td colspan="5">Nenhum identificador NAM encontrado.</td></tr>';
             body.innerHTML = unknownRows.map(row =>
                 '<tr><td>' + blockLabels[row.block] + '</td><td><code>' + row.id + '</code></td>' +
                 '<td>' + row.count + '</td><td>' + row.presets.join(', ') + '</td></tr>'
@@ -1542,9 +1561,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 'Efeitos não cadastrados: ' + unknownRows.length,
                 '',
                 'IDENTIFICADORES NAM (BLOCO NS)',
-                ...(namRows.length ? namRows.map(row =>
-                    row.id + ' | ocorrências: ' + row.count + ' | presets: ' + row.presets.join(', ')
-                ) : ['Nenhum']),
+                ...(namRows.length ? namRows.map(row => {
+                    const nam = getNamCatalogEntry(row.id);
+                    return (nam ? nam.name : 'NAM não identificado') + ' | ' + row.id +
+                        ' | origem: ' + (nam ? nam.origin : 'desconhecida') +
+                        ' | ocorrências: ' + row.count + ' | presets: ' + row.presets.join(', ');
+                }) : ['Nenhum']),
                 '',
                 'EFEITOS NÃO CADASTRADOS',
                 ...(unknownRows.length ? unknownRows.map(row =>
