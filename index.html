@@ -482,10 +482,15 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .gp5-brand small { display:block; color:#89939e; font-size:.68rem; letter-spacing:.16em; margin-top:3px; }
 .pedalboard { max-width:850px; margin:0 auto; padding:14px; border:1px solid #343d47; border-radius:18px; background:linear-gradient(145deg,#252b32,#15191e); box-shadow:0 14px 35px #0008,inset 0 1px #ffffff12; }
 .preset-list-toolbar { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:2px 0 10px; }
+.preset-page-indicator { color:#7f8b97; font-size:.65rem; font-weight:800; letter-spacing:.1em; }
+.preset-page-layout { display:grid; grid-template-columns:30px minmax(0,1fr) 30px; align-items:center; gap:4px; }
+.preset-page-btn { width:30px; height:54px; padding:0; border:1px solid #596673; border-radius:8px; color:#f2c36a; background:linear-gradient(#414b55,#252c33); font-size:2rem; line-height:1; font-weight:500; }
+.preset-page-btn:active:not(:disabled) { transform:scale(.94); background:#4b5966; }
+.preset-page-btn:disabled { opacity:.25; color:#89939e; }
 .pedalboard-label { color:#8d99a6; font-size:.68rem; letter-spacing:.18em; font-weight:800; margin:0; }
 .preset-count-control { display:flex; align-items:center; gap:7px; color:#aeb8c2; font-size:.72rem; font-weight:700; white-space:nowrap; }
 .preset-count-control select { background:#111820; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; padding:6px 8px; font-size:.75rem; }
-.preset-pedals { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:7px; }
+.preset-pedals { min-width:0; display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:7px; }
 .preset-pedal { min-width:0; min-height:104px; padding:5px 2px 0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; border:0; border-radius:0; background:transparent; color:#aeb8c2; font-weight:800; font-size:.62rem; box-shadow:none; }
 .preset-pedal .preset-number { color:#788491; font-size:.58rem; letter-spacing:.12em; }
 .preset-pedal .preset-name { display:block; width:100%; min-height:1.5em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#e8edf2; font-size:.65rem; letter-spacing:.03em; margin:0; }
@@ -566,17 +571,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         </div>
         <section class="pedalboard" aria-label="Pedalboard controls">
             <div class="preset-list-toolbar">
-                <div class="pedalboard-label">PRESETS • 00—08</div>
-                <label class="preset-count-control" for="presetCountSelect">
-                    <span>Mostrar</span>
-                    <select id="presetCountSelect" aria-label="Quantidade de presets na tela">
-                        <option value="3">3 presets</option>
-                        <option value="6">6 presets</option>
-                        <option value="9" selected>9 presets</option>
-                    </select>
-                </label>
+                <div class="pedalboard-label" id="presetPageLabel">PRESETS • 00—08</div>
+                <div class="preset-page-indicator" id="presetPageIndicator">PÁGINA 1/12</div>
             </div>
-            <div class="preset-pedals">
+            <div class="preset-page-layout">
+                <button type="button" class="preset-page-btn" id="btnPrevPresetPage" aria-label="Mostrar os 9 presets anteriores" disabled>‹</button>
+                <div class="preset-pedals">
                 <button type="button" class="preset-pedal" id="quickPreset1" data-preset="0" disabled><span class="preset-number">00</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset2" data-preset="1" disabled><span class="preset-number">01</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset3" data-preset="2" disabled><span class="preset-number">02</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
@@ -586,6 +586,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 <button type="button" class="preset-pedal" id="quickPreset7" data-preset="6" disabled><span class="preset-number">06</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset8" data-preset="7" disabled><span class="preset-number">07</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset9" data-preset="8" disabled><span class="preset-number">08</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
+                </div>
+                <button type="button" class="preset-page-btn" id="btnNextPresetPage" aria-label="Mostrar os próximos 9 presets" disabled>›</button>
             </div>
             <div class="footswitch-row">
                 <button type="button" class="footswitch" id="delayFootswitch" disabled>DELAY <small id="delayFootswitchState">OFF</small></button>
@@ -888,8 +890,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.querySelectorAll('.preset-pedal').forEach(btn => {
                 btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.preset)));
             });
-            document.getElementById('presetCountSelect').addEventListener('change', updatePresetVisibility);
-            updatePresetVisibility();
+            document.getElementById('btnPrevPresetPage').addEventListener('click', () => showPresetPage(presetPageStart - 9));
+            document.getElementById('btnNextPresetPage').addEventListener('click', () => showPresetPage(presetPageStart + 9));
+            showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
             document.querySelectorAll('.rhythm-option').forEach(btn => {
                 btn.addEventListener('click', () => setTapSubdivision(btn.dataset.subdivision));
@@ -2265,14 +2268,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             });
             
             updateQuickPresetNames();
+            showPresetPage(presetPageStart);
             log(`${deviceState.patchNames.length} patches loaded`);
-        }
-
-        function updatePresetVisibility() {
-            const count = Number(document.getElementById('presetCountSelect').value) || 9;
-            document.querySelectorAll('.preset-pedal').forEach(btn => {
-                btn.hidden = Number(btn.dataset.preset) >= count;
-            });
         }
 
         function updateQuickPresetNames() {
@@ -2282,7 +2279,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     .find(item => Number(item.value) === preset);
                 const name = option ? option.textContent.replace(/^\\d+\\s*-\\s*/, '').trim() : '';
                 const label = btn.querySelector('.preset-name');
-                if (label && name) label.textContent = name;
+                if (label) label.textContent = name || 'PRESET';
             });
         }
 
@@ -2340,6 +2337,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.getElementById('patchSelect').disabled = !enabled;
             document.getElementById('btnPrevPatch').disabled = !enabled;
             document.getElementById('btnNextPatch').disabled = !enabled;
+            document.getElementById('btnPrevPresetPage').disabled = !enabled || presetPageStart === 0;
+            document.getElementById('btnNextPresetPage').disabled = !enabled || presetPageStart + PRESETS_PER_PAGE >= TOTAL_PRESETS;
             
             document.querySelectorAll('.block-btn').forEach(btn => {
                 btn.disabled = !enabled;
@@ -2374,6 +2373,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
 
 // ==================== PEDALBOARD QUICK CONTROLS ====================
+let presetPageStart = 0;
+const PRESETS_PER_PAGE = 9;
+const TOTAL_PRESETS = 100;
 let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
@@ -2398,6 +2400,29 @@ function updateQuickPresetButtons(preset) {
     document.querySelectorAll('.preset-pedal').forEach(btn => {
         btn.classList.toggle('active', Number(btn.dataset.preset) === Number(preset));
     });
+}
+
+function showPresetPage(start) {
+    presetPageStart = Math.max(0, Math.min(99, Math.floor(start / PRESETS_PER_PAGE) * PRESETS_PER_PAGE));
+    const buttons = [...document.querySelectorAll('.preset-pedal')];
+    buttons.forEach((btn, slot) => {
+        const preset = presetPageStart + slot;
+        const number = btn.querySelector('.preset-number');
+        btn.dataset.preset = String(preset);
+        btn.hidden = preset >= TOTAL_PRESETS;
+        if (number) number.textContent = String(preset).padStart(2, '0');
+    });
+
+    const lastPreset = Math.min(presetPageStart + PRESETS_PER_PAGE - 1, TOTAL_PRESETS - 1);
+    document.getElementById('presetPageLabel').textContent =
+        'PRESETS • ' + String(presetPageStart).padStart(2, '0') + '—' + String(lastPreset).padStart(2, '0');
+    document.getElementById('presetPageIndicator').textContent =
+        'PÁGINA ' + (Math.floor(presetPageStart / PRESETS_PER_PAGE) + 1) + '/12';
+    document.getElementById('btnPrevPresetPage').disabled = !deviceState.connected || presetPageStart === 0;
+    document.getElementById('btnNextPresetPage').disabled = !deviceState.connected || presetPageStart + PRESETS_PER_PAGE >= TOTAL_PRESETS;
+
+    updateQuickPresetNames();
+    updateQuickPresetButtons(deviceState.currentPatch);
 }
 
 function quickSelectPreset(preset) {
