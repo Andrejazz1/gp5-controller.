@@ -1530,10 +1530,17 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 presetScanDebug("FINAL recebido, mas avanço bloqueado: ativo=" + presetScan.active + ", processando=" + presetScan.processing + ".");
                 return;
             }
-            const current = Number(deviceState.currentPatch);
-            if (presetScan.expected !== current) {
-                presetScanDebug("FINAL recebido, mas preset não confere: esperado=" + presetScan.expected + ", atual=" + current + ".");
+            // Durante a varredura, a GP5 pode enviar os dados do preset solicitado
+            // sem emitir a notificação de mudança. O preset esperado é a referência.
+            const current = Number(presetScan.expected);
+            if (!Number.isInteger(current) || current < 0 || current > 99) {
+                presetScanDebug("FINAL ignorado: número de preset esperado inválido (" + presetScan.expected + ").");
                 return;
+            }
+            if (Number(deviceState.currentPatch) !== current) {
+                presetScanDebug("Notificação de mudança ausente ou atrasada; sincronizando estado para o preset " + current + " após receber seu pacote FINAL.");
+                deviceState.currentPatch = current;
+                document.getElementById('patchSelect').value = String(current);
             }
             presetScanDebug("FINAL aceito para preset " + current + "; salvando na biblioteca.");
             presetScan.processing = true;
