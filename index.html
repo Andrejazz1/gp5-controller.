@@ -1412,6 +1412,24 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
         }
 
+        async function requestPresetForScan(patchNumber) {
+            document.getElementById('patchSelect').value = String(patchNumber);
+            if (Number(deviceState.currentPatch) === patchNumber) {
+                deviceState.blocks = {};
+                deviceState.preEffectId = '';
+                await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+                return;
+            }
+            const command = gp5Config.patch_commands.change_patch.command_template
+                .replace('{PATCH}', patchNumber.toString(16).padStart(2, '0'));
+            const crc = crc8(hexStringToBytes(command));
+            const final = addzero(crc.toString(16).padStart(2, '0').toUpperCase() + command);
+            deviceState.blocks = {};
+            deviceState.preEffectId = '';
+            deviceState.currentPatch = patchNumber;
+            await sendSysex('8080F0' + final + 'F7');
+        }
+
         async function startPresetScan() {
             if (!writeChar || connectionMode !== 'bluetooth') {
                 log('Conecte a GP5 por Bluetooth antes de iniciar a leitura.', 'error');
@@ -1428,8 +1446,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.getElementById('presetScanStatus').textContent = 'Lendo preset ' + presetScan.next + ' de 99…';
             deviceState.blocks = {};
             deviceState.preEffectId = '';
-            document.getElementById('patchSelect').value = '0';
-            await changePatch();
+            await requestPresetForScan(0);
         }
 
         async function completePresetScanStep() {
@@ -1448,14 +1465,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             if (current >= 99) {
                 presetScan.restoring = true;
                 document.getElementById('presetScanStatus').textContent += ' — restaurando preset inicial…';
-                document.getElementById('patchSelect').value = String(presetScan.original);
-                await changePatch();
+                await requestPresetForScan(presetScan.original);
                 return;
             }
             const next = current + 1;
             presetScan.next = next;
-            document.getElementById('patchSelect').value = String(next);
-            await changePatch();
+            await requestPresetForScan(next);
         }
 
         function exportPresetLibrary() {
