@@ -607,6 +607,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <div class="editor-notice">Conecte a GP5 via Bluetooth para editar. A leitura dos valores reais e a gravação serão habilitadas nas próximas etapas.</div>
     </section>
 
+    <!-- Bluetooth patch diagnostics -->
+    <section id="gp5Diagnostic" style="display:none; margin:16px; padding:14px; background:#202a40; color:#fff; border:1px solid #52617d; border-radius:12px; overflow-wrap:anywhere;">
+        <h3 style="font-size:16px; margin:0 0 10px;">DIAGNÓSTICO BLUETOOTH</h3>
+        <pre id="gp5DiagnosticText" style="white-space:pre-wrap; font-size:11px; line-height:1.5; margin:0; color:#e7edf8;"></pre>
+    </section>
+
     <!-- Blocks Grid -->
     <div class="blocks-section">
         <div class="blocks-title">CADEIA DE EFEITOS</div>
@@ -1262,12 +1268,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 return blockName.toUpperCase() + ' [' + start + ']: ' + raw +
                     ' | código=' + code + ' | efeito=' + (matched ? matched.name : 'NÃO ENCONTRADO');
             });
-            const statusText = document.getElementById('statusText');
-            if (statusText) {
-                statusText.textContent = 'DIAGNÓSTICO BLUETOOTH — PARTE 2 DO PRESET\\n' +
-                    diagnosticRows.join('\\n');
+            const diagnosticPanel = document.getElementById('gp5Diagnostic');
+            const diagnosticText = document.getElementById('gp5DiagnosticText');
+            if (diagnosticPanel && diagnosticText) {
+                diagnosticPanel.style.display = 'block';
+                diagnosticText.textContent = 'PARTE 2 DO PRESET\\n' + diagnosticRows.join('\\n');
             }
-            console.log('GP5 Bluetooth diagnostic:\\n' + diagnosticRows.join('\\n'));
+            console.log('GP5 Bluetooth diagnostic:\n' + diagnosticRows.join('\n'));
 
             // Atualizar estado com os IDs dos efeitos
             Object.keys(effects).forEach(blockName => {
