@@ -1277,7 +1277,16 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             const diagnosticText = document.getElementById('gp5DiagnosticText');
             if (diagnosticPanel && diagnosticText) {
                 diagnosticPanel.style.display = 'block';
-                diagnosticText.textContent = 'PARTE 2 DO PRESET\\n' + diagnosticRows.join('\\n');
+                const fullPacketRows = [];
+                for (let i = 0; i < bytes.length; i += 16) {
+                    const hex = Array.from(bytes.slice(i, i + 16))
+                        .map(value => value.toString(16).padStart(2, '0')).join(' ');
+                    fullPacketRows.push(String(i).padStart(3, '0') + ': ' + hex);
+                }
+                diagnosticText.textContent = 'PARTE 2 — LEITURA ATUAL\\n' +
+                    diagnosticRows.join('\\n') +
+                    '\\n\\nPACOTE COMPLETO (índice: bytes)\\n' +
+                    fullPacketRows.join('\\n');
             }
             console.log('GP5 Bluetooth diagnostic:\n' + diagnosticRows.join('\n'));
 
