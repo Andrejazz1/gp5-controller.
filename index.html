@@ -576,6 +576,14 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <section class="pedalboard" aria-label="Pedalboard controls">
             <div class="preset-list-toolbar">
                 <div class="pedalboard-label" id="presetPageLabel">PRESETS • 00—08</div>
+                <div class="preset-count-control">
+                    <label for="presetVisibleCount">MOSTRAR</label>
+                    <select id="presetVisibleCount" aria-label="Quantidade de presets visíveis">
+                        <option value="3">3</option>
+                        <option value="6">6</option>
+                        <option value="9" selected>9</option>
+                    </select>
+                </div>
                 <div class="preset-page-indicator" id="presetPageIndicator">PÁGINA 1/12</div>
             </div>
             <div class="preset-page-layout">
@@ -896,6 +904,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             });
             document.getElementById('btnPrevPresetPage').addEventListener('click', () => showPresetPage(presetPageStart - 9));
             document.getElementById('btnNextPresetPage').addEventListener('click', () => showPresetPage(presetPageStart + 9));
+            document.getElementById('presetVisibleCount').addEventListener('change', event => {
+                presetVisibleCount = Number(event.target.value);
+                showPresetPage(presetPageStart);
+            });
             showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
             document.querySelectorAll('.rhythm-option').forEach(btn => {
@@ -2380,6 +2392,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 let presetPageStart = 0;
 const PRESETS_PER_PAGE = 9;
 const TOTAL_PRESETS = 100;
+let presetVisibleCount = 9;
 let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
@@ -2409,11 +2422,13 @@ function updateQuickPresetButtons(preset) {
 function showPresetPage(start) {
     presetPageStart = Math.max(0, Math.min(99, Math.floor(start / PRESETS_PER_PAGE) * PRESETS_PER_PAGE));
     const buttons = [...document.querySelectorAll('.preset-pedal')];
+    const pedalContainer = document.querySelector('.preset-pedals');
+    if (pedalContainer) pedalContainer.style.gridTemplateColumns = 'repeat(' + presetVisibleCount + ', minmax(0, 1fr))';
     buttons.forEach((btn, slot) => {
         const preset = presetPageStart + slot;
         const number = btn.querySelector('.preset-number');
         btn.dataset.preset = String(preset);
-        btn.hidden = preset >= TOTAL_PRESETS;
+        btn.hidden = slot >= presetVisibleCount || preset >= TOTAL_PRESETS;
         if (number) number.textContent = String(preset).padStart(2, '0');
     });
 
