@@ -1610,10 +1610,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                     const statusText = enabled ? 'ON' : 'OFF';
                     if (block.name === 'dly') setDelayFootswitchState(enabled);
                     
-                    btn.innerHTML = `
-                        <div class="block-label">${block.label}</div>
-                        <div class="block-effect">${effectName || statusText}</div>
-                    `;
+                    const labelEl = btn.querySelector('.block-label');
+                    const effectEl = btn.querySelector('.block-effect');
+                    if (labelEl) labelEl.textContent = block.label;
+                    if (effectEl) effectEl.textContent = effectName || statusText;
                     
                     console.log(`Block ${block.name}: ${enabled ? 'ON' : 'OFF'}, Effect: ${effectName}`);
                 }
