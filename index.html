@@ -1428,6 +1428,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             deviceState.preEffectId = '';
             deviceState.currentPatch = patchNumber;
             await sendSysex('8080F0' + final + 'F7');
+            await sleep(250);
+            await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
         }
 
         async function startPresetScan() {
