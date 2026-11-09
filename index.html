@@ -607,6 +607,21 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         <div class="editor-notice">Conecte a GP5 via Bluetooth para editar. A leitura dos valores reais e a gravação serão habilitadas nas próximas etapas.</div>
     </section>
 
+    <!-- Biblioteca de efeitos dos presets -->
+    <section id="presetLibrary" style="margin:16px;padding:14px;background:#202a40;color:#fff;border:1px solid #52617d;border-radius:12px;">
+        <h3 style="font-size:16px;margin:0 0 8px;">BIBLIOTECA DE EFEITOS — 100 PRESETS</h3>
+        <p style="font-size:12px;color:#c5cfdd;margin:0 0 12px;">Leia os presets da GP5 em sequência por Bluetooth. A varredura troca temporariamente de preset e, ao terminar, tenta voltar ao preset inicial.</p>
+        <button id="scanPresetsButton" type="button" class="btn btn-warning btn-sm" onclick="startPresetScan()">LER EFEITOS DOS 100 PRESETS</button>
+        <button id="exportPresetLibraryButton" type="button" class="btn btn-outline-light btn-sm" onclick="exportPresetLibrary()" disabled>EXPORTAR JSON</button>
+        <div id="presetScanStatus" style="font-size:12px;color:#dce3e9;margin-top:10px;">Aguardando conexão Bluetooth.</div>
+        <div style="overflow-x:auto;margin-top:10px;">
+            <table class="table table-dark table-sm table-striped" style="font-size:11px;min-width:760px;">
+                <thead><tr><th>Preset</th><th>NR</th><th>PRE</th><th>DST</th><th>NS</th><th>AMP</th><th>CAB</th><th>EQ</th><th>MOD</th><th>DLY</th><th>RVB</th></tr></thead>
+                <tbody id="presetLibraryRows"><tr><td colspan="11">Nenhum preset lido ainda.</td></tr></tbody>
+            </table>
+        </div>
+    </section>
+
     <!-- Bluetooth patch diagnostics -->
     <section id="gp5Diagnostic" style="display:none; margin:16px; padding:14px; background:#202a40; color:#fff; border:1px solid #52617d; border-radius:12px; overflow-wrap:anywhere;">
         <h3 style="font-size:16px; margin:0 0 10px;">DIAGNÓSTICO BLUETOOTH</h3>
@@ -1244,6 +1259,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             
             // Extrair efeito PRE
             const preEffectId = getEffectId(bytes, 203);
+            deviceState.preEffectId = preEffectId;
             console.log('PRE Effect ID:', preEffectId);
         }
 
@@ -1305,6 +1321,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
         // Mantém as partes recebidas no painel para facilitar a cópia do diagnóstico.
         const gp5PacketDiagnostics = {};
+        const presetLibrary = {};
+        const presetScan = { active: false, restoring: false, next: 0, original: 0, total: 100 };
 
         function formatPatchPacketRows(bytes) {
             const rows = [];
@@ -1344,6 +1362,110 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
         function parsePatchDataFinal(bytes) {
             logPatchPacketPart('FINAL', 'final', bytes);
+            if (presetScan.active) completePresetScanStep();
+        }
+
+        function getCatalogEffectName(blockName, effectId) {
+            if (!effectId) return '—';
+            const block = gp5Config.blocks.find(item => item.name === blockName);
+            const effect = block && block.effects ? block.effects[effectId] : null;
+            return effect ? effect.name : 'ID ' + effectId;
+        }
+
+        function saveCurrentPresetToLibrary(patchNumber) {
+            const blocks = {};
+            Object.keys(deviceState.blocks).forEach(name => {
+                const state = deviceState.blocks[name] || {};
+                const effectId = state.effectId || '';
+                blocks[name] = { enabled: Boolean(state.enabled), effectId, effectName: getCatalogEffectName(name, effectId) };
+            });
+            const preId = deviceState.preEffectId || '';
+            presetLibrary[patchNumber] = {
+                number: patchNumber,
+                name: deviceState.patchNames[patchNumber] || ('Preset ' + patchNumber),
+                blocks,
+                pre: { effectId: preId, effectName: getCatalogEffectName('pre', preId) }
+            };
+            renderPresetLibrary();
+        }
+
+        function renderPresetLibrary() {
+            const body = document.getElementById('presetLibraryRows');
+            const exportButton = document.getElementById('exportPresetLibraryButton');
+            if (!body) return;
+            const entries = Object.values(presetLibrary).sort((a,b) => a.number-b.number);
+            body.innerHTML = entries.map(preset => {
+                const cell = name => {
+                    const item = preset.blocks[name] || {};
+                    return (item.enabled ? '● ' : '○ ') + (item.effectName || '—');
+                };
+                const pre = preset.pre && preset.pre.effectName ? preset.pre.effectName : '—';
+                return '<tr><td>' + String(preset.number).padStart(2,'0') + ' — ' + escapeHtml(preset.name) + '</td>' +
+                    '<td>' + escapeHtml(cell('nr')) + '</td><td>' + escapeHtml(pre) + '</td>' +
+                    ['dst','ns','amp','cab','eq','mod','dly','rvb'].map(name => '<td>' + escapeHtml(cell(name)) + '</td>').join('') +
+                    '</tr>';
+            }).join('') || '<tr><td colspan="11">Nenhum preset lido ainda.</td></tr>';
+            if (exportButton) exportButton.disabled = entries.length === 0;
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+        }
+
+        async function startPresetScan() {
+            if (!writeChar || connectionMode !== 'bluetooth') {
+                log('Conecte a GP5 por Bluetooth antes de iniciar a leitura.', 'error');
+                return;
+            }
+            if (presetScan.active) return;
+            presetScan.active = true;
+            presetScan.restoring = false;
+            presetScan.original = Number(deviceState.currentPatch) || 0;
+            presetScan.next = presetScan.original;
+            Object.keys(presetLibrary).forEach(key => delete presetLibrary[key]);
+            renderPresetLibrary();
+            document.getElementById('scanPresetsButton').disabled = true;
+            document.getElementById('presetScanStatus').textContent = 'Lendo preset ' + presetScan.next + ' de 99…';
+            deviceState.blocks = {};
+            deviceState.preEffectId = '';
+            await sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
+        }
+
+        async function completePresetScanStep() {
+            if (!presetScan.active) return;
+            if (presetScan.restoring) {
+                presetScan.active = false;
+                presetScan.restoring = false;
+                document.getElementById('scanPresetsButton').disabled = false;
+                document.getElementById('presetScanStatus').textContent = 'Concluído: ' + Object.keys(presetLibrary).length + ' presets lidos. Preset original restaurado.';
+                return;
+            }
+            const current = Number(deviceState.currentPatch);
+            saveCurrentPresetToLibrary(current);
+            const count = Object.keys(presetLibrary).length;
+            document.getElementById('presetScanStatus').textContent = 'Lidos ' + count + '/100 — último: ' + current + ' (' + (deviceState.patchNames[current] || 'sem nome') + ')';
+            if (current >= 99) {
+                presetScan.restoring = true;
+                document.getElementById('presetScanStatus').textContent += ' — restaurando preset inicial…';
+                document.getElementById('patchSelect').value = String(presetScan.original);
+                await changePatch();
+                return;
+            }
+            const next = current + 1;
+            presetScan.next = next;
+            document.getElementById('patchSelect').value = String(next);
+            await changePatch();
+        }
+
+        function exportPresetLibrary() {
+            const data = JSON.stringify(Object.values(presetLibrary).sort((a,b) => a.number-b.number), null, 2);
+            const blob = new Blob([data], {type:'application/json'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'gp5-biblioteca-de-efeitos.json';
+            link.click();
+            URL.revokeObjectURL(url);
         }
 
         // Os campos dos blocos na parte 2 não são contíguos:
