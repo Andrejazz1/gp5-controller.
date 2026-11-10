@@ -629,13 +629,7 @@ body.editor-mode .preset-library { display:block !important; }
     <section class="editor-intro" id="editorIntro" aria-label="Editor de timbres">
         <div class="editor-heading">EDITOR DE TIMBRES</div>
         <p>Selecione um bloco da cadeia para abrir seus modelos e parâmetros.</p>
-        <div class="editor-notice">Este editor trabalha exclusivamente com os nove primeiros presets físicos da GP5 (00–08). Selecione um deles para editar sua cadeia de efeitos e parâmetros.</div>
-    </section>
-
-    <section class="editor-intro" id="editorPresetManager" aria-label="Editor dos nove presets">
-        <div class="editor-heading">PRESETS EDITÁVEIS · 00–08</div>
-        <p>Escolha um dos nove presets para carregar sua cadeia no editor. As posições correspondem diretamente aos presets físicos da GP5.</p>
-        <div id="editorPresetSlots" class="editor-slot-grid"></div>
+        <div class="editor-notice" id="editorCurrentPreset">Conecte a GP5 e selecione um dos nove presets na aba Pedalboard. O Editor acompanhará automaticamente a seleção.</div>
     </section>
 
     <!-- Biblioteca de efeitos dos presets -->
@@ -899,16 +893,6 @@ body.editor-mode .preset-library { display:block !important; }
             }
             document.getElementById('viewPedalboardBtn').addEventListener('click', () => setAppView('pedalboard'));
             document.getElementById('viewEditorBtn').addEventListener('click', () => setAppView('editor'));
-            document.getElementById('editorPresetSlots').addEventListener('click', event => {
-                const button = event.target.closest('[data-editor-preset]');
-                if (!button) return;
-                const preset = Number(button.dataset.editorPreset);
-                if (!Number.isInteger(preset) || preset < 0 || preset >= TOTAL_QUICK_PRESETS) return;
-                activeEditorSlot = preset;
-                renderEditorPresetSlots();
-                quickSelectPreset(preset);
-                log('Abrindo no Editor o preset físico ' + String(preset).padStart(2, '0') + '.');
-            });
             document.getElementById('patchSelect').addEventListener('change', changePatch);
             document.getElementById('btnPrevPatch').addEventListener('click', () => navigatePatch(-1));
             document.getElementById('btnNextPatch').addEventListener('click', () => navigatePatch(1));
@@ -920,7 +904,6 @@ body.editor-mode .preset-library { display:block !important; }
                 presetVisibleCount = Number(event.target.value);
                 showPresetPage(presetPageStart);
             });
-            renderEditorPresetSlots();
             showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
             document.querySelectorAll('.rhythm-option').forEach(btn => {
@@ -2359,7 +2342,6 @@ body.editor-mode .preset-library { display:block !important; }
                 const label = btn.querySelector('.preset-name');
                 if (label) label.textContent = getPhysicalPresetName(slot) || 'PRESET';
             });
-            renderEditorPresetSlots();
         }
 
         function updateBlocksStatus() {
@@ -2455,7 +2437,6 @@ body.editor-mode .preset-library { display:block !important; }
 // ==================== PEDALBOARD QUICK CONTROLS ====================
 const TOTAL_QUICK_PRESETS = 9;
 let presetVisibleCount = 9;
-let activeEditorSlot = 0;
 let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
@@ -2486,24 +2467,23 @@ function getPhysicalPresetName(preset) {
     return 'Preset ' + String(number).padStart(2, '0');
 }
 
-function renderEditorPresetSlots() {
-    const container = document.getElementById('editorPresetSlots');
-    if (!container) return;
-    container.innerHTML = Array.from({length: TOTAL_QUICK_PRESETS}, (_, slot) => {
-        const name = getPhysicalPresetName(slot);
-        return '<button type="button" class="editor-slot-card' + (slot === activeEditorSlot ? ' selected' : '') +
-            '" data-editor-preset="' + slot + '">' +
-            '<span class="editor-slot-number">' + String(slot).padStart(2, '0') + '</span>' +
-            '<span class="editor-slot-name">' + escapeHtml(name) + '</span>' +
-            '<span class="editor-slot-action">EDITAR PRESET</span>' +
-            '</button>';
-    }).join('');
-}
-
 function updateQuickPresetButtons(preset) {
     document.querySelectorAll('.preset-pedal').forEach((btn, slot) => {
         btn.classList.toggle('active', slot === Number(preset));
     });
+
+    const editorStatus = document.getElementById('editorCurrentPreset');
+    if (!editorStatus) return;
+    if (preset === null || preset === undefined || preset === '') {
+        editorStatus.textContent = 'Conecte a GP5 e selecione um dos nove presets na aba Pedalboard. O Editor acompanhará automaticamente a seleção.';
+        return;
+    }
+    const number = Number(preset);
+    if (!Number.isInteger(number) || number < 0 || number >= TOTAL_QUICK_PRESETS) {
+        editorStatus.textContent = 'Preset ' + String(number).padStart(2, '0') + ' está fora dos nove presets editáveis (00–08). Selecione um dos nove na aba Pedalboard.';
+        return;
+    }
+    editorStatus.textContent = 'Preset selecionado: ' + String(number).padStart(2, '0') + ' — ' + getPhysicalPresetName(number) + '. O Editor está vinculado a esta seleção.';
 }
 
 function showPresetPage() {
@@ -2532,8 +2512,6 @@ function quickSelectPreset(slot) {
         return;
     }
     select.value = String(preset);
-    activeEditorSlot = preset;
-    renderEditorPresetSlots();
     updateQuickPresetButtons(preset);
     changePatch();
 }
