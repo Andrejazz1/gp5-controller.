@@ -522,11 +522,11 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .rhythm-option.active small { color:#2b2111; }
 .tap-control .footswitch { min-height:52px; }
 .editor-slot-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin-top:12px; }
-.editor-slot-card { min-width:0; padding:10px; border:1px solid #46515d; border-radius:10px; background:linear-gradient(#252d35,#171d23); }
+.editor-slot-card { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; padding:12px 8px; border:1px solid #46515d; border-radius:10px; color:#f3f4f6; background:linear-gradient(#252d35,#171d23); cursor:pointer; }
 .editor-slot-card.selected { border-color:#d6a64d; box-shadow:0 0 0 1px #d6a64d55; }
-.editor-slot-card label { display:block; margin-bottom:7px; color:#d6a64d; font-size:.66rem; font-weight:900; letter-spacing:.08em; }
-.editor-slot-select { width:100%; min-width:0; min-height:38px; padding:6px; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; background:#111820; font-size:.72rem; }
-.editor-slot-load { width:100%; margin-top:7px; min-height:34px; border:1px solid #8f6424; border-radius:7px; color:#17120a; background:linear-gradient(#d6a64d,#8f6424); font-size:.65rem; font-weight:900; }
+.editor-slot-number { color:#d6a64d; font-size:1.2rem; font-weight:900; }
+.editor-slot-name { max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:.75rem; font-weight:700; }
+.editor-slot-action { color:#aeb8c4; font-size:.6rem; font-weight:900; letter-spacing:.07em; }
 .preset-library { display:none !important; }
 body.editor-mode .preset-library { display:block !important; }
 .preset-library-details > summary { list-style:none; }
@@ -641,12 +641,12 @@ body.editor-mode .preset-library { display:block !important; }
     <section class="editor-intro" id="editorIntro" aria-label="Editor de timbres">
         <div class="editor-heading">EDITOR DE TIMBRES</div>
         <p>Selecione um bloco da cadeia para abrir seus modelos e parâmetros.</p>
-        <div class="editor-notice">Selecione uma das nove posições da pedalboard. Você pode associar cada posição a qualquer preset físico (00–99) da GP5 e abrir esse preset para editar sua cadeia.</div>
+        <div class="editor-notice">Este editor trabalha exclusivamente com os nove primeiros presets físicos da GP5 (00–08). Selecione um deles para editar sua cadeia de efeitos e parâmetros.</div>
     </section>
 
-    <section class="editor-intro" id="editorPresetManager" aria-label="Organização dos nove presets">
-        <div class="editor-heading">NOVE POSIÇÕES DA PEDALBOARD</div>
-        <p>Escolha qual preset físico da GP5 será chamado por cada footswitch. As associações ficam salvas neste navegador.</p>
+    <section class="editor-intro" id="editorPresetManager" aria-label="Editor dos nove presets">
+        <div class="editor-heading">PRESETS EDITÁVEIS · 00–08</div>
+        <p>Escolha um dos nove presets para carregar sua cadeia no editor. As posições correspondem diretamente aos presets físicos da GP5.</p>
         <div id="editorPresetSlots" class="editor-slot-grid"></div>
     </section>
 
@@ -913,27 +913,15 @@ body.editor-mode .preset-library { display:block !important; }
             }
             document.getElementById('viewPedalboardBtn').addEventListener('click', () => setAppView('pedalboard'));
             document.getElementById('viewEditorBtn').addEventListener('click', () => setAppView('editor'));
-            document.getElementById('editorPresetSlots').addEventListener('change', event => {
-                const select = event.target.closest('.editor-slot-select');
-                if (!select) return;
-                const slot = Number(select.dataset.slot);
-                const physicalPreset = Number(select.value);
-                if (!Number.isInteger(slot) || slot < 0 || slot >= TOTAL_QUICK_PRESETS ||
-                    !Number.isInteger(physicalPreset) || physicalPreset < 0 || physicalPreset > 99) return;
-                quickPresetAssignments[slot] = physicalPreset;
-                saveQuickPresetAssignments();
-                showPresetPage();
-                log('Footswitch ' + String(slot).padStart(2, '0') + ' associado ao preset físico ' + String(physicalPreset).padStart(2, '0') + '.');
-            });
             document.getElementById('editorPresetSlots').addEventListener('click', event => {
-                const button = event.target.closest('[data-load-slot]');
+                const button = event.target.closest('[data-editor-preset]');
                 if (!button) return;
-                const slot = Number(button.dataset.loadSlot);
-                if (!Number.isInteger(slot) || slot < 0 || slot >= TOTAL_QUICK_PRESETS) return;
-                activeEditorSlot = slot;
+                const preset = Number(button.dataset.editorPreset);
+                if (!Number.isInteger(preset) || preset < 0 || preset >= TOTAL_QUICK_PRESETS) return;
+                activeEditorSlot = preset;
                 renderEditorPresetSlots();
-                quickSelectPreset(slot);
-                log('Abrindo no Editor: posição ' + String(slot).padStart(2, '0') + ' → preset físico ' + String(quickPresetAssignments[slot]).padStart(2, '0') + '.');
+                quickSelectPreset(preset);
+                log('Abrindo no Editor o preset físico ' + String(preset).padStart(2, '0') + '.');
             });
             document.getElementById('patchSelect').addEventListener('change', changePatch);
             document.getElementById('btnPrevPatch').addEventListener('click', () => navigatePatch(-1));
@@ -946,7 +934,6 @@ body.editor-mode .preset-library { display:block !important; }
                 presetVisibleCount = Number(event.target.value);
                 showPresetPage(presetPageStart);
             });
-            loadQuickPresetAssignments();
             renderEditorPresetSlots();
             showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
@@ -2215,8 +2202,8 @@ body.editor-mode .preset-library { display:block !important; }
             
             if (connectionMode === 'usb' && midiOut && CC_COMMANDS && CC_COMMANDS.commands) {
                 // In USB mode, use prev/next CC if available, or calculate preset number
-                const currentPatch = deviceState.currentPatch || parseInt(select.value) || 0;
-                const newPatch = clamp(currentPatch + direction, 0, 99);
+                const currentPatch = Number.isInteger(deviceState.currentPatch) ? deviceState.currentPatch : (parseInt(select.value) || 0);
+                const newPatch = clamp(currentPatch + direction, 0, TOTAL_QUICK_PRESETS - 1);
                 console.log('[navigatePatch] USB mode - current:', currentPatch, 'new:', newPatch);
                 
                 // Could use patchPrev/patchNext CC or just send preset directly
@@ -2239,8 +2226,8 @@ body.editor-mode .preset-library { display:block !important; }
             // Bluetooth mode or fallback
             let newIndex = select.selectedIndex + direction;
             
-            if (newIndex < 0) newIndex = select.options.length - 1;
-            if (newIndex >= select.options.length) newIndex = 0;
+            if (newIndex < 0) newIndex = 0;
+            if (newIndex >= select.options.length) newIndex = select.options.length - 1;
             
             select.selectedIndex = newIndex;
             changePatch();
@@ -2314,11 +2301,11 @@ body.editor-mode .preset-library { display:block !important; }
             const select = document.getElementById('patchSelect');
             select.innerHTML = '';
             
-            deviceState.patchNames.forEach((name, index) => {
+            deviceState.patchNames.slice(0, TOTAL_QUICK_PRESETS).forEach((name, index) => {
                 if (name) {
                     const option = document.createElement('option');
                     option.value = index;
-                    option.textContent = `${index} - ${name}`;
+                    option.textContent = `${String(index).padStart(2, '0')} - ${name}`;
                     select.appendChild(option);
                 }
             });
@@ -2330,10 +2317,9 @@ body.editor-mode .preset-library { display:block !important; }
 
         function updateQuickPresetNames() {
             document.querySelectorAll('.preset-pedal').forEach((btn, slot) => {
-                const preset = Number(quickPresetAssignments[slot]);
-                btn.dataset.preset = String(preset);
+                btn.dataset.preset = String(slot);
                 const label = btn.querySelector('.preset-name');
-                if (label) label.textContent = getPhysicalPresetName(preset) || 'PRESET';
+                if (label) label.textContent = getPhysicalPresetName(slot) || 'PRESET';
             });
             renderEditorPresetSlots();
         }
@@ -2427,9 +2413,7 @@ body.editor-mode .preset-library { display:block !important; }
 
 // ==================== PEDALBOARD QUICK CONTROLS ====================
 const TOTAL_QUICK_PRESETS = 9;
-const QUICK_PRESET_STORAGE_KEY = 'gp5ControllerPresetSlotsV1';
 let presetVisibleCount = 9;
-let quickPresetAssignments = Array.from({length: TOTAL_QUICK_PRESETS}, (_, slot) => slot);
 let activeEditorSlot = 0;
 let tapTimes = [];
 let lastTapMs = 0;
@@ -2451,63 +2435,33 @@ function setTapSubdivision(subdivision) {
     document.getElementById('tapReadout').textContent = 'Figura selecionada: ' + labels[subdivision] + '. Toque no TAP TEMPO.';
 }
 
-function loadQuickPresetAssignments() {
-    try {
-        const saved = JSON.parse(localStorage.getItem(QUICK_PRESET_STORAGE_KEY) || 'null');
-        if (Array.isArray(saved) && saved.length === TOTAL_QUICK_PRESETS) {
-            quickPresetAssignments = saved.map((value, slot) => {
-                const n = Number(value);
-                return Number.isInteger(n) && n >= 0 && n <= 99 ? n : slot;
-            });
-        }
-    } catch (error) {
-        console.warn('[preset slots] Não foi possível carregar as associações salvas:', error);
-    }
-}
-
-function saveQuickPresetAssignments() {
-    try {
-        localStorage.setItem(QUICK_PRESET_STORAGE_KEY, JSON.stringify(quickPresetAssignments));
-    } catch (error) {
-        log('Não foi possível salvar as posições neste navegador: ' + error.message, 'error');
-    }
-}
-
 function getPhysicalPresetName(preset) {
     const number = Number(preset);
+    const knownName = deviceState.patchNames && deviceState.patchNames[number];
+    if (knownName) return String(knownName).split('\\0').join('').trim();
     const select = document.getElementById('patchSelect');
     const option = select ? [...select.options].find(item => Number(item.value) === number) : null;
-    if (option) {
-        let label = option.textContent.trim();
-        label = label.replace(/^[0-9]{1,2}\\s*[-–—:]\\s*/, '');
-        label = label.replace(/^(?:patch|preset)\\s*/i, '').trim();
-        if (label && !/^\\d{1,2}$/.test(label) && !/^patch\\s*\\d+$/i.test(label)) return label;
-    }
-    const knownName = deviceState.patchNames && deviceState.patchNames[number];
-    return knownName ? String(knownName).split('\\0').join('').trim() : 'Patch ' + String(number).padStart(2, '0');
+    if (option) return option.textContent.replace(/^\\d{1,2}\\s*[-–—:]\\s*/, '').trim();
+    return 'Preset ' + String(number).padStart(2, '0');
 }
 
 function renderEditorPresetSlots() {
     const container = document.getElementById('editorPresetSlots');
     if (!container) return;
-    container.innerHTML = quickPresetAssignments.map((physicalPreset, slot) => {
-        const options = Array.from({length: 100}, (_, number) => {
-            const name = getPhysicalPresetName(number);
-            return '<option value="' + number + '"' + (number === physicalPreset ? ' selected' : '') + '>' +
-                String(number).padStart(2, '0') + ' — ' + escapeHtml(name) + '</option>';
-        }).join('');
-        return '<div class="editor-slot-card' + (slot === activeEditorSlot ? ' selected' : '') + '">' +
-            '<label for="editorSlotSelect' + slot + '">FOOTSWITCH ' + String(slot).padStart(2, '0') + '</label>' +
-            '<select class="editor-slot-select" id="editorSlotSelect' + slot + '" data-slot="' + slot + '">' + options + '</select>' +
-            '<button type="button" class="editor-slot-load" data-load-slot="' + slot + '">ABRIR NO EDITOR</button>' +
-            '</div>';
+    container.innerHTML = Array.from({length: TOTAL_QUICK_PRESETS}, (_, slot) => {
+        const name = getPhysicalPresetName(slot);
+        return '<button type="button" class="editor-slot-card' + (slot === activeEditorSlot ? ' selected' : '') +
+            '" data-editor-preset="' + slot + '">' +
+            '<span class="editor-slot-number">' + String(slot).padStart(2, '0') + '</span>' +
+            '<span class="editor-slot-name">' + escapeHtml(name) + '</span>' +
+            '<span class="editor-slot-action">EDITAR PRESET</span>' +
+            '</button>';
     }).join('');
 }
 
 function updateQuickPresetButtons(preset) {
     document.querySelectorAll('.preset-pedal').forEach((btn, slot) => {
-        const assignedPreset = quickPresetAssignments[slot];
-        btn.classList.toggle('active', Number(assignedPreset) === Number(preset));
+        btn.classList.toggle('active', slot === Number(preset));
     });
 }
 
@@ -2518,7 +2472,7 @@ function showPresetPage() {
     buttons.forEach((btn, slot) => {
         const number = btn.querySelector('.preset-number');
         btn.dataset.slot = String(slot);
-        btn.dataset.preset = String(quickPresetAssignments[slot]);
+        btn.dataset.preset = String(slot);
         btn.hidden = slot >= presetVisibleCount || slot >= TOTAL_QUICK_PRESETS;
         if (number) number.textContent = String(slot).padStart(2, '0');
     });
@@ -2528,7 +2482,8 @@ function showPresetPage() {
 }
 
 function quickSelectPreset(slot) {
-    const preset = Number(quickPresetAssignments[Number(slot)]);
+    const preset = Number(slot);
+    if (!Number.isInteger(preset) || preset < 0 || preset >= TOTAL_QUICK_PRESETS) return;
     const select = document.getElementById('patchSelect');
     const option = [...select.options].find(o => Number(o.value) === preset);
     if (!option) {
@@ -2536,7 +2491,7 @@ function quickSelectPreset(slot) {
         return;
     }
     select.value = String(preset);
-    activeEditorSlot = Number(slot);
+    activeEditorSlot = preset;
     renderEditorPresetSlots();
     updateQuickPresetButtons(preset);
     changePatch();
