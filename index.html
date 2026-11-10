@@ -555,7 +555,6 @@ body.editor-mode .preset-library { display:block !important; }
         .view-switch,
         .editor-intro,
         #presetLibrary,
-        #gp5Diagnostic,
         .blocks-section,
         #effectPanel,
         .patch-selector-wrapper {
@@ -575,6 +574,7 @@ body.editor-mode .preset-library { display:block !important; }
                     <button id="btnConnect" class="connect-btn btn btn-primary">
                         <span id="connectionStatus">⚫</span> Connect
                     </button>
+                    <button id="btnDiagnostics" type="button" class="btn btn-outline-light btn-sm" onclick="toggleGp5Diagnostics()">LOG</button>
                 </div>
             </div>
         
@@ -702,9 +702,12 @@ body.editor-mode .preset-library { display:block !important; }
     </section>
 
     <!-- Bluetooth patch diagnostics -->
-    <section id="gp5Diagnostic" style="display:none; margin:16px; padding:14px; background:#202a40; color:#fff; border:1px solid #52617d; border-radius:12px; overflow-wrap:anywhere;">
-        <h3 style="font-size:16px; margin:0 0 10px;">DIAGNÓSTICO BLUETOOTH</h3>
-        <pre id="gp5DiagnosticText" style="white-space:pre-wrap; font-size:11px; line-height:1.5; margin:0; color:#e7edf8;"></pre>
+    <section id="gp5Diagnostic" style="display:none; margin:12px; padding:12px; background:#202a40; color:#fff; border:1px solid #52617d; border-radius:12px; overflow-wrap:anywhere;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+            <h3 style="font-size:14px; margin:0;">DIAGNÓSTICO BLUETOOTH</h3>
+            <button type="button" class="btn btn-sm btn-outline-light" onclick="clearGp5Diagnostics()">LIMPAR</button>
+        </div>
+        <pre id="gp5DiagnosticText" style="white-space:pre-wrap; max-height:220px; overflow:auto; font-size:11px; line-height:1.5; margin:0; color:#e7edf8;">Aguardando conexão.</pre>
     </section>
 
     <!-- Blocks Grid -->
@@ -740,6 +743,9 @@ body.editor-mode .preset-library { display:block !important; }
     <script>
         // ==================== CONFIGURAÇÃO ====================
         let gp5Config = null;
+        let gp5SyncTimeoutId = null;
+        let gp5SyncStage = "idle";
+        let gp5DiagnosticLines = [];
 
         // Catálogo de NAMs confirmados pelo usuário (origem informada manualmente).
         const GP5_NAM_CATALOG = {
@@ -1147,6 +1153,7 @@ body.editor-mode .preset-library { display:block !important; }
                 
                 const server = await device.gatt.connect();
                 log(`Connected to ${device.name}`);
+                diagnosticLog("Bluetooth conectado: " + (device.name || "GP5"));
                 
                 const service = await server.getPrimaryService(gp5Config.device.bluetooth.service_uuid);
                 const characteristic = await service.getCharacteristic(gp5Config.device.bluetooth.characteristic_uuid);
@@ -1156,6 +1163,7 @@ body.editor-mode .preset-library { display:block !important; }
                 
                 await notifyChar.startNotifications();
                 notifyChar.addEventListener('characteristicvaluechanged', handleNotification);
+                diagnosticLog("Notificações BLE ativadas.");
                 
                 log('Characteristics configured');
                 
@@ -1286,6 +1294,9 @@ body.editor-mode .preset-library { display:block !important; }
         }
 
         function onDisconnected() {
+            if (gp5SyncTimeoutId) clearTimeout(gp5SyncTimeoutId);
+            gp5SyncTimeoutId = null;
+            diagnosticLog("GP5 desconectada.");
             log('Device disconnected');
             deviceState.connected = false;
             device = null;
@@ -1296,14 +1307,28 @@ body.editor-mode .preset-library { display:block !important; }
         }
 
         async function syncDevice() {
+            gp5SyncStage = "início da sincronização";
+            diagnosticLog("Iniciando sincronização.");
             log('Syncing device...');
+            if (gp5SyncTimeoutId) clearTimeout(gp5SyncTimeoutId);
+            gp5SyncTimeoutId = setTimeout(() => {
+                diagnosticLog("TIMEOUT: nenhuma sincronização concluída em 20 segundos. Última etapa: " + gp5SyncStage + ".");
+                log("Sync timeout — abra o LOG para ver a última etapa.");
+                showLoading(false);
+                gp5SyncTimeoutId = null;
+            }, 20000);
             
-            // Send sync commands in sequence
+            // Mantém os comandos SysEx originais; apenas registra o andamento.
+            gp5SyncStage = "enviando início";
+            diagnosticLog("Enviando comando start_sync.");
             await sendSysex(gp5Config.sync_commands.start_sync.sysex);
             await sleep(100);
             
+            gp5SyncStage = "aguardando lista de presets";
+            diagnosticLog("Enviando solicitação da lista de presets.");
             await sendSysex(gp5Config.sync_commands.request_patch_list.sysex);
             await sleep(100);
+            diagnosticLog("Comandos iniciais enviados; aguardando respostas da GP5.");
         }
 
         // ==================== NOTIFICATIONS ====================
@@ -1314,7 +1339,8 @@ body.editor-mode .preset-library { display:block !important; }
                 bytes.push(value.getUint8(i));
             }
             
-            // Log for debug
+            // Diagnóstico visível no celular: tamanho e bytes de identificação de cada pacote.
+            diagnosticLog("BLE RX: " + bytes.length + " bytes | [5..8]=" + [bytes[5],bytes[6],bytes[7],bytes[8]].map(v => v === undefined ? "--" : v).join(","));
             console.log('Notification:', bytes.length, 'bytes - [5]:', bytes[5], '[6]:', bytes[6], '[7]:', bytes[7], '[8]:', bytes[8]);
             
             // Process different notification types
@@ -1328,21 +1354,30 @@ body.editor-mode .preset-library { display:block !important; }
                 }
             }
             if (bytes[5] === 1 && bytes[6] === 5 && bytes.length === 212) {
+                gp5SyncStage = "recebendo lista de presets";
                 // Patch list
                 parsePatchNames(bytes);
             } else if (bytes[5] === 1 && bytes[6] === 5 && bytes[7] === 1 && bytes[8] === 4 && bytes.length === 16) {
+                gp5SyncStage = "lista recebida; solicitando SnapTones";
+                diagnosticLog("Lista de presets concluída.");
                 // End of patch list
                 populatePatchList();
                 sendSysex(gp5Config.sync_commands.request_snaptones.sysex);
             } else if (bytes[5] === 0 && bytes[6] === 14 && bytes.length === 136) {
+                gp5SyncStage = "SnapTones recebidos; solicitando IRs";
+                diagnosticLog("SnapTones recebidos.");
                 // End of snaptones
                 log('Snaptones loaded');
                 sendSysex(gp5Config.sync_commands.request_ir_list.sysex);
             } else if (bytes[5] === 0 && bytes[6] === 4 && bytes.length === 96) {
+                gp5SyncStage = "IRs recebidos; solicitando preset atual";
+                diagnosticLog("Lista de IRs recebida.");
                 // End of IRs
                 log('IRs loaded');
                 sendSysex(gp5Config.sync_commands.request_current_patch_number.sysex);
             } else if (bytes[5] === 0 && bytes[6] === 1 && bytes[10] === 4 && bytes[11] === 1 && bytes[12] === 2 && bytes.length === 20) {
+                gp5SyncStage = "preset atual identificado; solicitando dados";
+                diagnosticLog("Resposta do número do preset atual recebida.");
                 // Current patch number
                 const newPatch = bytes[15] * 16 + bytes[16];
                 console.log('Current patch:', newPatch);
@@ -1358,6 +1393,7 @@ body.editor-mode .preset-library { display:block !important; }
                     sendSysex(gp5Config.sync_commands.request_patch_data.sysex);
                 }, 100);
             } else if (bytes[5] === 0 && bytes[6] === 5 && bytes.length === 212) {
+                gp5SyncStage = "recebendo dados do preset";
                 // Patch data
                 if (bytes[7] === 0 && bytes[8] === 0) {
                     log('Reading patch data (part 1/4)');
@@ -1377,6 +1413,10 @@ body.editor-mode .preset-library { display:block !important; }
                 log('Reading patch data (final)');
                 parsePatchDataFinal(bytes);
                 log('GP5 synced successfully!');
+                diagnosticLog("SINCRONIZAÇÃO CONCLUÍDA.");
+                gp5SyncStage = "concluída";
+                if (gp5SyncTimeoutId) clearTimeout(gp5SyncTimeoutId);
+                gp5SyncTimeoutId = null;
                 showLoading(false);
                 updateBlocksStatus();
             } else if (bytes[5] === 0 && bytes[6] === 1 && bytes[12] === 2 && bytes[13] === 4 && bytes[14] === 3 && bytes.length === 24) {
@@ -2392,11 +2432,35 @@ body.editor-mode .preset-library { display:block !important; }
 
         function log(message, type = 'info') {
             const statusText = document.getElementById('statusText');
-            const spinner = document.getElementById('spinner');
             const timestamp = new Date().toLocaleTimeString();
             statusText.textContent = `[${timestamp}] ${message}`;
-            
+            diagnosticLog(message);
             console.log(`[GP5] ${message}`);
+        }
+
+        function diagnosticLog(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            gp5DiagnosticLines.push("[" + timestamp + "] " + message);
+            if (gp5DiagnosticLines.length > 80) gp5DiagnosticLines.shift();
+            const output = document.getElementById("gp5DiagnosticText");
+            if (output) {
+                output.textContent = gp5DiagnosticLines.join("\\n");
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        function toggleGp5Diagnostics() {
+            const panel = document.getElementById("gp5Diagnostic");
+            if (!panel) return;
+            const opening = panel.style.display === "none" || !panel.style.display;
+            panel.style.display = opening ? "block" : "none";
+            if (opening && gp5DiagnosticLines.length === 0) diagnosticLog("Painel pronto. Conecte a GP5 para registrar a sincronização.");
+        }
+
+        function clearGp5Diagnostics() {
+            gp5DiagnosticLines = [];
+            const output = document.getElementById("gp5DiagnosticText");
+            if (output) output.textContent = "Diagnóstico limpo. Conecte a GP5 novamente.";
         }
 
         function showLoading(show) {
