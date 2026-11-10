@@ -735,6 +735,17 @@ body.editor-mode .preset-library { display:block !important; }
             return GP5_NAM_CATALOG[String(effectId || '').trim().toLowerCase()] || null;
         }
 
+        // PRE: o código 010a0000, observado nos presets lidos, corresponde ao Boost.
+        // O catálogo usa o identificador observado no pacote PRE.
+        function getPreEffectCatalogEntry(effectId) {
+            const id = String(effectId || '').trim().toLowerCase();
+            if (id === '010a0000' || id === '1a000000') {
+                return { id: 2, name: 'Boost' };
+            }
+            const block = gp5Config?.blocks?.find(item => item.name === 'pre');
+            return block?.effects?.[id] || null;
+        }
+
         // Lista de referência da seção "Factory SnapTone Files" do manual.
         // Não atribuir códigos a nomes sem correspondência confirmada.
         const GP5_FACTORY_NAM_NAMES = [
@@ -941,6 +952,53 @@ body.editor-mode .preset-library { display:block !important; }
 
         function showBlockDetails(block, useCenteredDefaults = false) {
             console.log('showBlockDetails called for:', block.label, 'useCenteredDefaults:', useCenteredDefaults);
+
+            // NAM não é uma lista de efeitos convencional: o ID recebido no bloco NS
+            // identifica o SnapTone/capture atualmente carregado.
+            if (block.name === 'ns') {
+                const panel = document.getElementById('effectPanel');
+                const panelTitle = document.getElementById('panelTitle');
+                const contentDiv = document.getElementById('effectContent');
+                if (!panel || !panelTitle || !contentDiv) return;
+                const state = deviceState.blocks.ns || {};
+                const nam = getNamCatalogEntry(state.effectId);
+                const displayName = nam ? nam.name : (state.effectId ? 'NAM ' + state.effectId : 'NAM não identificado');
+                panelTitle.textContent = block.label;
+                contentDiv.innerHTML = `
+                    <div class="control-group">
+                        <div class="control-label">SnapTone / NAM carregado</div>
+                        <div class="param-item">
+                            <div class="param-header">
+                                <span class="param-name">${escapeHtml(displayName)}</span>
+                                <span class="param-value">${escapeHtml(nam ? nam.origin : (state.effectId || 'sem identificador'))}</span>
+                            </div>
+                        </div>
+                        <div class="control-label">Identificador</div>
+                        <div class="param-item"><span class="param-name">${escapeHtml(state.effectId || 'Não recebido')}</span></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="toggle-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="block-toggle-ns" data-block-id="${block.id}" ${state.enabled ? 'checked' : ''}>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="switch-label">${state.enabled ? 'ON' : 'OFF'}</span>
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <div class="control-label">Parâmetros</div>
+                        <div class="param-item"><span class="param-name">A leitura dos valores do NAM ainda não está disponível no Editor.</span></div>
+                    </div>`;
+                panel.classList.add('active');
+                const toggle = document.getElementById('block-toggle-ns');
+                if (toggle) toggle.addEventListener('change', event => {
+                    const label = event.target.closest('.toggle-switch').querySelector('.switch-label');
+                    label.textContent = event.target.checked ? 'ON' : 'OFF';
+                    deviceState.blocks.ns.enabled = event.target.checked;
+                    sendBlockStatus(block.id, event.target.checked ? '1' : '0');
+                });
+                return;
+            }
             
             const panel = document.getElementById('effectPanel');
             const panelTitle = document.getElementById('panelTitle');
@@ -1457,6 +1515,11 @@ body.editor-mode .preset-library { display:block !important; }
             // Extrair efeito PRE
             const preEffectId = getEffectId(bytes, 203);
             deviceState.preEffectId = preEffectId;
+            deviceState.blocks.pre = deviceState.blocks.pre || {};
+            deviceState.blocks.pre.effectId = preEffectId;
+            const preEffect = getPreEffectCatalogEntry(preEffectId);
+            deviceState.blocks.pre.effect = preEffect ? preEffect.id : null;
+            deviceState.blocks.pre.effectName = preEffect ? preEffect.name : (preEffectId ? 'ID ' + preEffectId : '—');
 
             // Exibir o código PRE no diagnóstico para identificação do modelo.
             const preRaw = Array.from(bytes.slice(203, 211))
@@ -1510,6 +1573,13 @@ body.editor-mode .preset-library { display:block !important; }
                     deviceState.blocks[blockName] = {};
                 }
                 deviceState.blocks[blockName].effectId = effects[blockName];
+                if (blockName === 'ns') {
+                    const namEntry = getNamCatalogEntry(effects.ns);
+                    deviceState.blocks.ns.effectName = namEntry
+                        ? namEntry.name
+                        : (effects.ns ? 'NAM ' + effects.ns : 'NAM não identificado');
+                    deviceState.blocks.ns.namOrigin = namEntry ? namEntry.origin : '';
+                }
                 const rawStart = ({dst:11, ns:67, amp:19, cab:27, eq:35, mod:43, dly:51, rvb:59})[blockName];
                 deviceState.blocks[blockName].rawBytes = Array.from(bytes.slice(rawStart, rawStart + 8))
                     .map(value => value.toString(16).padStart(2, '0')).join(' ');
@@ -1596,6 +1666,14 @@ body.editor-mode .preset-library { display:block !important; }
 
         function getCatalogEffectName(blockName, effectId) {
             if (!effectId) return '—';
+            if (blockName === 'pre') {
+                const preEffect = getPreEffectCatalogEntry(effectId);
+                return preEffect ? preEffect.name : 'ID ' + effectId;
+            }
+            if (blockName === 'ns') {
+                const nam = getNamCatalogEntry(effectId);
+                return nam ? nam.name : 'NAM ' + effectId;
+            }
             const block = gp5Config.blocks.find(item => item.name === blockName);
             const effect = block && block.effects ? block.effects[effectId] : null;
             return effect ? effect.name : 'ID ' + effectId;

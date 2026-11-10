@@ -319,36 +319,6 @@
             }
           ]
         },
-        "1a000000": {
-          "id": 2,
-          "name": "Boost",
-          "parameters": [
-            {
-              "index": 0,
-              "name": "Gain",
-              "default": 20,
-              "min": 0,
-              "max": 100,
-              "step": 1
-            },
-            {
-              "index": 1,
-              "name": "+3DB",
-              "default": 1,
-              "min": 0,
-              "max": 1,
-              "step": 1
-            },
-            {
-              "index": 2,
-              "name": "Bright",
-              "default": 1,
-              "min": 0,
-              "max": 1,
-              "step": 1
-            }
-          ]
-        },
         "0b000000": {
           "id": 4,
           "name": "B-Boost",
@@ -427,6 +397,36 @@
               "index": 4,
               "name": "Mode (Guitar/Bass)",
               "default": 0,
+              "min": 0,
+              "max": 1,
+              "step": 1
+            }
+          ]
+        },
+        "010a0000": {
+          "id": 2,
+          "name": "Boost",
+          "parameters": [
+            {
+              "index": 0,
+              "name": "Gain",
+              "default": 20,
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "index": 1,
+              "name": "+3DB",
+              "default": 1,
+              "min": 0,
+              "max": 1,
+              "step": 1
+            },
+            {
+              "index": 2,
+              "name": "Bright",
+              "default": 1,
               "min": 0,
               "max": 1,
               "step": 1
