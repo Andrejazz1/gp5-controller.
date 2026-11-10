@@ -2444,7 +2444,7 @@ body.editor-mode .preset-library { display:block !important; }
             if (gp5DiagnosticLines.length > 80) gp5DiagnosticLines.shift();
             const output = document.getElementById("gp5DiagnosticText");
             if (output) {
-                output.textContent = gp5DiagnosticLines.join("\\n");
+                output.textContent = gp5DiagnosticLines.join("\n");
                 output.scrollTop = output.scrollHeight;
             }
         }
