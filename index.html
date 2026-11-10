@@ -934,7 +934,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             document.getElementById('btnNextPatch').addEventListener('click', () => navigatePatch(1));
             document.getElementById('closePanel').addEventListener('click', closeEffectPanel);
             document.querySelectorAll('.preset-pedal').forEach(btn => {
-                btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.preset)));
+                btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.slot)));
             });
             document.getElementById('presetVisibleCount').addEventListener('change', event => {
                 presetVisibleCount = Number(event.target.value);
@@ -2472,14 +2472,13 @@ function getPhysicalPresetName(preset) {
     const select = document.getElementById('patchSelect');
     const option = select ? [...select.options].find(item => Number(item.value) === number) : null;
     if (option) {
-        const label = option.textContent.trim()
-            .replace(/^\\s*(?:patch|preset)\\s*/i, '')
-            .replace(/^\\s*\\d{1,2}\\s*[-–—:]\\s*/, '')
-            .trim();
-        if (label) return label;
+        let label = option.textContent.trim();
+        label = label.replace(/^[0-9]{1,2}\\s*[-–—:]\\s*/, '');
+        label = label.replace(/^(?:patch|preset)\\s*/i, '').trim();
+        if (label && !/^patch\\s*\\d+$/i.test(label)) return label;
     }
     const knownName = deviceState.patchNames && deviceState.patchNames[number];
-    return knownName ? String(knownName).replace(/\\0/g, '').trim() : 'Patch ' + String(number).padStart(2, '0');
+    return knownName ? String(knownName).split('\\0').join('').trim() : 'Patch ' + String(number).padStart(2, '0');
 }
 
 function renderEditorPresetSlots() {
