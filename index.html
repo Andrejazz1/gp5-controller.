@@ -527,6 +527,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .editor-slot-card label { display:block; margin-bottom:7px; color:#d6a64d; font-size:.66rem; font-weight:900; letter-spacing:.08em; }
 .editor-slot-select { width:100%; min-width:0; min-height:38px; padding:6px; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; background:#111820; font-size:.72rem; }
 .editor-slot-load { width:100%; margin-top:7px; min-height:34px; border:1px solid #8f6424; border-radius:7px; color:#17120a; background:linear-gradient(#d6a64d,#8f6424); font-size:.65rem; font-weight:900; }
+.preset-library { display:none !important; }
+body.editor-mode .preset-library { display:block !important; }
+.preset-library-details > summary { list-style:none; }
+.preset-library-details > summary::-webkit-details-marker { display:none; }
 @media(max-width:575px) { .editor-slot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .tap-readout { text-align:center; color:#c4ccd4; font-size:.75rem; padding-top:9px; min-height:25px; }
 .patch-selector-wrapper { margin-top:14px; }
@@ -647,8 +651,9 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
     </section>
 
     <!-- Biblioteca de efeitos dos presets -->
-    <section id="presetLibrary" style="margin:16px;padding:14px;background:#202a40;color:#fff;border:1px solid #52617d;border-radius:12px;">
-        <h3 style="font-size:16px;margin:0 0 8px;">BIBLIOTECA DE EFEITOS — 100 PRESETS</h3>
+    <section id="presetLibrary" class="preset-library" style="margin:16px;padding:14px;background:#202a40;color:#fff;border:1px solid #52617d;border-radius:12px;">
+        <details class="preset-library-details">
+        <summary style="cursor:pointer;font-size:14px;font-weight:800;letter-spacing:.06em;color:#f2c36a;margin-bottom:10px;">BIBLIOTECA TÉCNICA — 100 PRESETS (AVANÇADO)</summary>
         <p style="font-size:12px;color:#c5cfdd;margin:0 0 12px;">Leia os presets da GP5 em sequência por Bluetooth. A varredura troca temporariamente de preset e, ao terminar, tenta voltar ao preset inicial.</p>
         <button id="readCurrentPresetButton" type="button" class="btn btn-info btn-sm" onclick="readCurrentPreset()">LER PRESET ATUAL</button>
         <button id="scanPresetsButton" type="button" class="btn btn-warning btn-sm" onclick="startPresetScan()">LER EFEITOS DOS 100 PRESETS</button>
@@ -693,6 +698,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 <tbody id="presetLibraryRows"><tr><td colspan="11">Nenhum preset lido ainda.</td></tr></tbody>
             </table>
         </div>
+        </details>
     </section>
 
     <!-- Bluetooth patch diagnostics -->
