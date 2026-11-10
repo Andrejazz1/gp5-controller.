@@ -521,6 +521,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .rhythm-option.active { color:#17120a; background:linear-gradient(#d6a64d,#8f6424); border-color:#f2c36a; }
 .rhythm-option.active small { color:#2b2111; }
 .tap-control .footswitch { min-height:52px; }
+.editor-slot-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin-top:12px; }
+.editor-slot-card { min-width:0; padding:10px; border:1px solid #46515d; border-radius:10px; background:linear-gradient(#252d35,#171d23); }
+.editor-slot-card.selected { border-color:#d6a64d; box-shadow:0 0 0 1px #d6a64d55; }
+.editor-slot-card label { display:block; margin-bottom:7px; color:#d6a64d; font-size:.66rem; font-weight:900; letter-spacing:.08em; }
+.editor-slot-select { width:100%; min-width:0; min-height:38px; padding:6px; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; background:#111820; font-size:.72rem; }
+.editor-slot-load { width:100%; margin-top:7px; min-height:34px; border:1px solid #8f6424; border-radius:7px; color:#17120a; background:linear-gradient(#d6a64d,#8f6424); font-size:.65rem; font-weight:900; }
+@media(max-width:575px) { .editor-slot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .tap-readout { text-align:center; color:#c4ccd4; font-size:.75rem; padding-top:9px; min-height:25px; }
 .patch-selector-wrapper { margin-top:14px; }
 .patch-nav-buttons { display:none; }
@@ -630,7 +637,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
     <section class="editor-intro" id="editorIntro" aria-label="Editor de timbres">
         <div class="editor-heading">EDITOR DE TIMBRES</div>
         <p>Selecione um bloco da cadeia para abrir seus modelos e parâmetros.</p>
-        <div class="editor-notice">Conecte a GP5 via Bluetooth para editar. A leitura dos valores reais e a gravação serão habilitadas nas próximas etapas.</div>
+        <div class="editor-notice">Selecione uma das nove posições da pedalboard. Você pode associar cada posição a qualquer preset físico (00–99) da GP5 e abrir esse preset para editar sua cadeia.</div>
+    </section>
+
+    <section class="editor-intro" id="editorPresetManager" aria-label="Organização dos nove presets">
+        <div class="editor-heading">NOVE POSIÇÕES DA PEDALBOARD</div>
+        <p>Escolha qual preset físico da GP5 será chamado por cada footswitch. As associações ficam salvas neste navegador.</p>
+        <div id="editorPresetSlots" class="editor-slot-grid"></div>
     </section>
 
     <!-- Biblioteca de efeitos dos presets -->
@@ -894,6 +907,28 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
             }
             document.getElementById('viewPedalboardBtn').addEventListener('click', () => setAppView('pedalboard'));
             document.getElementById('viewEditorBtn').addEventListener('click', () => setAppView('editor'));
+            document.getElementById('editorPresetSlots').addEventListener('change', event => {
+                const select = event.target.closest('.editor-slot-select');
+                if (!select) return;
+                const slot = Number(select.dataset.slot);
+                const physicalPreset = Number(select.value);
+                if (!Number.isInteger(slot) || slot < 0 || slot >= TOTAL_QUICK_PRESETS ||
+                    !Number.isInteger(physicalPreset) || physicalPreset < 0 || physicalPreset > 99) return;
+                quickPresetAssignments[slot] = physicalPreset;
+                saveQuickPresetAssignments();
+                showPresetPage();
+                log('Footswitch ' + String(slot).padStart(2, '0') + ' associado ao preset físico ' + String(physicalPreset).padStart(2, '0') + '.');
+            });
+            document.getElementById('editorPresetSlots').addEventListener('click', event => {
+                const button = event.target.closest('[data-load-slot]');
+                if (!button) return;
+                const slot = Number(button.dataset.loadSlot);
+                if (!Number.isInteger(slot) || slot < 0 || slot >= TOTAL_QUICK_PRESETS) return;
+                activeEditorSlot = slot;
+                renderEditorPresetSlots();
+                quickSelectPreset(slot);
+                log('Abrindo no Editor: posição ' + String(slot).padStart(2, '0') + ' → preset físico ' + String(quickPresetAssignments[slot]).padStart(2, '0') + '.');
+            });
             document.getElementById('patchSelect').addEventListener('change', changePatch);
             document.getElementById('btnPrevPatch').addEventListener('click', () => navigatePatch(-1));
             document.getElementById('btnNextPatch').addEventListener('click', () => navigatePatch(1));
@@ -905,6 +940,8 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
                 presetVisibleCount = Number(event.target.value);
                 showPresetPage(presetPageStart);
             });
+            loadQuickPresetAssignments();
+            renderEditorPresetSlots();
             showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
             document.querySelectorAll('.rhythm-option').forEach(btn => {
@@ -2286,14 +2323,13 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
         }
 
         function updateQuickPresetNames() {
-            document.querySelectorAll('.preset-pedal').forEach(btn => {
-                const preset = Number(btn.dataset.preset);
-                const option = [...document.getElementById('patchSelect').options]
-                    .find(item => Number(item.value) === preset);
-                const name = option ? option.textContent.replace(/^\\d+\\s*-\\s*/, '').trim() : '';
+            document.querySelectorAll('.preset-pedal').forEach((btn, slot) => {
+                const preset = Number(quickPresetAssignments[slot]);
+                btn.dataset.preset = String(preset);
                 const label = btn.querySelector('.preset-name');
-                if (label) label.textContent = name || 'PRESET';
+                if (label) label.textContent = getPhysicalPresetName(preset) || 'PRESET';
             });
+            renderEditorPresetSlots();
         }
 
         function updateBlocksStatus() {
@@ -2385,7 +2421,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 
 // ==================== PEDALBOARD QUICK CONTROLS ====================
 const TOTAL_QUICK_PRESETS = 9;
+const QUICK_PRESET_STORAGE_KEY = 'gp5ControllerPresetSlotsV1';
 let presetVisibleCount = 9;
+let quickPresetAssignments = Array.from({length: TOTAL_QUICK_PRESETS}, (_, slot) => slot);
+let activeEditorSlot = 0;
 let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
@@ -2406,9 +2445,64 @@ function setTapSubdivision(subdivision) {
     document.getElementById('tapReadout').textContent = 'Figura selecionada: ' + labels[subdivision] + '. Toque no TAP TEMPO.';
 }
 
+function loadQuickPresetAssignments() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(QUICK_PRESET_STORAGE_KEY) || 'null');
+        if (Array.isArray(saved) && saved.length === TOTAL_QUICK_PRESETS) {
+            quickPresetAssignments = saved.map((value, slot) => {
+                const n = Number(value);
+                return Number.isInteger(n) && n >= 0 && n <= 99 ? n : slot;
+            });
+        }
+    } catch (error) {
+        console.warn('[preset slots] Não foi possível carregar as associações salvas:', error);
+    }
+}
+
+function saveQuickPresetAssignments() {
+    try {
+        localStorage.setItem(QUICK_PRESET_STORAGE_KEY, JSON.stringify(quickPresetAssignments));
+    } catch (error) {
+        log('Não foi possível salvar as posições neste navegador: ' + error.message, 'error');
+    }
+}
+
+function getPhysicalPresetName(preset) {
+    const number = Number(preset);
+    const select = document.getElementById('patchSelect');
+    const option = select ? [...select.options].find(item => Number(item.value) === number) : null;
+    if (option) {
+        const label = option.textContent.trim()
+            .replace(/^\\s*(?:patch|preset)\\s*/i, '')
+            .replace(/^\\s*\\d{1,2}\\s*[-–—:]\\s*/, '')
+            .trim();
+        if (label) return label;
+    }
+    const knownName = deviceState.patchNames && deviceState.patchNames[number];
+    return knownName ? String(knownName).replace(/\\0/g, '').trim() : 'Patch ' + String(number).padStart(2, '0');
+}
+
+function renderEditorPresetSlots() {
+    const container = document.getElementById('editorPresetSlots');
+    if (!container) return;
+    container.innerHTML = quickPresetAssignments.map((physicalPreset, slot) => {
+        const options = Array.from({length: 100}, (_, number) => {
+            const name = getPhysicalPresetName(number);
+            return '<option value="' + number + '"' + (number === physicalPreset ? ' selected' : '') + '>' +
+                String(number).padStart(2, '0') + ' — ' + escapeHtml(name) + '</option>';
+        }).join('');
+        return '<div class="editor-slot-card' + (slot === activeEditorSlot ? ' selected' : '') + '">' +
+            '<label for="editorSlotSelect' + slot + '">FOOTSWITCH ' + String(slot).padStart(2, '0') + '</label>' +
+            '<select class="editor-slot-select" id="editorSlotSelect' + slot + '" data-slot="' + slot + '">' + options + '</select>' +
+            '<button type="button" class="editor-slot-load" data-load-slot="' + slot + '">ABRIR NO EDITOR</button>' +
+            '</div>';
+    }).join('');
+}
+
 function updateQuickPresetButtons(preset) {
-    document.querySelectorAll('.preset-pedal').forEach(btn => {
-        btn.classList.toggle('active', Number(btn.dataset.preset) === Number(preset));
+    document.querySelectorAll('.preset-pedal').forEach((btn, slot) => {
+        const assignedPreset = quickPresetAssignments[slot];
+        btn.classList.toggle('active', Number(assignedPreset) === Number(preset));
     });
 }
 
@@ -2418,7 +2512,8 @@ function showPresetPage() {
     if (pedalContainer) pedalContainer.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
     buttons.forEach((btn, slot) => {
         const number = btn.querySelector('.preset-number');
-        btn.dataset.preset = String(slot);
+        btn.dataset.slot = String(slot);
+        btn.dataset.preset = String(quickPresetAssignments[slot]);
         btn.hidden = slot >= presetVisibleCount || slot >= TOTAL_QUICK_PRESETS;
         if (number) number.textContent = String(slot).padStart(2, '0');
     });
@@ -2427,14 +2522,17 @@ function showPresetPage() {
     updateQuickPresetButtons(deviceState.currentPatch);
 }
 
-function quickSelectPreset(preset) {
+function quickSelectPreset(slot) {
+    const preset = Number(quickPresetAssignments[Number(slot)]);
     const select = document.getElementById('patchSelect');
-    const option = [...select.options].find(o => Number(o.value) === Number(preset));
+    const option = [...select.options].find(o => Number(o.value) === preset);
     if (!option) {
         log('Preset ainda não carregado. Conecte a GP5 e sincronize a lista.');
         return;
     }
     select.value = String(preset);
+    activeEditorSlot = Number(slot);
+    renderEditorPresetSlots();
     updateQuickPresetButtons(preset);
     changePatch();
 }
