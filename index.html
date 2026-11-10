@@ -736,7 +736,7 @@ body.editor-mode .preset-library { display:block !important; }
         }
 
         // PRE: o código 010a0000, observado nos presets lidos, corresponde ao Boost.
-        // O catálogo também mantém o identificador 1a000000 usado na definição original.
+        // O catálogo usa o identificador observado no pacote PRE.
         function getPreEffectCatalogEntry(effectId) {
             const id = String(effectId || '').trim().toLowerCase();
             if (id === '010a0000' || id === '1a000000') {
