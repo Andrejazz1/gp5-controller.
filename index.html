@@ -1351,6 +1351,7 @@ body.editor-mode .preset-library { display:block !important; }
                 deviceState.blocks = {};
                 deviceState.currentPatch = newPatch;
                 document.getElementById('patchSelect').value = newPatch;
+                updateQuickPresetButtons(newPatch);
                 
                 log('Patch ' + newPatch + ' active, loading data...');
                 setTimeout(() => {
@@ -1388,6 +1389,7 @@ body.editor-mode .preset-library { display:block !important; }
                 deviceState.blocks = {};
                 deviceState.currentPatch = newPatch;
                 document.getElementById('patchSelect').value = newPatch;
+                updateQuickPresetButtons(newPatch);
                 
                 log('Patch changed to ' + newPatch + ', loading data...');
                 if (presetScan.active) {
