@@ -2475,7 +2475,7 @@ function getPhysicalPresetName(preset) {
         let label = option.textContent.trim();
         label = label.replace(/^[0-9]{1,2}\\s*[-–—:]\\s*/, '');
         label = label.replace(/^(?:patch|preset)\\s*/i, '').trim();
-        if (label && !/^patch\\s*\\d+$/i.test(label)) return label;
+        if (label && !/^\\d{1,2}$/.test(label) && !/^patch\\s*\\d+$/i.test(label)) return label;
     }
     const knownName = deviceState.patchNames && deviceState.patchNames[number];
     return knownName ? String(knownName).split('\\0').join('').trim() : 'Patch ' + String(number).padStart(2, '0');
