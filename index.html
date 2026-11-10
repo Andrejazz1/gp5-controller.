@@ -550,17 +550,6 @@ body.editor-mode .preset-library { display:block !important; }
 
     </style>
 
-    <style id="pedalboard-only-mode">
-        /* Interface enxuta: somente pedalboard e conexão */
-        .view-switch,
-        .editor-intro,
-        #presetLibrary,
-        .blocks-section,
-        #effectPanel,
-        .patch-selector-wrapper {
-            display: none !important;
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -574,7 +563,6 @@ body.editor-mode .preset-library { display:block !important; }
                     <button id="btnConnect" class="connect-btn btn btn-primary">
                         <span id="connectionStatus">⚫</span> Connect
                     </button>
-                    <button id="btnDiagnostics" type="button" class="btn btn-outline-light btn-sm" onclick="toggleGp5Diagnostics()">LOG</button>
                 </div>
             </div>
         
@@ -701,15 +689,6 @@ body.editor-mode .preset-library { display:block !important; }
         </details>
     </section>
 
-    <!-- Bluetooth patch diagnostics -->
-    <section id="gp5Diagnostic" style="display:none; margin:12px; padding:12px; background:#202a40; color:#fff; border:1px solid #52617d; border-radius:12px; overflow-wrap:anywhere;">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
-            <h3 style="font-size:14px; margin:0;">DIAGNÓSTICO BLUETOOTH</h3>
-            <button type="button" class="btn btn-sm btn-outline-light" onclick="clearGp5Diagnostics()">LIMPAR</button>
-        </div>
-        <pre id="gp5DiagnosticText" style="white-space:pre-wrap; max-height:220px; overflow:auto; font-size:11px; line-height:1.5; margin:0; color:#e7edf8;">Aguardando conexão.</pre>
-    </section>
-
     <!-- Blocks Grid -->
     <div class="blocks-section">
         <div class="blocks-title">CADEIA DE EFEITOS</div>
@@ -745,7 +724,6 @@ body.editor-mode .preset-library { display:block !important; }
         let gp5Config = null;
         let gp5SyncTimeoutId = null;
         let gp5SyncStage = "idle";
-        let gp5DiagnosticLines = [];
         let gp5SnapToneChunks = new Set();
         let gp5SnapTonesCompleted = false;
 
@@ -2456,30 +2434,9 @@ body.editor-mode .preset-library { display:block !important; }
             console.log(`[GP5] ${message}`);
         }
 
-        function diagnosticLog(message) {
-            const timestamp = new Date().toLocaleTimeString();
-            gp5DiagnosticLines.push("[" + timestamp + "] " + message);
-            if (gp5DiagnosticLines.length > 80) gp5DiagnosticLines.shift();
-            const output = document.getElementById("gp5DiagnosticText");
-            if (output) {
-                output.textContent = gp5DiagnosticLines.join("\n");
-                output.scrollTop = output.scrollHeight;
-            }
-        }
-
-        function toggleGp5Diagnostics() {
-            const panel = document.getElementById("gp5Diagnostic");
-            if (!panel) return;
-            const opening = panel.style.display === "none" || !panel.style.display;
-            panel.style.display = opening ? "block" : "none";
-            if (opening && gp5DiagnosticLines.length === 0) diagnosticLog("Painel pronto. Conecte a GP5 para registrar a sincronização.");
-        }
-
-        function clearGp5Diagnostics() {
-            gp5DiagnosticLines = [];
-            const output = document.getElementById("gp5DiagnosticText");
-            if (output) output.textContent = "Diagnóstico limpo. Conecte a GP5 novamente.";
-        }
+        // Diagnóstico visual removido após validação da sincronização BLE.
+        // Mantém a função como no-op para preservar os pontos de chamada existentes.
+        function diagnosticLog(message) {}
 
         function showLoading(show) {
             const spinner = document.getElementById('spinner');
