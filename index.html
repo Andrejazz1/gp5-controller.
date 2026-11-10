@@ -746,6 +746,8 @@ body.editor-mode .preset-library { display:block !important; }
         let gp5SyncTimeoutId = null;
         let gp5SyncStage = "idle";
         let gp5DiagnosticLines = [];
+        let gp5SnapToneChunks = new Set();
+        let gp5SnapTonesCompleted = false;
 
         // Catálogo de NAMs confirmados pelo usuário (origem informada manualmente).
         const GP5_NAM_CATALOG = {
@@ -1308,6 +1310,8 @@ body.editor-mode .preset-library { display:block !important; }
 
         async function syncDevice() {
             gp5SyncStage = "início da sincronização";
+            gp5SnapToneChunks = new Set();
+            gp5SnapTonesCompleted = false;
             diagnosticLog("Iniciando sincronização.");
             log('Syncing device...');
             if (gp5SyncTimeoutId) clearTimeout(gp5SyncTimeoutId);
@@ -1329,6 +1333,15 @@ body.editor-mode .preset-library { display:block !important; }
             await sendSysex(gp5Config.sync_commands.request_patch_list.sysex);
             await sleep(100);
             diagnosticLog("Comandos iniciais enviados; aguardando respostas da GP5.");
+        }
+
+        function finishSnapTonesSync() {
+            if (gp5SnapTonesCompleted) return;
+            gp5SnapTonesCompleted = true;
+            gp5SyncStage = "SnapTones recebidos; solicitando IRs";
+            diagnosticLog("SnapTones concluídos (" + (gp5SnapToneChunks.size ? gp5SnapToneChunks.size + "/10 partes" : "pacote compacto de 136 bytes") + ").");
+            log('Snaptones loaded');
+            sendSysex(gp5Config.sync_commands.request_ir_list.sysex);
         }
 
         // ==================== NOTIFICATIONS ====================
@@ -1363,12 +1376,17 @@ body.editor-mode .preset-library { display:block !important; }
                 // End of patch list
                 populatePatchList();
                 sendSysex(gp5Config.sync_commands.request_snaptones.sysex);
+            } else if (bytes[5] === 0 && bytes[6] === 14 && bytes.length === 212 && bytes[7] === 0 && bytes[8] >= 0 && bytes[8] <= 9) {
+                // A GP5 envia os SnapTones em 10 partes de 212 bytes (índices 0 a 9).
+                gp5SnapToneChunks.add(bytes[8]);
+                gp5SyncStage = "recebendo SnapTones (" + gp5SnapToneChunks.size + "/10 partes)";
+                diagnosticLog("SnapTones: parte " + (bytes[8] + 1) + "/10 recebida (" + gp5SnapToneChunks.size + "/10 únicas).");
+                if (gp5SnapToneChunks.size === 10 && !gp5SnapTonesCompleted) {
+                    finishSnapTonesSync();
+                }
             } else if (bytes[5] === 0 && bytes[6] === 14 && bytes.length === 136) {
-                gp5SyncStage = "SnapTones recebidos; solicitando IRs";
-                diagnosticLog("SnapTones recebidos.");
-                // End of snaptones
-                log('Snaptones loaded');
-                sendSysex(gp5Config.sync_commands.request_ir_list.sysex);
+                // Compatibilidade com firmware/respostas que enviam o pacote final compacto.
+                finishSnapTonesSync();
             } else if (bytes[5] === 0 && bytes[6] === 4 && bytes.length === 96) {
                 gp5SyncStage = "IRs recebidos; solicitando preset atual";
                 diagnosticLog("Lista de IRs recebida.");
