@@ -2415,7 +2415,7 @@ function updateQuickPresetButtons(preset) {
 function showPresetPage() {
     const buttons = [...document.querySelectorAll('.preset-pedal')];
     const pedalContainer = document.querySelector('.preset-pedals');
-    if (pedalContainer) pedalContainer.style.gridTemplateColumns = 'repeat(' + presetVisibleCount + ', minmax(0, 1fr))';
+    if (pedalContainer) pedalContainer.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
     buttons.forEach((btn, slot) => {
         const number = btn.querySelector('.preset-number');
         btn.dataset.preset = String(slot);
