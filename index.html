@@ -1690,6 +1690,7 @@ body.editor-mode .preset-library { display:block !important; }
             const dstReaders = {
                 '00000003': ['Green OD', readGreenODParameters],
                 '02000003': ['Yellow OD', readYellowODParameters],
+                '2a000003': ['SM Dist', readSmDistParameters],
                 '40000003': ['Bass OD', readBassODParameters]
             };
             const dstReader = dstReaders[deviceState.blocks.dst?.effectId];
@@ -2241,6 +2242,13 @@ body.editor-mode .preset-library { display:block !important; }
 
         function readYellowODParameters(bytes) {
             return readDstFloatParameters(bytes, [11, 19]);
+        }
+
+        // SM Dist (DST / ID 2a000003): Gain, Tone e Volume.
+        // Offsets 11, 19 e 27 confirmados por variações controladas
+        // de um parâmetro por vez na GP5 (50 -> 70).
+        function readSmDistParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19, 27]);
         }
 
         function readBassODParameters(bytes) {
