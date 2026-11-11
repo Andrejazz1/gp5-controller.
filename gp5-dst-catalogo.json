@@ -41,8 +41,8 @@
         11,
         19
       ],
-      "mappingStatus": "hardware-confirmed",
-      "validation": "Captura decodificada: Gain 78, Volume 50; confirmação do usuário."
+      "mappingStatus": "validated",
+      "validation": "Offsets 11 e 19 e parâmetros Gain/Volume conferidos com captura da GP5; exemplo validado: 78/50."
     },
     {
       "name": "Super OD",
@@ -165,7 +165,7 @@
         35,
         43
       ],
-      "mappingStatus": "hardware-confirmed",
+      "mappingStatus": "validated",
       "referenceValues": [
         100,
         100,
@@ -173,7 +173,7 @@
         100,
         100
       ],
-      "validation": "Cinco parâmetros e valores confirmados no visor; decodificação nos cinco offsets também resultou em 100."
+      "validation": "Offsets 11, 19, 27, 35 e 43 e cinco parâmetros conferidos no visor da GP5; exemplo validado: todos em 100."
     }
   ]
 }
