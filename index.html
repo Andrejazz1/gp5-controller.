@@ -1684,6 +1684,18 @@ body.editor-mode .preset-library { display:block !important; }
             deviceState.patchPacketParts = deviceState.patchPacketParts || {};
             deviceState.patchPacketParts.part3 = Array.from(bytes);
             logPatchPacketPart('3', 'part3', bytes);
+
+            // Só interpreta os sete controles quando o modelo ativo é UK 50JP.
+            if (deviceState.blocks.amp?.effectId === '2f000007') {
+                const ampParameters = readAmpUK50JPParameters(bytes);
+                if (ampParameters) {
+                    deviceState.blocks.amp.parameters = ampParameters;
+                    deviceState.blocks.amp.parametersSource = 'device';
+                    console.log('AMP UK 50JP parameters read from GP5:', ampParameters);
+                } else {
+                    console.warn('AMP UK 50JP parameter bytes invalid; keeping catalog defaults.');
+                }
+            }
         }
 
         function parsePatchData4(bytes) {
@@ -2190,6 +2202,17 @@ body.editor-mode .preset-library { display:block !important; }
                 Math.abs(value) < 0.0001 || Math.abs(value - 1) < 0.0001
             )) return null;
             return values;
+        }
+
+        // UK 50JP (AMP / ID 2f000007): parâmetros no pacote BLE parte 3.
+        // O editor Stash reconstrói os cinco fragmentos BLE removendo os 11 bytes
+        // de cabeçalho de cada um. No fluxo concatenado, AMP começa em 464;
+        // como a parte 3 começa no offset 400, os offsets locais são 75..123.
+        function readAmpUK50JPParameters(bytes) {
+            const starts = [75, 83, 91, 99, 107, 115, 123];
+            const values = starts.map(start => decodeFloat32FromNibbles(bytes, start));
+            if (values.some(value => value === null || value < 0 || value > 100)) return null;
+            return values.map(value => Math.round(value * 100) / 100);
         }
 
         // Os campos dos blocos na parte 2 não são contíguos:
