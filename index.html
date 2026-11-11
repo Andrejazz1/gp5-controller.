@@ -1685,7 +1685,21 @@ body.editor-mode .preset-library { display:block !important; }
             deviceState.patchPacketParts.part3 = Array.from(bytes);
             logPatchPacketPart('3', 'part3', bytes);
 
-            // Só interpreta os sete controles quando o modelo ativo é UK 50JP.
+            // DST Green OD (ID 00000003): três controles no início do
+            // bloco de parâmetros da parte 3. Só atualiza quando o modelo ativo
+            // corresponde ao Green OD; caso contrário, mantém o catálogo.
+            if (deviceState.blocks.dst?.effectId === '00000003') {
+                const dstParameters = readGreenODParameters(bytes);
+                if (dstParameters) {
+                    deviceState.blocks.dst.parameters = dstParameters;
+                    deviceState.blocks.dst.parametersSource = 'device';
+                    console.log('DST Green OD parameters read from GP5:', dstParameters);
+                } else {
+                    console.warn('DST Green OD parameter bytes invalid; keeping catalog defaults.');
+                }
+            }
+
+            // AMP UK 50JP continua com leitura independente.
             if (deviceState.blocks.amp?.effectId === '2f000007') {
                 const ampParameters = readAmpUK50JPParameters(bytes);
                 if (ampParameters) {
@@ -2202,6 +2216,17 @@ body.editor-mode .preset-library { display:block !important; }
                 Math.abs(value) < 0.0001 || Math.abs(value - 1) < 0.0001
             )) return null;
             return values;
+        }
+
+        // Green OD (DST / ID 00000003): Gain, Tone e VOL são os três
+        // primeiros parâmetros do bloco DST. O bloco AMP começa 8 slots depois
+        // (64 bytes) na mesma sequência: offsets locais 11, 19 e 27 na parte 3.
+        // Valores são aceitos somente no intervalo físico documentado de 0–100.
+        function readGreenODParameters(bytes) {
+            const starts = [11, 19, 27];
+            const values = starts.map(start => decodeFloat32FromNibbles(bytes, start));
+            if (values.some(value => value === null || value < 0 || value > 100)) return null;
+            return values.map(value => Math.round(value * 100) / 100);
         }
 
         // UK 50JP (AMP / ID 2f000007): parâmetros no pacote BLE parte 3.
