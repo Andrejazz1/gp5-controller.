@@ -152,12 +152,16 @@
         "Fuzz",
         "Volume"
       ],
-      "mappingStatus": "labels-and-values-confirmed",
+      "mappingStatus": "validated",
       "referenceValues": [
-        0,
-        100
+        50,
+        50
       ],
-      "validation": "Nomes e valores confirmados pelo usuário no visor; offsets genéricos não reproduziram os valores."
+      "validation": "Offsets 11 e 19 confirmados por variações controladas independentes na GP5: Fuzz 50->70 com Volume 50; Volume 50->70 com Fuzz 50. Leitor implementado em modo somente leitura.",
+      "part3Offsets": [
+        11,
+        19
+      ]
     },
     {
       "name": "Bass OD",

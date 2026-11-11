@@ -1695,6 +1695,7 @@ body.editor-mode .preset-library { display:block !important; }
                 '30000003': ['La Charger', readLaChargerParameters],
                 '2b000003': ['Darktale', readDarktaleParameters],
                 '22000003': ['Sora Fuzz', readSoraFuzzParameters],
+                '24000003': ['Red Haze', readRedHazeParameters],
                 '40000003': ['Bass OD', readBassODParameters]
             };
             const dstReader = dstReaders[deviceState.blocks.dst?.effectId];
@@ -2279,6 +2280,13 @@ body.editor-mode .preset-library { display:block !important; }
         // Offsets 11 e 19 confirmados por variações independentes na GP5:
         // Fuzz 50->70 com Volume 50; Volume 50->70 com Fuzz 50.
         function readSoraFuzzParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19]);
+        }
+
+        // Red Haze (DST / ID 24000003): Fuzz e Volume.
+        // Offsets 11 e 19 confirmados por variações independentes:
+        // Fuzz 50->70 com Volume 50; Volume 50->70 com Fuzz 50.
+        function readRedHazeParameters(bytes) {
             return readDstFloatParameters(bytes, [11, 19]);
         }
 
