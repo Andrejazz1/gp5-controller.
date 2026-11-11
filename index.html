@@ -1685,17 +1685,23 @@ body.editor-mode .preset-library { display:block !important; }
             deviceState.patchPacketParts.part3 = Array.from(bytes);
             logPatchPacketPart('3', 'part3', bytes);
 
-            // DST Green OD (ID 00000003): três controles no início do
-            // bloco de parâmetros da parte 3. Só atualiza quando o modelo ativo
-            // corresponde ao Green OD; caso contrário, mantém o catálogo.
-            if (deviceState.blocks.dst?.effectId === '00000003') {
-                const dstParameters = readGreenODParameters(bytes);
+            // Leitores DST estritamente condicionados ao ID do efeito ativo.
+            // Cada modelo usa apenas offsets já confirmados em capturas da GP5.
+            const dstReaders = {
+                '00000003': ['Green OD', readGreenODParameters],
+                '02000003': ['Yellow OD', readYellowODParameters],
+                '40000003': ['Bass OD', readBassODParameters]
+            };
+            const dstReader = dstReaders[deviceState.blocks.dst?.effectId];
+            if (dstReader) {
+                const [dstName, readParameters] = dstReader;
+                const dstParameters = readParameters(bytes);
                 if (dstParameters) {
                     deviceState.blocks.dst.parameters = dstParameters;
                     deviceState.blocks.dst.parametersSource = 'device';
-                    console.log('DST Green OD parameters read from GP5:', dstParameters);
+                    console.log('DST ' + dstName + ' parameters read from GP5:', dstParameters);
                 } else {
-                    console.warn('DST Green OD parameter bytes invalid; keeping catalog defaults.');
+                    console.warn('DST ' + dstName + ' parameter bytes invalid; keeping catalog defaults.');
                 }
             }
 
@@ -2218,15 +2224,27 @@ body.editor-mode .preset-library { display:block !important; }
             return values;
         }
 
-        // Green OD (DST / ID 00000003): Gain, Tone e VOL são os três
-        // primeiros parâmetros do bloco DST. O bloco AMP começa 8 slots depois
-        // (64 bytes) na mesma sequência: offsets locais 11, 19 e 27 na parte 3.
-        // Valores são aceitos somente no intervalo físico documentado de 0–100.
-        function readGreenODParameters(bytes) {
-            const starts = [11, 19, 27];
+        // Green OD (DST / ID 00000003): Gain, Tone e Volume.
+        // Yellow OD (DST / ID 02000003): Gain e Volume.
+        // Bass OD (DST / ID 40000003): Gain, Blend, Volume, Bass e Treble.
+        // Os offsets são locais à parte 3 e foram conferidos com valores exibidos
+        // na GP5. Cada leitor é associado exclusivamente ao ID correspondente.
+        function readDstFloatParameters(bytes, starts) {
             const values = starts.map(start => decodeFloat32FromNibbles(bytes, start));
             if (values.some(value => value === null || value < 0 || value > 100)) return null;
             return values.map(value => Math.round(value * 100) / 100);
+        }
+
+        function readGreenODParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19, 27]);
+        }
+
+        function readYellowODParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19]);
+        }
+
+        function readBassODParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19, 27, 35, 43]);
         }
 
         // UK 50JP (AMP / ID 2f000007): parâmetros no pacote BLE parte 3.
