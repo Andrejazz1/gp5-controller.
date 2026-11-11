@@ -114,13 +114,18 @@
         "Filter",
         "Volume"
       ],
-      "mappingStatus": "labels-and-values-confirmed",
+      "mappingStatus": "validated",
       "referenceValues": [
         50,
-        0,
-        0
+        75,
+        50
       ],
-      "validation": "Nomes e valores confirmados pelo usuário no visor; offsets genéricos não reproduziram o terceiro valor."
+      "validation": "Offsets 11, 19 e 27 confirmados por variações controladas independentes na GP5: Gain 25->50, Filter 50->75 e Volume 75->50; leitor implementado em modo somente leitura.",
+      "part3Offsets": [
+        11,
+        19,
+        27
+      ]
     },
     {
       "name": "Sora Fuzz",
