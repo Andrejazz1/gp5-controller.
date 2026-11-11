@@ -1120,11 +1120,13 @@ body.editor-mode .preset-library { display:block !important; }
 
         function createParameterControl(block, param, index, value) {
             const inputId = `param-${block.name}-${index}`;
+            const isBoolean = Number(param.min) === 0 && Number(param.max) === 1 && Number(param.step) === 1;
+            const displayValue = isBoolean ? (Number(value) === 1 ? 'ON' : 'OFF') : value;
             return `
                 <div class="param-item">
                     <div class="param-header">
                         <span class="param-name">${param.name}</span>
-                        <span class="param-value" id="${inputId}-value">${value}</span>
+                        <span class="param-value" id="${inputId}-value">${displayValue}</span>
                     </div>
                     <input type="range" 
                            class="param-slider" 
@@ -1135,6 +1137,7 @@ body.editor-mode .preset-library { display:block !important; }
                            value="${value}"
                            data-block-id="${block.id}"
                            data-param-index="${index}"
+                           data-boolean="${isBoolean ? 'true' : 'false'}"
                            oninput="updateParameter(this)">
                 </div>
             `;
@@ -1145,8 +1148,11 @@ body.editor-mode .preset-library { display:block !important; }
             const blockId = parseInt(input.dataset.blockId);
             const paramIndex = parseInt(input.dataset.paramIndex);
             
-            // Atualizar display
-            document.getElementById(`${input.id}-value`).textContent = value;
+            // Exibir parâmetros binários como ON/OFF, mantendo 0/1 internamente.
+            const displayValue = input.dataset.boolean === 'true'
+                ? (value === 1 ? 'ON' : 'OFF')
+                : value;
+            document.getElementById(`${input.id}-value`).textContent = displayValue;
             
             // Debounce para enviar comando
             clearTimeout(input.debounceTimer);
