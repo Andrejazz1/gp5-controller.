@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "slot": "DST",
+  "description": "Catálogo técnico dos efeitos DST de fábrica da Valeton GP5. Valores de teste são referências de captura, não presets padrão.",
+  "parameterEncoding": {
+    "format": "float32 little-endian; cada byte transmitido como dois nibbles",
+    "part3Offsets": [
+      11,
+      19,
+      27,
+      35,
+      43
+    ],
+    "note": "Offsets abaixo são candidatos até confirmação individual por variação controlada; não presumir que todos os efeitos usam a mesma disposição."
+  },
+  "effects": [
+    {
+      "name": "Green OD",
+      "id": "00000003",
+      "parameters": [
+        "Gain",
+        "Tone",
+        "Volume"
+      ],
+      "part3Offsets": [
+        11,
+        19,
+        27
+      ],
+      "mappingStatus": "validated",
+      "validation": "Leitor já implementado e validado em hardware; presets 13 e 17."
+    },
+    {
+      "name": "Yellow OD",
+      "id": "02000003",
+      "parameters": [
+        "Gain",
+        "Volume"
+      ],
+      "part3Offsets": [
+        11,
+        19
+      ],
+      "mappingStatus": "hardware-confirmed",
+      "validation": "Captura decodificada: Gain 78, Volume 50; confirmação do usuário."
+    },
+    {
+      "name": "Super OD",
+      "id": "06000003",
+      "parameters": [
+        "Gain",
+        "Tone",
+        "Volume"
+      ],
+      "part3Offsets": [
+        11,
+        19,
+        27
+      ],
+      "mappingStatus": "candidate",
+      "validation": "Offsets candidatos; ainda sem confirmação dos valores no visor."
+    },
+    {
+      "name": "SM Dist",
+      "id": "2a000003",
+      "parameters": [
+        "Gain",
+        "Volume"
+      ],
+      "part3Offsets": [
+        11,
+        19
+      ],
+      "mappingStatus": "candidate",
+      "validation": "Decodificação preliminar: 18 e 60; precisa confirmação no visor."
+    },
+    {
+      "name": "Plustortion",
+      "id": "29000003",
+      "parameters": [
+        "Gain",
+        "Volume"
+      ],
+      "part3Offsets": [
+        11,
+        19
+      ],
+      "mappingStatus": "candidate",
+      "validation": "Decodificação preliminar: 86 e 60; usuário confirmou que são apenas dois parâmetros."
+    },
+    {
+      "name": "La Charger",
+      "id": "30000003",
+      "parameters": [
+        "Gain",
+        "Tone",
+        "Volume"
+      ],
+      "part3Offsets": [
+        11,
+        19,
+        27
+      ],
+      "mappingStatus": "candidate",
+      "validation": "Decodificação preliminar: 50, 88 e 50; ainda sem confirmação no visor."
+    },
+    {
+      "name": "Darktale",
+      "id": "2b000003",
+      "parameters": [
+        "Gain",
+        "Filter",
+        "Volume"
+      ],
+      "mappingStatus": "labels-and-values-confirmed",
+      "referenceValues": [
+        50,
+        0,
+        0
+      ],
+      "validation": "Nomes e valores confirmados pelo usuário no visor; offsets genéricos não reproduziram o terceiro valor."
+    },
+    {
+      "name": "Sora Fuzz",
+      "id": "22000003",
+      "parameters": [
+        "Fuzz",
+        "Volume"
+      ],
+      "mappingStatus": "labels-and-values-confirmed",
+      "referenceValues": [
+        100,
+        50
+      ],
+      "validation": "Nomes e valores confirmados pelo usuário no visor; offsets genéricos não reproduziram os valores."
+    },
+    {
+      "name": "Red Haze",
+      "id": "24000003",
+      "parameters": [
+        "Fuzz",
+        "Volume"
+      ],
+      "mappingStatus": "labels-and-values-confirmed",
+      "referenceValues": [
+        0,
+        100
+      ],
+      "validation": "Nomes e valores confirmados pelo usuário no visor; offsets genéricos não reproduziram os valores."
+    },
+    {
+      "name": "Bass OD",
+      "id": "40000003",
+      "parameters": [
+        "Gain",
+        "Blend",
+        "Volume",
+        "Bass",
+        "Treble"
+      ],
+      "part3Offsets": [
+        11,
+        19,
+        27,
+        35,
+        43
+      ],
+      "mappingStatus": "hardware-confirmed",
+      "referenceValues": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "validation": "Cinco parâmetros e valores confirmados no visor; decodificação nos cinco offsets também resultou em 100."
+    }
+  ]
+}
