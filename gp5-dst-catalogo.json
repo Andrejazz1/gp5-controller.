@@ -57,8 +57,8 @@
         19,
         27
       ],
-      "mappingStatus": "candidate",
-      "validation": "Offsets candidatos; ainda sem confirmação dos valores no visor."
+      "mappingStatus": "validated",
+      "validation": "Offsets 11, 19 e 27 confirmados por capturas controladas na GP5: Gain 50->70, Tone 50->70 e Volume 50->70, alterados individualmente. Leitor implementado em modo somente leitura."
     },
     {
       "name": "SM Dist",
