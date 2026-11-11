@@ -1610,6 +1610,20 @@ body.editor-mode .preset-library { display:block !important; }
                     }
                 }
             });
+
+            // A leitura dos parâmetros do PRE Boost já foi validada contra
+            // quatro valores reais (20, 80, 91 e 100) da pedaleira.
+            if (deviceState.preEffectId === '1a000000') {
+                const preParameters = readPreBoostParameters(bytes);
+                if (preParameters) {
+                    deviceState.blocks.pre = deviceState.blocks.pre || {};
+                    deviceState.blocks.pre.parameters = preParameters;
+                    deviceState.blocks.pre.parametersSource = 'device';
+                    console.log('PRE Boost parameters read from GP5:', preParameters);
+                } else {
+                    console.warn('PRE Boost parameter bytes were not valid; keeping catalog defaults.');
+                }
+            }
         }
 
         // Mantém as partes recebidas no painel para facilitar a cópia do diagnóstico.
@@ -2145,6 +2159,37 @@ body.editor-mode .preset-library { display:block !important; }
                 event.target.value = '';
             };
             reader.readAsText(file);
+        }
+
+        // Os parâmetros numéricos do GP5 chegam como nibbles: dois valores
+        // de 0..15 representam um byte. O grupo de quatro bytes é float32 LE.
+        function decodeFloat32FromNibbles(bytes, start) {
+            if (!bytes || start < 0 || start + 7 >= bytes.length) return null;
+            const decoded = [];
+            for (let i = 0; i < 8; i += 2) {
+                const high = bytes[start + i];
+                const low = bytes[start + i + 1];
+                if (high > 0x0f || low > 0x0f) return null;
+                decoded.push((high << 4) | low);
+            }
+            const buffer = new Uint8Array(decoded).buffer;
+            const value = new DataView(buffer).getFloat32(0, true);
+            return Number.isFinite(value) ? value : null;
+        }
+
+        // Boost (PRE / ID 1a000000): posições confirmadas por comparação
+        // de capturas reais da GP5. Cada float ocupa oito nibbles.
+        function readPreBoostParameters(bytes) {
+            const values = [147, 155, 163].map(start =>
+                decodeFloat32FromNibbles(bytes, start)
+            );
+            if (values.some(value => value === null)) return null;
+            const [gain, plus3db, bright] = values;
+            if (gain < 0 || gain > 100) return null;
+            if (![plus3db, bright].every(value =>
+                Math.abs(value) < 0.0001 || Math.abs(value - 1) < 0.0001
+            )) return null;
+            return values;
         }
 
         // Os campos dos blocos na parte 2 não são contíguos:
