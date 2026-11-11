@@ -65,14 +65,16 @@
       "id": "2a000003",
       "parameters": [
         "Gain",
+        "Tone",
         "Volume"
       ],
       "part3Offsets": [
         11,
-        19
+        19,
+        27
       ],
-      "mappingStatus": "candidate",
-      "validation": "Decodificação preliminar: 18 e 60; precisa confirmação no visor."
+      "mappingStatus": "validated",
+      "validation": "Offsets 11, 19 e 27 confirmados por variações controladas na GP5: Gain, Tone e Volume alterados individualmente de 50 para 70; leitor implementado em modo somente leitura."
     },
     {
       "name": "Plustortion",
