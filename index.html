@@ -638,6 +638,11 @@ body.editor-mode .preset-library { display:block !important; }
         <summary style="cursor:pointer;font-size:14px;font-weight:800;letter-spacing:.06em;color:#f2c36a;margin-bottom:10px;">BIBLIOTECA TÉCNICA — 100 PRESETS (AVANÇADO)</summary>
         <p style="font-size:12px;color:#c5cfdd;margin:0 0 12px;">Leia os presets da GP5 em sequência por Bluetooth. A varredura troca temporariamente de preset e, ao terminar, tenta voltar ao preset inicial.</p>
         <button id="readCurrentPresetButton" type="button" class="btn btn-info btn-sm" onclick="readCurrentPreset()">LER PRESET ATUAL</button>
+        <button id="copyRawPresetPacketsButton" type="button" class="btn btn-outline-light btn-sm" onclick="copyRawPresetPackets()" disabled>COPIAR PACOTES BRUTOS</button>
+        <div id="gp5Diagnostic" style="display:none;margin-top:12px;padding:10px;background:#111b2b;border:1px solid #52617d;border-radius:8px;">
+            <div style="font-size:12px;font-weight:700;color:#f2c36a;margin-bottom:6px;">DADOS BRUTOS DO PRESET — SOMENTE LEITURA</div>
+            <textarea id="gp5DiagnosticText" readonly spellcheck="false" style="width:100%;min-height:180px;box-sizing:border-box;background:#0b1220;color:#dce8f7;border:1px solid #405574;border-radius:6px;padding:8px;font:11px/1.45 monospace;white-space:pre;overflow:auto;" placeholder="Faça a leitura do preset atual para preencher os pacotes recebidos."></textarea>
+        </div>
         <button id="scanPresetsButton" type="button" class="btn btn-warning btn-sm" onclick="startPresetScan()">LER EFEITOS DOS 100 PRESETS</button>
         <button id="exportPresetLibraryButton" type="button" class="btn btn-outline-light btn-sm" onclick="exportPresetLibrary()" disabled>EXPORTAR JSON</button>
         <button id="importPresetLibraryButton" type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('importPresetLibraryInput').click()">IMPORTAR JSON</button>
@@ -1624,12 +1629,32 @@ body.editor-mode .preset-library { display:block !important; }
         function renderGp5PacketDiagnostics() {
             const panel = document.getElementById('gp5Diagnostic');
             const output = document.getElementById('gp5DiagnosticText');
+            const copyButton = document.getElementById('copyRawPresetPacketsButton');
             if (!panel || !output) return;
-            panel.style.display = 'block';
-            output.textContent = ['pre', 'part2', 'part3', 'part4', 'final']
+            const content = ['pre', 'part2', 'part3', 'part4', 'final']
                 .filter(key => gp5PacketDiagnostics[key])
                 .map(key => gp5PacketDiagnostics[key])
                 .join('\\n\\n==============================\\n\\n');
+            output.value = content;
+            panel.style.display = content ? 'block' : 'none';
+            if (copyButton) copyButton.disabled = !content;
+        }
+
+        async function copyRawPresetPackets() {
+            const output = document.getElementById('gp5DiagnosticText');
+            if (!output || !output.value) {
+                log('Nenhum pacote bruto disponível. Leia o preset atual primeiro.', 'error');
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(output.value);
+                log('Pacotes brutos copiados. Cole o conteúdo aqui na conversa.');
+            } catch (error) {
+                output.focus();
+                output.select();
+                const copied = document.execCommand('copy');
+                log(copied ? 'Pacotes selecionados e copiados. Cole o conteúdo aqui na conversa.' : 'Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.', copied ? 'info' : 'error');
+            }
         }
 
         function logPatchPacketPart(label, key, bytes) {
