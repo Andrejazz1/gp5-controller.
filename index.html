@@ -1693,6 +1693,7 @@ body.editor-mode .preset-library { display:block !important; }
                 '2a000003': ['SM Dist', readSmDistParameters],
                 '29000003': ['Plustortion', readPlustortionParameters],
                 '30000003': ['La Charger', readLaChargerParameters],
+                '2b000003': ['Darktale', readDarktaleParameters],
                 '40000003': ['Bass OD', readBassODParameters]
             };
             const dstReader = dstReaders[deviceState.blocks.dst?.effectId];
@@ -2263,6 +2264,13 @@ body.editor-mode .preset-library { display:block !important; }
         // Offsets 11, 19 e 27 confirmados por variações controladas
         // independentes de cada parâmetro na GP5 (70 -> 50).
         function readLaChargerParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19, 27]);
+        }
+
+        // Darktale (DST / ID 2b000003): Gain, Filter e Volume.
+        // Offsets 11, 19 e 27 confirmados por alterações isoladas
+        // na GP5: Gain 25->50, Filter 50->75 e Volume 75->50.
+        function readDarktaleParameters(bytes) {
             return readDstFloatParameters(bytes, [11, 19, 27]);
         }
 
