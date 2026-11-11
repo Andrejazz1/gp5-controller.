@@ -134,12 +134,16 @@
         "Fuzz",
         "Volume"
       ],
-      "mappingStatus": "labels-and-values-confirmed",
+      "mappingStatus": "validated",
       "referenceValues": [
         100,
         50
       ],
-      "validation": "Nomes e valores confirmados pelo usuário no visor; offsets genéricos não reproduziram os valores."
+      "validation": "Offsets 11 e 19 confirmados por variações independentes na GP5: Fuzz 50->70 com Volume 50 e Volume 50->70 com Fuzz 50; leitor implementado em modo somente leitura.",
+      "part3Offsets": [
+        11,
+        19
+      ]
     },
     {
       "name": "Red Haze",

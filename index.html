@@ -1694,6 +1694,7 @@ body.editor-mode .preset-library { display:block !important; }
                 '29000003': ['Plustortion', readPlustortionParameters],
                 '30000003': ['La Charger', readLaChargerParameters],
                 '2b000003': ['Darktale', readDarktaleParameters],
+                '22000003': ['Sora Fuzz', readSoraFuzzParameters],
                 '40000003': ['Bass OD', readBassODParameters]
             };
             const dstReader = dstReaders[deviceState.blocks.dst?.effectId];
@@ -2272,6 +2273,13 @@ body.editor-mode .preset-library { display:block !important; }
         // na GP5: Gain 25->50, Filter 50->75 e Volume 75->50.
         function readDarktaleParameters(bytes) {
             return readDstFloatParameters(bytes, [11, 19, 27]);
+        }
+
+        // Sora Fuzz (DST / ID 22000003): Fuzz e Volume.
+        // Offsets 11 e 19 confirmados por variações independentes na GP5:
+        // Fuzz 50->70 com Volume 50; Volume 50->70 com Fuzz 50.
+        function readSoraFuzzParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19]);
         }
 
         function readBassODParameters(bytes) {
