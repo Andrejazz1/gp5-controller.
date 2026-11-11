@@ -1691,6 +1691,7 @@ body.editor-mode .preset-library { display:block !important; }
                 '00000003': ['Green OD', readGreenODParameters],
                 '02000003': ['Yellow OD', readYellowODParameters],
                 '2a000003': ['SM Dist', readSmDistParameters],
+                '29000003': ['Plustortion', readPlustortionParameters],
                 '40000003': ['Bass OD', readBassODParameters]
             };
             const dstReader = dstReaders[deviceState.blocks.dst?.effectId];
@@ -2249,6 +2250,12 @@ body.editor-mode .preset-library { display:block !important; }
         // de um parâmetro por vez na GP5 (50 -> 70).
         function readSmDistParameters(bytes) {
             return readDstFloatParameters(bytes, [11, 19, 27]);
+        }
+
+        // Plustortion (DST / ID 29000003): Gain e Volume confirmados
+        // por variações controladas independentes na GP5.
+        function readPlustortionParameters(bytes) {
+            return readDstFloatParameters(bytes, [11, 19]);
         }
 
         function readBassODParameters(bytes) {

@@ -87,8 +87,8 @@
         11,
         19
       ],
-      "mappingStatus": "candidate",
-      "validation": "Decodificação preliminar: 86 e 60; usuário confirmou que são apenas dois parâmetros."
+      "mappingStatus": "validated",
+      "validation": "Offsets 11 e 19 confirmados por variações controladas independentes na GP5: Gain e Volume alterados individualmente de 50 para 70; leitor implementado em modo somente leitura."
     },
     {
       "name": "La Charger",
