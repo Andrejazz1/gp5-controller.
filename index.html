@@ -1538,6 +1538,8 @@ body.editor-mode .preset-library { display:block !important; }
             deviceState.preRawBytes = preRaw;
             gp5PacketDiagnostics.pre = 'PRE [203]: ' + preRaw +
                 ' | código=' + preEffectId;
+            gp5PacketDiagnostics.part1 = 'PARTE 1 — PACOTE COMPLETO (' + bytes.length + ' bytes)\\n' +
+                formatPatchPacketRows(bytes);
             renderGp5PacketDiagnostics();
             console.log('PRE Effect ID:', preEffectId, '| bytes:', preRaw);
         }
@@ -1631,7 +1633,7 @@ body.editor-mode .preset-library { display:block !important; }
             const output = document.getElementById('gp5DiagnosticText');
             const copyButton = document.getElementById('copyRawPresetPacketsButton');
             if (!panel || !output) return;
-            const content = ['pre', 'part2', 'part3', 'part4', 'final']
+            const content = ['pre', 'part1', 'part2', 'part3', 'part4', 'final']
                 .filter(key => gp5PacketDiagnostics[key])
                 .map(key => gp5PacketDiagnostics[key])
                 .join('\\n\\n==============================\\n\\n');
