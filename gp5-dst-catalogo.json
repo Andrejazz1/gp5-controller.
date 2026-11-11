@@ -103,8 +103,8 @@
         19,
         27
       ],
-      "mappingStatus": "candidate",
-      "validation": "Decodificação preliminar: 50, 88 e 50; ainda sem confirmação no visor."
+      "mappingStatus": "validated",
+      "validation": "Offsets 11, 19 e 27 confirmados por variações controladas independentes na GP5: Gain, Tone e Volume alterados individualmente de 70 para 50; leitor implementado em modo somente leitura."
     },
     {
       "name": "Darktale",
