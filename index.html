@@ -786,7 +786,7 @@ body.editor-mode .preset-library { display:block !important; }
 }
 .footswitch-row > .mod-tap-control {
     grid-column:1 / -1;
-    grid-row:2;
+    grid-row:3;
     width:100%;
     padding-top:16px;
     border-top:1px solid #46515b;
@@ -854,12 +854,15 @@ body.editor-mode .preset-library { display:block !important; }
 .utility-pedal.active .preset-name small { color:#fff; }
 .footswitch-row > .utility-pedal { grid-column:1; grid-row:1; }
 .footswitch-row > .delay-tap-control {
-    grid-column:2;
-    grid-row:1;
+    grid-column:1 / -1;
+    grid-row:2;
     display:grid;
     grid-template-columns:minmax(84px,.68fr) minmax(0,1fr);
     align-items:start;
     gap:12px;
+    width:100%;
+    padding-top:16px;
+    border-top:1px solid #46515b;
 }
 .delay-tap-main { grid-column:2; grid-row:1; min-width:0; }
 .footswitch-row > .mod-tap-control {
