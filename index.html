@@ -480,7 +480,7 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .pedalboard-label { color:#8d99a6; font-size:.68rem; letter-spacing:.18em; font-weight:800; margin:0; }
 .preset-count-control { display:flex; align-items:center; gap:7px; color:#aeb8c2; font-size:.72rem; font-weight:700; white-space:nowrap; }
 .preset-count-control select { background:#111820; border:1px solid #46515d; border-radius:7px; color:#f3f4f6; padding:6px 8px; font-size:.75rem; }
-.preset-pedals { min-width:0; display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); gap:7px; }
+.preset-pedals { min-width:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
 .preset-pedal[hidden] { display:none !important; }
 .preset-pedal { min-width:0; min-height:104px; padding:5px 2px 0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; border:0; border-radius:0; background:transparent; color:#aeb8c2; font-weight:800; font-size:.62rem; box-shadow:none; }
 .preset-pedal .preset-number { color:#788491; font-size:.58rem; letter-spacing:.12em; }
@@ -557,13 +557,13 @@ body.editor-mode .preset-library { display:block !important; }
         </div>
         <section class="pedalboard" aria-label="Pedalboard controls">
             <div class="preset-list-toolbar">
-                <div class="pedalboard-label">PRESETS • 00—08</div>
+                <div class="pedalboard-label">PRESETS • 00—07</div>
                 <div class="preset-count-control">
                     <label for="presetVisibleCount">MOSTRAR</label>
                     <select id="presetVisibleCount" aria-label="Quantidade de presets visíveis">
                         <option value="3">3</option>
                         <option value="6">6</option>
-                        <option value="9" selected>9</option>
+                        <option value="8" selected>8</option>
                     </select>
                 </div>
             </div>
@@ -577,7 +577,6 @@ body.editor-mode .preset-library { display:block !important; }
                 <button type="button" class="preset-pedal" id="quickPreset6" data-preset="5" disabled><span class="preset-number">05</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset7" data-preset="6" disabled><span class="preset-number">06</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 <button type="button" class="preset-pedal" id="quickPreset8" data-preset="7" disabled><span class="preset-number">07</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
-                <button type="button" class="preset-pedal" id="quickPreset9" data-preset="8" disabled><span class="preset-number">08</span><span class="preset-name">PRESET</span><span class="preset-switch" aria-hidden="true"></span></button>
                 </div>
             </div>
             <div class="footswitch-row">
@@ -2684,8 +2683,8 @@ body.editor-mode .preset-library { display:block !important; }
 
 
 // ==================== PEDALBOARD QUICK CONTROLS ====================
-const TOTAL_QUICK_PRESETS = 9;
-let presetVisibleCount = 9;
+const TOTAL_QUICK_PRESETS = 8;
+let presetVisibleCount = 8;
 let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
@@ -2724,7 +2723,7 @@ function updateQuickPresetButtons(preset) {
     const editorStatus = document.getElementById('editorCurrentPreset');
     if (!editorStatus) return;
     if (preset === null || preset === undefined || preset === '') {
-        editorStatus.textContent = 'Conecte a GP5 e selecione um dos nove presets na aba Pedalboard. O Editor acompanhará automaticamente a seleção.';
+        editorStatus.textContent = 'Conecte a GP5 e selecione um dos oito presets na aba Pedalboard.';
         return;
     }
     const number = Number(preset);
