@@ -917,6 +917,29 @@ body.editor-mode .preset-library { display:block !important; }
     
 
 
+
+/* Alinhamento por colunas: a plaquinha DELAY ocupa exatamente a primeira
+   coluna dos presets; os controles de ritmo usam a segunda e a terceira. */
+.footswitch-row > .delay-tap-control {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    column-gap:7px;
+}
+.footswitch-row > .delay-tap-control > #delayFootswitch {
+    grid-column:1;
+    margin-left:0;
+    width:100%;
+}
+.footswitch-row > .delay-tap-control > .delay-tap-main {
+    grid-column:2 / 4;
+    min-width:0;
+}
+@media(max-width:520px) {
+    .footswitch-row > .delay-tap-control {
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        column-gap:7px;
+    }
+}
+
 /* Alinhar a plaquinha DELAY com a borda esquerda do primeiro preset. */
 .footswitch-row > .delay-tap-control > #delayFootswitch {
     margin-left:0;
