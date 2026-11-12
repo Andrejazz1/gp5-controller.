@@ -917,15 +917,22 @@ body.editor-mode .preset-library { display:block !important; }
     
 
 
-/* Recuar a plaquinha DELAY até a margem esquerda do painel. */
+/* Alinhar a plaquinha DELAY com a borda esquerda do primeiro preset. */
 .footswitch-row > .delay-tap-control > #delayFootswitch {
-    margin-left:-16px;
-    width:calc(100% + 16px);
+    margin-left:0;
+    width:100%;
+}
+
+/* Garantir que PONTUADA caiba na terceira plaquinha de ritmo. */
+.rhythm-option[data-subdivision="dottedEighth"] small {
+    font-size:.40rem;
+    letter-spacing:-.04em;
+    white-space:nowrap;
 }
 @media(max-width:520px) {
-    .footswitch-row > .delay-tap-control > #delayFootswitch {
-        margin-left:-12px;
-        width:calc(100% + 12px);
+    .rhythm-option[data-subdivision="dottedEighth"] small {
+        font-size:.34rem;
+        letter-spacing:-.045em;
     }
 }
 
