@@ -826,6 +826,78 @@ body.editor-mode .preset-library { display:block !important; }
     }
 }
 
+    
+/* Utility ON/OFF pedals reuse the exact preset footswitch construction. */
+.footswitch-row {
+    grid-template-columns:minmax(84px,.68fr) minmax(0,1fr);
+    align-items:start;
+    column-gap:12px;
+    row-gap:18px;
+}
+.utility-pedal {
+    width:100%;
+    min-height:116px;
+    cursor:pointer;
+    justify-content:flex-start;
+}
+.utility-pedal .preset-name small {
+    display:inline;
+    margin-left:4px;
+    color:#d7eaff;
+    font-size:.62rem;
+    letter-spacing:.06em;
+}
+.utility-pedal.active .preset-name small { color:#fff; }
+.footswitch-row > .utility-pedal { grid-column:1; grid-row:1; }
+.footswitch-row > .delay-tap-control { grid-column:2; grid-row:1; }
+.footswitch-row > .mod-tap-control {
+    grid-column:1 / -1;
+    grid-row:2;
+    display:grid;
+    grid-template-columns:minmax(84px,.68fr) minmax(0,1fr);
+    align-items:start;
+    gap:12px;
+    width:100%;
+    padding-top:16px;
+    border-top:1px solid #46515b;
+}
+.footswitch-row > .mod-tap-control::before { display:none; }
+.mod-power-pedal { grid-column:1; grid-row:1; }
+.mod-tap-main { grid-column:2; grid-row:1; min-width:0; }
+.footswitch.tap {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:42px;
+    height:42px;
+    margin:8px 0 0;
+    padding:7px 5px;
+    border:1px solid #5597d2;
+    border-radius:4px;
+    color:#eaf5ff;
+    background:linear-gradient(180deg,#1678c8 0%,#07539b 55%,#063c73 100%);
+    box-shadow:inset 0 1px 2px #ffffff70,inset 0 -3px 5px #001d3b99,0 2px 5px #0008;
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-shadow:0 0 7px #a9ddff99;
+}
+.footswitch.tap::before, .footswitch.tap::after { display:none; content:none; }
+.footswitch.tap:disabled { opacity:.48; }
+.footswitch.tap:active:not(:disabled) {
+    background:linear-gradient(180deg,#36a5f5 0%,#0875c9 55%,#064b86 100%);
+}
+.tap-control .tap-readout { min-height:34px; }
+@media(max-width:520px) {
+    .footswitch-row { grid-template-columns:minmax(76px,.68fr) minmax(0,1fr); column-gap:9px; }
+    .footswitch-row > .mod-tap-control { grid-template-columns:minmax(76px,.68fr) minmax(0,1fr); gap:9px; padding-top:13px; }
+    .utility-pedal { min-height:110px; }
+    .footswitch.tap { font-size:.58rem; }
+    .utility-pedal .preset-name { font-size:.59rem; }
+    .utility-pedal .preset-name small { font-size:.54rem; }
+}
+
     </style>
 
 </head>
@@ -873,8 +945,10 @@ body.editor-mode .preset-library { display:block !important; }
                 </div>
             </div>
             <div class="footswitch-row">
-                <button type="button" class="footswitch" id="delayFootswitch" disabled>DELAY <small id="delayFootswitchState">OFF</small></button>
-                <div class="tap-control">
+                <button type="button" class="preset-pedal utility-pedal" id="delayFootswitch" disabled>
+                    <span class="preset-number">EFFECT</span><span class="preset-name">DELAY <small id="delayFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
+                </button>
+                <div class="tap-control delay-tap-control">
                     <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo do Delay">
                         <button type="button" class="rhythm-option" data-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
                         <button type="button" class="rhythm-option" data-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
@@ -884,13 +958,18 @@ body.editor-mode .preset-library { display:block !important; }
                     <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO</div>
                 </div>
                 <div class="tap-control mod-tap-control">
-                    <div class="rhythm-select" role="group" aria-label="Figura rítmica da velocidade da Modulação">
-                        <button type="button" class="rhythm-option mod-rhythm-option" data-mod-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
-                        <button type="button" class="rhythm-option mod-rhythm-option" data-mod-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
-                        <button type="button" class="rhythm-option mod-rhythm-option active" data-mod-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
+                    <button type="button" class="preset-pedal utility-pedal mod-power-pedal" id="modFootswitch" disabled>
+                        <span class="preset-number">EFFECT</span><span class="preset-name">MOD <small id="modFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
+                    </button>
+                    <div class="mod-tap-main">
+                        <div class="rhythm-select" role="group" aria-label="Figura rítmica da velocidade da Modulação">
+                            <button type="button" class="rhythm-option mod-rhythm-option" data-mod-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
+                            <button type="button" class="rhythm-option mod-rhythm-option" data-mod-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
+                            <button type="button" class="rhythm-option mod-rhythm-option active" data-mod-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
+                        </div>
+                        <button type="button" class="footswitch tap mod-tap" id="modTapFootswitch" disabled>MOD TAP</button>
+                        <div class="tap-readout" id="modTapReadout">Toque para definir a velocidade da modulação</div>
                     </div>
-                    <button type="button" class="footswitch tap mod-tap" id="modTapFootswitch" disabled>MOD TAP</button>
-                    <div class="tap-readout" id="modTapReadout">Toque para definir a velocidade da modulação</div>
                 </div>
             </div>
         </section>
@@ -1210,6 +1289,12 @@ body.editor-mode .preset-library { display:block !important; }
                 sendBlockStatus(7, next ? 1 : 0);
                 deviceState.blocks.dly = {...(deviceState.blocks.dly || {}), enabled: next};
                 setDelayFootswitchState(next);
+            });
+            document.getElementById('modFootswitch').addEventListener('click', () => {
+                const next = !deviceState.blocks.mod?.enabled;
+                sendBlockStatus(6, next ? 1 : 0);
+                deviceState.blocks.mod = {...(deviceState.blocks.mod || {}), enabled: next};
+                setModFootswitchState(next);
             });
             
             // Close panel on backdrop click
@@ -2918,6 +3003,7 @@ body.editor-mode .preset-library { display:block !important; }
                     const effectName = blockState?.effectName || '';
                     const statusText = enabled ? 'ON' : 'OFF';
                     if (block.name === 'dly') setDelayFootswitchState(enabled);
+                    if (block.name === 'mod') setModFootswitchState(enabled);
                     
                     const labelEl = btn.querySelector('.block-label');
                     const effectEl = btn.querySelector('.block-effect');
@@ -2960,6 +3046,7 @@ body.editor-mode .preset-library { display:block !important; }
             });
             document.querySelectorAll('.preset-pedal').forEach(btn => { btn.disabled = !enabled; });
             document.getElementById('delayFootswitch').disabled = !enabled;
+            document.getElementById('modFootswitch').disabled = !enabled;
             document.getElementById('tapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
             document.getElementById('modTapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
             document.getElementById('readCurrentPresetButton').disabled = !enabled || connectionMode !== 'bluetooth' || presetScan.active || singlePresetRead.active;
@@ -3158,6 +3245,12 @@ function setDelayFootswitchState(enabled) {
     const btn = document.getElementById('delayFootswitch');
     btn.classList.toggle('active', !!enabled);
     document.getElementById('delayFootswitchState').textContent = enabled ? 'ON' : 'OFF';
+}
+
+function setModFootswitchState(enabled) {
+    const btn = document.getElementById('modFootswitch');
+    btn.classList.toggle('active', !!enabled);
+    document.getElementById('modFootswitchState').textContent = enabled ? 'ON' : 'OFF';
 }
 
         // ==================== INICIALIZAÇÃO ====================
