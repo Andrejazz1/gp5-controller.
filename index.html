@@ -751,6 +751,18 @@ body.editor-mode .preset-library { display:block !important; }
 .tap-control .footswitch { min-height:102px; }
 .footswitch.tap::before { content:'TAP TEMPO'; }
 
+    /* Independent modulation tap tempo, sharing the Helix-style footswitch design. */
+.footswitch-row { grid-template-columns:minmax(82px,.72fr) minmax(0,1fr) minmax(0,1fr); align-items:start; }
+.tap-control { width:100%; }
+.tap-control .tap-readout { min-height:34px; padding-left:2px; padding-right:2px; font-size:.62rem; line-height:1.25; }
+.footswitch.tap.mod-tap::before { content:'MOD TAP'; }
+@media(max-width:520px) {
+    .footswitch-row { grid-template-columns:minmax(66px,.65fr) minmax(0,1fr) minmax(0,1fr); gap:5px; }
+    .footswitch { font-size:.58rem; }
+    .rhythm-option small { font-size:.42rem; }
+    .tap-control .tap-readout { font-size:.55rem; }
+}
+
     </style>
 
 </head>
@@ -800,15 +812,24 @@ body.editor-mode .preset-library { display:block !important; }
             <div class="footswitch-row">
                 <button type="button" class="footswitch" id="delayFootswitch" disabled>DELAY <small id="delayFootswitchState">OFF</small></button>
                 <div class="tap-control">
-                    <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo">
+                    <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo do Delay">
                         <button type="button" class="rhythm-option" data-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
                         <button type="button" class="rhythm-option" data-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
                         <button type="button" class="rhythm-option active" data-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
                     </div>
                     <button type="button" class="footswitch tap" id="tapFootswitch" disabled>TAP TEMPO</button>
+                    <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO</div>
+                </div>
+                <div class="tap-control mod-tap-control">
+                    <div class="rhythm-select" role="group" aria-label="Figura rítmica da velocidade da Modulação">
+                        <button type="button" class="rhythm-option mod-rhythm-option" data-mod-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
+                        <button type="button" class="rhythm-option mod-rhythm-option" data-mod-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
+                        <button type="button" class="rhythm-option mod-rhythm-option active" data-mod-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
+                    </div>
+                    <button type="button" class="footswitch tap mod-tap" id="modTapFootswitch" disabled>MOD TAP</button>
+                    <div class="tap-readout" id="modTapReadout">Toque para definir a velocidade da modulação</div>
                 </div>
             </div>
-            <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO no ritmo da música</div>
         </section>
 
         <!-- Patch Selector -->
@@ -1095,6 +1116,7 @@ body.editor-mode .preset-library { display:block !important; }
                 modeEl.addEventListener('change', (e) => {
                     connectionMode = e.target.value;
                     document.getElementById('tapFootswitch').disabled = !deviceState.connected || connectionMode !== 'bluetooth';
+                    document.getElementById('modTapFootswitch').disabled = !deviceState.connected || connectionMode !== 'bluetooth';
                     document.getElementById('statusText').textContent = `Mode: ${connectionMode.toUpperCase()}. Waiting for connection...`;
                 });
             }
@@ -1111,10 +1133,15 @@ body.editor-mode .preset-library { display:block !important; }
             });
             showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
-            document.querySelectorAll('.rhythm-option').forEach(btn => {
+            document.querySelectorAll('.rhythm-option:not(.mod-rhythm-option)').forEach(btn => {
                 btn.addEventListener('click', () => setTapSubdivision(btn.dataset.subdivision));
             });
+            document.getElementById('modTapFootswitch').addEventListener('click', quickModTapTempo);
+            document.querySelectorAll('.mod-rhythm-option').forEach(btn => {
+                btn.addEventListener('click', () => setModTapSubdivision(btn.dataset.modSubdivision));
+            });
             setTapSubdivision(tapSubdivision);
+            setModTapSubdivision(modTapSubdivision);
             document.getElementById('delayFootswitch').addEventListener('click', () => {
                 const next = !deviceState.blocks.dly?.enabled;
                 sendBlockStatus(7, next ? 1 : 0);
@@ -2871,6 +2898,7 @@ body.editor-mode .preset-library { display:block !important; }
             document.querySelectorAll('.preset-pedal').forEach(btn => { btn.disabled = !enabled; });
             document.getElementById('delayFootswitch').disabled = !enabled;
             document.getElementById('tapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
+            document.getElementById('modTapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
             document.getElementById('readCurrentPresetButton').disabled = !enabled || connectionMode !== 'bluetooth' || presetScan.active || singlePresetRead.active;
         }
 
@@ -2907,6 +2935,9 @@ let tapTimes = [];
 let lastTapMs = 0;
 let currentTapBpm = null;
 let tapSubdivision = 'dottedEighth';
+let modTapTimes = [];
+let modLastTapMs = 0;
+let modTapSubdivision = 'dottedEighth';
 
 function setTapSubdivision(subdivision) {
     const factors = { quarter: 1, eighth: 0.5, dottedEighth: 0.75 };
@@ -2921,6 +2952,56 @@ function setTapSubdivision(subdivision) {
     lastTapMs = 0;
     const labels = { quarter: 'semínima', eighth: 'colcheia', dottedEighth: 'colcheia pontuada' };
     document.getElementById('tapReadout').textContent = 'Figura selecionada: ' + labels[subdivision] + '. Toque no TAP TEMPO.';
+}
+
+function setModTapSubdivision(subdivision) {
+    const factors = { quarter: 1, eighth: 0.5, dottedEighth: 0.75 };
+    if (!(subdivision in factors)) return;
+    modTapSubdivision = subdivision;
+    document.querySelectorAll('.mod-rhythm-option').forEach(btn => {
+        const selected = btn.dataset.modSubdivision === subdivision;
+        btn.classList.toggle('active', selected);
+        btn.setAttribute('aria-pressed', String(selected));
+    });
+    modTapTimes = [];
+    modLastTapMs = 0;
+    const labels = { quarter: 'semínima', eighth: 'colcheia', dottedEighth: 'colcheia pontuada' };
+    document.getElementById('modTapReadout').textContent = 'Figura: ' + labels[subdivision] + '. Toque no MOD TAP.';
+}
+
+function quickModTapTempo() {
+    if (connectionMode !== 'bluetooth' || !deviceState.connected) {
+        log('Tap da modulação requer conexão Bluetooth.');
+        return;
+    }
+    const modState = deviceState.blocks.mod || {};
+    const modBlock = gp5Config.blocks.find(block => block.name === 'mod');
+    const effect = modBlock && modBlock.effects ? modBlock.effects[modState.effectId] : null;
+    const rateParam = effect && effect.parameters ? effect.parameters.find(param => /rate/i.test(param.name)) : null;
+    if (!rateParam) {
+        document.getElementById('modTapReadout').textContent = 'O efeito MOD deste preset não possui parâmetro Rate reconhecido.';
+        log('Não foi possível aplicar o Tap Tempo: parâmetro Rate do MOD não identificado.');
+        return;
+    }
+    const now = performance.now();
+    if (modLastTapMs && now - modLastTapMs > 2200) modTapTimes = [];
+    modTapTimes.push(now);
+    modTapTimes = modTapTimes.slice(-5);
+    modLastTapMs = now;
+    if (modTapTimes.length >= 2) {
+        const intervals = modTapTimes.slice(1).map((time, index) => time - modTapTimes[index]);
+        const beatMs = intervals.reduce((sum, value) => sum + value, 0) / intervals.length;
+        const bpm = Math.round(60000 / beatMs);
+        const factors = { quarter: 1, eighth: 0.5, dottedEighth: 0.75 };
+        const labels = { quarter: 'semínima', eighth: 'colcheia', dottedEighth: 'colcheia pontuada' };
+        const rawRate = 1000 / (beatMs * factors[modTapSubdivision]);
+        const rate = Math.max(0.1, Math.min(10, Math.round(rawRate * 10) / 10));
+        sendParamChange(6, rateParam.index, rate);
+        document.getElementById('modTapReadout').textContent = bpm + ' BPM • ' + rate.toFixed(1) + ' Hz • ' + labels[modTapSubdivision];
+        log('Tap Modulação: ' + bpm + ' BPM → Rate ' + rate.toFixed(1) + ' Hz (' + labels[modTapSubdivision] + ') no efeito ' + effect.name + '.');
+    } else {
+        document.getElementById('modTapReadout').textContent = 'Mais um toque para calcular a velocidade…';
+    }
 }
 
 function getPhysicalPresetName(preset) {
