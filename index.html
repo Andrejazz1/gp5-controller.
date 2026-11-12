@@ -2943,7 +2943,7 @@ function setTapSubdivision(subdivision) {
     const factors = { quarter: 1, eighth: 0.5, dottedEighth: 0.75 };
     if (!(subdivision in factors)) return;
     tapSubdivision = subdivision;
-    document.querySelectorAll('.rhythm-option').forEach(btn => {
+    document.querySelectorAll('.rhythm-option:not(.mod-rhythm-option)').forEach(btn => {
         const selected = btn.dataset.subdivision === subdivision;
         btn.classList.toggle('active', selected);
         btn.setAttribute('aria-pressed', String(selected));
