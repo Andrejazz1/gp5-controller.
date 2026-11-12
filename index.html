@@ -3366,7 +3366,28 @@ function setModFootswitchState(enabled) {
 </html>
 
 
-/* Correção definitiva: o bloco Delay e sua divisória começam na mesma
+/* Correção restrita ao bloco Delay: alinhar sua borda esquerda e a
+   divisória com o início real da primeira célula da grade (preset 00). */
+.footswitch-row > .delay-tap-control {
+    grid-column:1 / -1 !important;
+    grid-row:2 !important;
+    width:calc(100% - 6px) !important;
+    margin-left:3px !important;
+    box-sizing:border-box;
+    border-top:1px solid #46515b;
+    padding-top:16px;
+}
+.footswitch-row {
+    border-top:0 !important;
+    padding-top:0 !important;
+}
+@media(max-width:520px) {
+    .footswitch-row > .delay-tap-control {
+        width:calc(100% - 6px) !important;
+        margin-left:3px !important;
+        padding-top:13px;
+    }
+}/* Correção definitiva: o bloco Delay e sua divisória começam na mesma
    borda esquerda da grade de presets (coluna 00). Sobrescreve a regra
    antiga que posicionava .tap-control na segunda coluna. */
 .footswitch-row {
