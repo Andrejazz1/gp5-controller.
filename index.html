@@ -727,6 +727,30 @@ body.editor-mode .preset-library { display:block !important; }
     .footswitch-row { gap:7px; }
 }
 
+    
+/* Final alignment for the two lower Helix-style footswitches. */
+.footswitch::before {
+    content:'DELAY';
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#eaf5ff;
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-shadow:0 0 7px #a9ddff99;
+}
+.footswitch small {
+    position:absolute;
+    top:35px;
+    left:0;
+    right:0;
+    margin:0;
+    text-align:center;
+}
+.tap-control .footswitch { min-height:102px; }
+.footswitch.tap::before { content:'TAP TEMPO'; }
+
     </style>
 
 </head>
