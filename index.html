@@ -1006,7 +1006,71 @@ body.editor-mode .preset-library { display:block !important; }
     opacity:1 !important;
 }
 
-    </style>
+    
+/* Preset footswitches: arcade-style illuminated push buttons */
+.preset-pedal .preset-switch {
+    position:relative;
+    width:52px;
+    height:52px;
+    flex:0 0 52px;
+    margin-top:2px;
+    border:4px solid #303840;
+    border-radius:50%;
+    opacity:1;
+    background:
+        radial-gradient(ellipse at 34% 22%,#ffffffd9 0%,#ffffff55 12%,transparent 28%),
+        radial-gradient(circle at 50% 42%,var(--arcade-light) 0%,var(--arcade-color) 48%,var(--arcade-dark) 78%,#171b20 100%);
+    box-shadow:
+        inset 0 3px 5px #ffffff88,
+        inset 0 -7px 10px #0009,
+        0 0 0 2px #78838c,
+        0 5px 0 #090c0f,
+        0 8px 10px #000c;
+    transition:transform .1s ease,filter .12s ease,box-shadow .12s ease;
+}
+.preset-pedal .preset-switch::before {
+    content:'';
+    position:absolute;
+    inset:4px;
+    border:1px solid #ffffff75;
+    border-radius:50%;
+    box-shadow:inset 0 2px 4px #0005,0 1px 2px #fff6;
+}
+.preset-pedal:nth-child(8n+1) { --arcade-color:#ed3d48; --arcade-light:#ff9b9f; --arcade-dark:#77151d; }
+.preset-pedal:nth-child(8n+2) { --arcade-color:#f0a52e; --arcade-light:#ffe0a0; --arcade-dark:#80500e; }
+.preset-pedal:nth-child(8n+3) { --arcade-color:#26a9e0; --arcade-light:#a0e7ff; --arcade-dark:#075078; }
+.preset-pedal:nth-child(8n+4) { --arcade-color:#39b978; --arcade-light:#a7f5c9; --arcade-dark:#125b38; }
+.preset-pedal:nth-child(8n+5) { --arcade-color:#a66be0; --arcade-light:#e0baff; --arcade-dark:#4e247c; }
+.preset-pedal:nth-child(8n+6) { --arcade-color:#e45c9b; --arcade-light:#ffc0df; --arcade-dark:#79254d; }
+.preset-pedal:nth-child(8n+7) { --arcade-color:#e4cb43; --arcade-light:#fff5a8; --arcade-dark:#756311; }
+.preset-pedal:nth-child(8n+8) { --arcade-color:#e87535; --arcade-light:#ffc09a; --arcade-dark:#783315; }
+.preset-pedal:active .preset-switch {
+    transform:translateY(4px) scale(.96);
+    filter:brightness(1.12);
+    box-shadow:inset 0 3px 7px #0009,0 0 0 2px #78838c,0 1px 0 #090c0f,0 2px 4px #000a;
+}
+.preset-pedal.active .preset-switch {
+    filter:brightness(1.18) saturate(1.12);
+    box-shadow:
+        inset 0 3px 5px #ffffff99,
+        inset 0 -7px 10px #0009,
+        0 0 0 2px #c6d0d8,
+        0 5px 0 #090c0f,
+        0 8px 10px #000c,
+        0 0 17px var(--arcade-color);
+}
+.preset-pedal.active .preset-switch::after {
+    width:8px;
+    height:8px;
+    top:-9px;
+    background:#fff5a8;
+    box-shadow:0 0 5px 3px var(--arcade-color),0 0 12px 5px var(--arcade-color);
+}
+@media(max-width:380px) {
+    .preset-pedal .preset-switch { width:47px; height:47px; flex-basis:47px; }
+}
+
+</style>
 
 </head>
 <body>
