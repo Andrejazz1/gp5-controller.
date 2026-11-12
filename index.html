@@ -853,7 +853,15 @@ body.editor-mode .preset-library { display:block !important; }
 }
 .utility-pedal.active .preset-name small { color:#fff; }
 .footswitch-row > .utility-pedal { grid-column:1; grid-row:1; }
-.footswitch-row > .delay-tap-control { grid-column:2; grid-row:1; }
+.footswitch-row > .delay-tap-control {
+    grid-column:2;
+    grid-row:1;
+    display:grid;
+    grid-template-columns:minmax(84px,.68fr) minmax(0,1fr);
+    align-items:start;
+    gap:12px;
+}
+.delay-tap-main { grid-column:2; grid-row:1; min-width:0; }
 .footswitch-row > .mod-tap-control {
     grid-column:1 / -1;
     grid-row:2;
@@ -895,7 +903,8 @@ body.editor-mode .preset-library { display:block !important; }
 .tap-control .tap-readout { min-height:34px; }
 @media(max-width:520px) {
     .footswitch-row { grid-template-columns:minmax(76px,.68fr) minmax(0,1fr); column-gap:9px; }
-    .footswitch-row > .mod-tap-control { grid-template-columns:minmax(76px,.68fr) minmax(0,1fr); gap:9px; padding-top:13px; }
+    .footswitch-row > .delay-tap-control, .footswitch-row > .mod-tap-control { grid-template-columns:minmax(76px,.68fr) minmax(0,1fr); gap:9px; }
+    .footswitch-row > .mod-tap-control { padding-top:13px; }
     .utility-pedal { min-height:110px; }
     .footswitch.tap { font-size:.58rem; }
     .utility-pedal .preset-name { font-size:.59rem; }
@@ -998,13 +1007,15 @@ body.editor-mode .preset-library { display:block !important; }
                     <button type="button" class="effect-label-toggle" id="delayFootswitch" disabled aria-label="Ligar ou desligar Delay">
                         <span>DELAY</span>
                     </button>
-                    <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo do Delay">
-                        <button type="button" class="rhythm-option" data-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
-                        <button type="button" class="rhythm-option" data-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
-                        <button type="button" class="rhythm-option active" data-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
+                    <div class="delay-tap-main">
+                        <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo do Delay">
+                            <button type="button" class="rhythm-option" data-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
+                            <button type="button" class="rhythm-option" data-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
+                            <button type="button" class="rhythm-option active" data-subdivision="dottedEighth" aria-pressed="true">♪.<small>PONTUADA</small></button>
+                        </div>
+                        <button type="button" class="footswitch tap" id="tapFootswitch" disabled>TAP TEMPO</button>
+                        <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO</div>
                     </div>
-                    <button type="button" class="footswitch tap" id="tapFootswitch" disabled>TAP TEMPO</button>
-                    <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO</div>
                 </div>
                 <div class="tap-control mod-tap-control">
                     <button type="button" class="effect-label-toggle" id="modFootswitch" disabled aria-label="Ligar ou desligar Modulação">
