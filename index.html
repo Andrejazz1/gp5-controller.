@@ -915,6 +915,9 @@ body.editor-mode .preset-library { display:block !important; }
 }
 
     
+/* Pedalboard simplification: show Delay only; keep modulation controls inactive and hidden. */
+.footswitch-row > .mod-tap-control { display:none !important; }
+
 /* Keep utility pedal labels and blue name plates visible before connecting to the GP5. */
 .utility-pedal:disabled {
     opacity:1 !important;
