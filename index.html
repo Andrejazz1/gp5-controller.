@@ -501,6 +501,12 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .footswitch.tap { background:linear-gradient(#315e88,#1b3550); }
 .footswitch.tap:active { transform:translateY(2px); }
 .tap-control { display:flex; flex-direction:column; gap:7px; min-width:0; }
+.effect-label-toggle { width:100%; min-height:38px; padding:7px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid #52708a; border-bottom:3px solid #101923; border-radius:8px; color:#f3f6f9; background:linear-gradient(180deg,#315e88,#1b3550); font-size:.78rem; font-weight:900; letter-spacing:.12em; text-align:left; }
+.effect-label-toggle strong { min-width:42px; padding:3px 7px; border-radius:5px; color:#d6e0e9; background:#111d29; font-size:.68rem; letter-spacing:.08em; text-align:center; }
+.effect-label-toggle.active { border-color:#59c99b; background:linear-gradient(180deg,#2d8d68,#14533d); }
+.effect-label-toggle.active strong { color:#fff; background:#0d3c2c; }
+.effect-label-toggle:disabled { opacity:1; filter:brightness(.78); cursor:not-allowed; }
+.effect-label-toggle:active:not(:disabled) { transform:translateY(1px); }
 .rhythm-select { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
 .rhythm-option { min-width:0; padding:5px 2px; border:1px solid #4a5662; border-radius:7px; color:#dce3e9; background:linear-gradient(#343d46,#20262d); font-size:1rem; font-weight:800; line-height:1.1; }
 .rhythm-option small { display:block; margin-top:3px; color:#aeb8c2; font-size:.48rem; letter-spacing:.02em; white-space:nowrap; }
@@ -990,10 +996,10 @@ body.editor-mode .preset-library { display:block !important; }
                 </div>
             </div>
             <div class="footswitch-row">
-                <button type="button" class="preset-pedal utility-pedal" id="delayFootswitch" disabled>
-                    <span class="preset-number utility-title">DELAY</span><span class="preset-name">ON / OFF <small id="delayFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
-                </button>
                 <div class="tap-control delay-tap-control">
+                    <button type="button" class="effect-label-toggle" id="delayFootswitch" disabled aria-label="Ligar ou desligar Delay">
+                        <span>DELAY</span><strong id="delayFootswitchState">OFF</strong>
+                    </button>
                     <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo do Delay">
                         <button type="button" class="rhythm-option" data-subdivision="quarter" aria-pressed="false">♩<small>SEMÍNIMA</small></button>
                         <button type="button" class="rhythm-option" data-subdivision="eighth" aria-pressed="false">♪<small>COLCHEIA</small></button>
@@ -1003,8 +1009,8 @@ body.editor-mode .preset-library { display:block !important; }
                     <div class="tap-readout" id="tapReadout">Toque no TAP TEMPO</div>
                 </div>
                 <div class="tap-control mod-tap-control">
-                    <button type="button" class="preset-pedal utility-pedal mod-power-pedal" id="modFootswitch" disabled>
-                        <span class="preset-number utility-title">MODULAÇÃO</span><span class="preset-name">ON / OFF <small id="modFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
+                    <button type="button" class="effect-label-toggle" id="modFootswitch" disabled aria-label="Ligar ou desligar Modulação">
+                        <span>MODULAÇÃO</span><strong id="modFootswitchState">OFF</strong>
                     </button>
                     <div class="mod-tap-main">
                         <div class="rhythm-select" role="group" aria-label="Figura rítmica da velocidade da Modulação">
