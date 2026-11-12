@@ -898,6 +898,23 @@ body.editor-mode .preset-library { display:block !important; }
     .utility-pedal .preset-name small { font-size:.54rem; }
 }
 
+    
+/* Keep utility pedal labels and blue name plates visible before connecting to the GP5. */
+.utility-pedal:disabled {
+    opacity:1 !important;
+    filter:none !important;
+    cursor:not-allowed;
+}
+.utility-pedal:disabled .preset-number { color:#aab5bf; }
+.utility-pedal:disabled .preset-name {
+    opacity:1;
+    color:#e8f5ff;
+    background:linear-gradient(180deg,#1678c8 0%,#07539b 55%,#063c73 100%);
+    border-color:#5597d2;
+}
+.utility-pedal:disabled .preset-switch { opacity:.78; }
+.utility-pedal:disabled .preset-name small { color:#d7eaff; }
+
     </style>
 
 </head>
