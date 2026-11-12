@@ -915,6 +915,20 @@ body.editor-mode .preset-library { display:block !important; }
 }
 
     
+
+
+/* Recuar a plaquinha DELAY até a margem esquerda do painel. */
+.footswitch-row > .delay-tap-control > #delayFootswitch {
+    margin-left:-16px;
+    width:calc(100% + 16px);
+}
+@media(max-width:520px) {
+    .footswitch-row > .delay-tap-control > #delayFootswitch {
+        margin-left:-12px;
+        width:calc(100% + 12px);
+    }
+}
+
 /* Pedalboard simplification: show Delay only; keep modulation controls inactive and hidden. */
 .footswitch-row > .mod-tap-control { display:none !important; }
 
