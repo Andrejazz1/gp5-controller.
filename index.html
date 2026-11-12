@@ -915,6 +915,34 @@ body.editor-mode .preset-library { display:block !important; }
 .utility-pedal:disabled .preset-switch { opacity:.78; }
 .utility-pedal:disabled .preset-name small { color:#d7eaff; }
 
+    
+/* Persistent section names above the utility ON/OFF footswitches. */
+.utility-pedal .utility-title {
+    display:block;
+    width:100%;
+    min-height:1.5em;
+    color:#e3bd78 !important;
+    font-size:.7rem !important;
+    font-weight:900;
+    letter-spacing:.16em;
+    line-height:1.5;
+    text-align:center;
+    text-transform:uppercase;
+    opacity:1 !important;
+    overflow:visible;
+}
+.utility-pedal .preset-name {
+    display:block;
+    visibility:visible;
+    opacity:1 !important;
+    text-align:center;
+}
+.utility-pedal .preset-name small {
+    display:inline-block;
+    visibility:visible;
+    opacity:1 !important;
+}
+
     </style>
 
 </head>
@@ -963,7 +991,7 @@ body.editor-mode .preset-library { display:block !important; }
             </div>
             <div class="footswitch-row">
                 <button type="button" class="preset-pedal utility-pedal" id="delayFootswitch" disabled>
-                    <span class="preset-number">EFFECT</span><span class="preset-name">DELAY <small id="delayFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
+                    <span class="preset-number utility-title">DELAY</span><span class="preset-name">ON / OFF <small id="delayFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
                 </button>
                 <div class="tap-control delay-tap-control">
                     <div class="rhythm-select" role="group" aria-label="Figura rítmica do Tap Tempo do Delay">
@@ -976,7 +1004,7 @@ body.editor-mode .preset-library { display:block !important; }
                 </div>
                 <div class="tap-control mod-tap-control">
                     <button type="button" class="preset-pedal utility-pedal mod-power-pedal" id="modFootswitch" disabled>
-                        <span class="preset-number">EFFECT</span><span class="preset-name">MOD <small id="modFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
+                        <span class="preset-number utility-title">MODULAÇÃO</span><span class="preset-name">ON / OFF <small id="modFootswitchState">OFF</small></span><span class="preset-switch" aria-hidden="true"></span>
                     </button>
                     <div class="mod-tap-main">
                         <div class="rhythm-select" role="group" aria-label="Figura rítmica da velocidade da Modulação">
