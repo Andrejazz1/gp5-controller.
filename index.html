@@ -534,6 +534,199 @@ body.editor-mode .preset-library { display:block !important; }
 .block-btn .block-label { font-size:.82rem; margin:0; } .block-btn .block-effect { font-size:.68rem; color:#aeb8c2; } .block-btn.active .block-effect { color:#fff; }
 @media(max-width:520px) { .preset-pedals { grid-template-columns:repeat(3,minmax(0,1fr)); } .preset-pedal { min-height:98px; } .preset-switch { width:40px; height:40px; flex-basis:40px; } .gp5-brand h1 {font-size:1rem;} }
 
+    
+/* Helix-inspired hardware surface: blue scribble strips and metal footswitches. */
+.app-header {
+    background:linear-gradient(180deg,#252a30 0%,#15191e 52%,#0d1014 100%);
+    border-bottom:2px solid #3b434b;
+    box-shadow:0 5px 18px #000b,inset 0 1px #ffffff18;
+}
+.gp5-brand { margin-bottom:12px; }
+.gp5-brand h1 { color:#e8edf2; text-shadow:0 1px 2px #000; }
+.gp5-brand small { color:#6f9bc9; }
+#connectionModeSelect {
+    background-color:#171d23;
+    color:#dce5ed;
+    border:1px solid #59636d;
+}
+.connect-btn {
+    border:1px solid #719ac2;
+    border-radius:5px;
+    background:linear-gradient(#397bb6,#174b7d);
+    box-shadow:inset 0 1px #ffffff55,0 3px 0 #080b0e;
+}
+.pedalboard {
+    max-width:900px;
+    padding:17px 13px 19px;
+    border:1px solid #4a535c;
+    border-radius:8px;
+    background:
+      linear-gradient(115deg,#30363c 0%,#22282e 45%,#171c21 100%);
+    box-shadow:inset 0 2px 2px #ffffff16,inset 0 -5px 12px #0008,0 12px 30px #000b;
+}
+.preset-list-toolbar {
+    padding:0 2px 11px;
+    margin:0 0 12px;
+    border-bottom:1px solid #101418;
+}
+.pedalboard-label { color:#aeb8c2; }
+.preset-count-control { color:#9ba8b4; }
+.preset-count-control select {
+    border-radius:4px;
+    border-color:#59636d;
+    background:linear-gradient(#343c44,#1c2228);
+}
+.preset-pedals {
+    gap:14px 8px;
+    padding:3px 0 8px;
+}
+.preset-pedal {
+    min-height:116px;
+    padding:0 2px 5px;
+    gap:7px;
+    justify-content:flex-start;
+}
+.preset-pedal .preset-number {
+    color:#aab5bf;
+    font-size:.55rem;
+    letter-spacing:.14em;
+}
+.preset-pedal .preset-name {
+    box-sizing:border-box;
+    min-height:31px;
+    padding:7px 3px 5px;
+    border:1px solid #5597d2;
+    border-radius:4px;
+    color:#e8f5ff;
+    background:linear-gradient(180deg,#1678c8 0%,#07539b 55%,#063c73 100%);
+    box-shadow:inset 0 1px 2px #ffffff70,inset 0 -3px 5px #001d3b99,0 2px 5px #0008;
+    text-shadow:0 0 7px #a9ddff99;
+    font-family:Arial,sans-serif;
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.025em;
+    line-height:1.1;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.preset-switch {
+    width:46px;
+    height:46px;
+    flex-basis:46px;
+    margin-top:1px;
+    border:2px solid #9aa3aa;
+    background:radial-gradient(circle at 33% 25%,#fff 0%,#d8dde0 13%,#9da5ab 34%,#626b73 62%,#272e34 100%);
+    box-shadow:inset 0 2px 4px #ffffffb0,inset 0 -6px 8px #000b,0 4px 0 #080b0e,0 7px 9px #000b;
+}
+.preset-switch::before {
+    inset:8px;
+    border-color:#ffffff70;
+    box-shadow:inset 0 1px 4px #0009,0 1px 1px #fff5;
+}
+.preset-pedal.active .preset-name {
+    color:#fff;
+    border-color:#9bd5ff;
+    background:linear-gradient(180deg,#36a5f5 0%,#0875c9 55%,#064b86 100%);
+    box-shadow:inset 0 1px 2px #ffffffa0,inset 0 -3px 5px #001d3b99,0 0 10px #279fff88;
+}
+.preset-pedal.active .preset-switch {
+    border-color:#f0d49c;
+    box-shadow:inset 0 2px 4px #ffffffb0,inset 0 -6px 8px #000b,0 4px 0 #080b0e,0 7px 9px #000b,0 0 13px #f1c16a88;
+}
+.footswitch-row {
+    gap:13px;
+    margin-top:8px;
+    padding-top:13px;
+    border-top:1px solid #11161a;
+}
+.footswitch {
+    position:relative;
+    min-height:102px;
+    padding:8px 5px 48px;
+    border:0;
+    border-radius:0;
+    border-bottom:0;
+    color:#eaf5ff;
+    background:transparent;
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-shadow:0 0 7px #a9ddff99;
+}
+.footswitch::before {
+    content:'';
+    position:absolute;
+    top:0;
+    left:5px;
+    right:5px;
+    height:30px;
+    border:1px solid #5597d2;
+    border-radius:4px;
+    background:linear-gradient(180deg,#1678c8 0%,#07539b 55%,#063c73 100%);
+    box-shadow:inset 0 1px 2px #ffffff70,inset 0 -3px 5px #001d3b99,0 2px 5px #0008;
+    z-index:0;
+}
+.footswitch::after {
+    content:'';
+    position:absolute;
+    left:50%;
+    bottom:5px;
+    width:43px;
+    height:43px;
+    transform:translateX(-50%);
+    border:2px solid #9aa3aa;
+    border-radius:50%;
+    background:radial-gradient(circle at 33% 25%,#fff 0%,#d8dde0 13%,#9da5ab 34%,#626b73 62%,#272e34 100%);
+    box-shadow:inset 0 2px 4px #ffffffb0,inset 0 -6px 8px #000b,0 4px 0 #080b0e,0 7px 9px #000b;
+}
+.footswitch > * { position:relative; z-index:1; }
+.footswitch small {
+    display:inline-block;
+    margin:0 0 0 4px;
+    color:#d6eaff;
+    font-size:.58rem;
+}
+.footswitch.active::before {
+    border-color:#9bd5ff;
+    background:linear-gradient(180deg,#36a5f5 0%,#0875c9 55%,#064b86 100%);
+    box-shadow:inset 0 1px 2px #ffffffa0,inset 0 -3px 5px #001d3b99,0 0 10px #279fff88;
+}
+.footswitch.active::after {
+    border-color:#f0d49c;
+    box-shadow:inset 0 2px 4px #ffffffb0,inset 0 -6px 8px #000b,0 4px 0 #080b0e,0 7px 9px #000b,0 0 13px #f1c16a88;
+}
+.footswitch.tap { background:transparent; }
+.footswitch.tap::before { content:'TAP TEMPO'; }
+.footswitch.tap { font-size:0; }
+.footswitch.tap::after { bottom:5px; }
+.rhythm-select { gap:5px; }
+.rhythm-option {
+    border:1px solid #416f9a;
+    border-radius:4px;
+    color:#d7eaff;
+    background:linear-gradient(#185d96,#103b62);
+    box-shadow:inset 0 1px #ffffff35,0 2px 4px #0008;
+}
+.rhythm-option small { color:#c4d9ed; }
+.rhythm-option.active {
+    color:#fff;
+    border-color:#80c8ff;
+    background:linear-gradient(#2996e6,#07569a);
+    box-shadow:inset 0 1px #ffffff75,0 0 8px #168fe888;
+}
+.rhythm-option.active small { color:#fff; }
+.tap-readout {
+    margin-top:8px;
+    padding:9px 5px 0;
+    border-top:1px solid #11161a;
+    color:#9eabb7;
+}
+@media(max-width:520px) {
+    .preset-pedal .preset-name { font-size:.59rem; padding-left:1px; padding-right:1px; }
+    .preset-switch { width:42px; height:42px; flex-basis:42px; }
+    .footswitch-row { gap:7px; }
+}
+
     </style>
 
 </head>
