@@ -1094,6 +1094,29 @@ body.editor-mode .preset-library { display:block !important; }
     grid-column:2 / 4 !important;
     min-width:0;
 }
+
+/* Modulação abaixo do Delay, com a mesma grade e identidade visual. */
+.footswitch-row > .mod-tap-control {
+    display:grid !important;
+    grid-column:1 / -1 !important;
+    grid-row:3 !important;
+    width:100% !important;
+    margin-left:0 !important;
+    box-sizing:border-box;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    column-gap:8px;
+    border-top:1px solid #46515b;
+    padding-top:16px;
+}
+.footswitch-row > .mod-tap-control > #modFootswitch {
+    grid-column:1 !important;
+    width:100% !important;
+    margin-left:0 !important;
+}
+.footswitch-row > .mod-tap-control > .mod-tap-main {
+    grid-column:2 / 4 !important;
+    min-width:0;
+}
 </style>
 
 </head>
