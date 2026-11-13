@@ -1070,6 +1070,30 @@ body.editor-mode .preset-library { display:block !important; }
     .preset-pedal .preset-switch { width:47px; height:47px; flex-basis:47px; }
 }
 
+
+/* Correção real do alinhamento: manter o bloco Delay na largura total
+   da grade e iniciar a plaquinha na primeira coluna (preset 00). */
+.footswitch-row > .delay-tap-control {
+    grid-column:1 / -1 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    margin-left:0 !important;
+    box-sizing:border-box;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    column-gap:8px;
+    border-top:1px solid #46515b;
+    padding-top:16px;
+}
+.footswitch-row > .delay-tap-control > #delayFootswitch {
+    grid-column:1 !important;
+    width:100% !important;
+    margin-left:0 !important;
+}
+.footswitch-row > .delay-tap-control > .delay-tap-main {
+    grid-column:2 / 4 !important;
+    min-width:0;
+}
 </style>
 
 </head>
