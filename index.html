@@ -3407,12 +3407,32 @@ function updateQuickPresetButtons(preset) {
 function showPresetPage() {
     const buttons = [...document.querySelectorAll('.preset-pedal')];
     const pedalContainer = document.querySelector('.preset-pedals');
-    if (pedalContainer) pedalContainer.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+    const countSelect = document.getElementById('presetVisibleCount');
+
+    // Keep the state synchronized with the visible selector, including on startup.
+    if (countSelect) {
+        const selectedCount = Number(countSelect.value);
+        presetVisibleCount = [3, 6, 8].includes(selectedCount) ? selectedCount : 8;
+    }
+    presetVisibleCount = Math.max(1, Math.min(TOTAL_QUICK_PRESETS, Number(presetVisibleCount) || 8));
+
+    if (pedalContainer) {
+        pedalContainer.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+    }
+
     buttons.forEach((btn, slot) => {
         const number = btn.querySelector('.preset-number');
+        const visible = slot < presetVisibleCount && slot < TOTAL_QUICK_PRESETS;
+
         btn.dataset.slot = String(slot);
         btn.dataset.preset = String(slot);
-        btn.hidden = slot >= presetVisibleCount || slot >= TOTAL_QUICK_PRESETS;
+        btn.hidden = !visible;
+        btn.setAttribute('aria-hidden', String(!visible));
+
+        // Explicit inline display prevents other pedalboard CSS rules from
+        // accidentally overriding the native hidden attribute.
+        btn.style.setProperty('display', visible ? 'flex' : 'none', 'important');
+
         if (number) number.textContent = String(slot).padStart(2, '0');
     });
 
