@@ -1496,10 +1496,7 @@ body.editor-mode .preset-library { display:block !important; }
             document.querySelectorAll('.preset-pedal').forEach(btn => {
                 btn.addEventListener('click', () => quickSelectPreset(Number(btn.dataset.slot)));
             });
-            document.getElementById('presetVisibleCount').addEventListener('change', event => {
-                presetVisibleCount = Number(event.target.value);
-                showPresetPage(presetPageStart);
-            });
+            // A visibilidade é inicializada antes do carregamento assíncrono em init().
             showPresetPage(0);
             document.getElementById('tapFootswitch').addEventListener('click', quickTapTempo);
             document.querySelectorAll('.rhythm-option:not(.mod-rhythm-option)').forEach(btn => {
@@ -3497,7 +3494,19 @@ function setModFootswitchState(enabled) {
 }
 
         // ==================== INICIALIZAÇÃO ====================
-        window.addEventListener('DOMContentLoaded', init);
+        // Este controle não depende dos arquivos de configuração da GP5.
+        // Registra o evento imediatamente, antes dos fetches assíncronos de init().
+        window.addEventListener('DOMContentLoaded', () => {
+            const presetCountSelect = document.getElementById('presetVisibleCount');
+            if (presetCountSelect) {
+                presetCountSelect.addEventListener('change', event => {
+                    presetVisibleCount = Number(event.target.value);
+                    showPresetPage();
+                });
+            }
+            showPresetPage();
+            init();
+        });
     </script>
 </body>
 </html>
