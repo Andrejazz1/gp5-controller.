@@ -484,11 +484,10 @@ body { background: radial-gradient(ellipse at top, #20252c 0%, #090b0e 65%); col
 .preset-pedal[hidden] { display:none !important; }
 /* A visibilidade também é controlada diretamente pelo valor selecionado.
    Assim, funciona mesmo se o listener JavaScript não atualizar os botões. */
-.pedalboard:has(#presetVisibleCount option[value="3"]:checked) .preset-pedal:nth-child(n+4),
-.pedalboard:has(#presetVisibleCount option[value="6"]:checked) .preset-pedal:nth-child(n+7) {
+.pedalboard:has(#presetVisibleCount option[value="4"]:checked) .preset-pedal:nth-child(n+5) {
     display:none !important;
 }
-.preset-pedal:nth-child(7), .preset-pedal:nth-child(8) { position:relative; left:50%; }
+
 .preset-pedal { min-width:0; min-height:104px; padding:5px 2px 0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; border:0; border-radius:0; background:transparent; color:#aeb8c2; font-weight:800; font-size:.62rem; box-shadow:none; }
 .preset-pedal .preset-number { color:#788491; font-size:.58rem; letter-spacing:.12em; }
 .preset-pedal .preset-name { display:block; width:100%; min-height:1.5em; overflow:visible; text-overflow:clip; white-space:normal; overflow-wrap:anywhere; color:#e8edf2; font-family:'Special Elite','Courier New',monospace; font-weight:400; text-transform:uppercase; font-size:.72rem; letter-spacing:.035em; line-height:1.2; margin:0; }
@@ -1123,6 +1122,38 @@ body.editor-mode .preset-library { display:block !important; }
     grid-column:2 / 4 !important;
     min-width:0;
 }
+
+/* Layout de cenas: quatro em 2x2 ou oito em 2x4. */
+.preset-pedals[data-scene-count="4"] {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:18px 14px;
+}
+.preset-pedals[data-scene-count="8"] {
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    gap:12px 10px;
+}
+.preset-pedals[data-scene-count="4"] .preset-pedal {
+    min-height:150px;
+    gap:10px;
+}
+.preset-pedals[data-scene-count="4"] .preset-pedal .preset-name {
+    font-size:.9rem;
+    min-height:2em;
+}
+.preset-pedals[data-scene-count="4"] .preset-switch {
+    width:58px;
+    height:58px;
+    flex-basis:58px;
+}
+.preset-pedals[data-scene-count="8"] .preset-pedal {
+    min-height:112px;
+}
+@media(max-width:520px) {
+    .preset-pedals[data-scene-count="8"] { gap:8px 5px; }
+    .preset-pedals[data-scene-count="8"] .preset-pedal { min-height:96px; }
+    .preset-pedals[data-scene-count="4"] .preset-pedal { min-height:125px; }
+    .preset-pedals[data-scene-count="4"] .preset-switch { width:48px; height:48px; flex-basis:48px; }
+}
 </style>
 
 </head>
@@ -1147,12 +1178,11 @@ body.editor-mode .preset-library { display:block !important; }
         </div>
         <section class="pedalboard" aria-label="Pedalboard controls">
             <div class="preset-list-toolbar">
-                <div class="pedalboard-label">PRESETS • 00—07</div>
+                <div class="pedalboard-label">CENAS • 00—07</div>
                 <div class="preset-count-control">
-                    <label for="presetVisibleCount">MOSTRAR</label>
-                    <select id="presetVisibleCount" aria-label="Quantidade de presets visíveis">
-                        <option value="3">3</option>
-                        <option value="6">6</option>
+                    <label for="presetVisibleCount">CENAS</label>
+                    <select id="presetVisibleCount" aria-label="Quantidade de cenas visíveis">
+                        <option value="4">4</option>
                         <option value="8" selected>8</option>
                     </select>
                 </div>
@@ -3415,12 +3445,13 @@ function showPresetPage() {
     // Keep the state synchronized with the visible selector, including on startup.
     if (countSelect) {
         const selectedCount = Number(countSelect.value);
-        presetVisibleCount = [3, 6, 8].includes(selectedCount) ? selectedCount : 8;
+        presetVisibleCount = [4, 8].includes(selectedCount) ? selectedCount : 8;
     }
     presetVisibleCount = Math.max(1, Math.min(TOTAL_QUICK_PRESETS, Number(presetVisibleCount) || 8));
 
     if (pedalContainer) {
-        pedalContainer.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+        pedalContainer.style.gridTemplateColumns = presetVisibleCount === 4 ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))';
+        pedalContainer.dataset.sceneCount = String(presetVisibleCount);
     }
 
     buttons.forEach((btn, slot) => {
