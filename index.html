@@ -459,6 +459,31 @@
             font-size: 0.9rem;
         }
     
+/* OCTAVE: footswitch independente para o bloco PRE. */
+.octave-control {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+    width:100%;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid #46515b;
+}
+.octave-control #octaveFootswitch {
+    grid-column:1;
+    width:100%;
+    min-height:42px;
+}
+.octave-control #octaveFootswitch.active {
+    color:#fff;
+    border-color:#75b7ed;
+    background:linear-gradient(180deg,#367fba,#174b78);
+    box-shadow:0 0 10px #247fc455;
+}
+@media(max-width:520px) {
+    .octave-control { gap:7px; }
+}
+
 /* Pedalboard-only interface. Editor and technical library remain dormant in code. */
 .view-switch, .editor-intro, .preset-library, .blocks-section, .effect-panel {
     display: none !important;
@@ -1229,6 +1254,11 @@ body.editor-mode .preset-library { display:block !important; }
                     </div>
                 </div>
             </div>
+            <div class="octave-control">
+                <button type="button" class="effect-label-toggle" id="octaveFootswitch" disabled aria-label="Ligar ou desligar Octave (bloco PRE)">
+                    <span>OCTAVE</span>
+                </button>
+            </div>
         </section>
 
         <!-- Patch Selector -->
@@ -1549,6 +1579,12 @@ body.editor-mode .preset-library { display:block !important; }
                 sendBlockStatus(6, next ? 1 : 0);
                 deviceState.blocks.mod = {...(deviceState.blocks.mod || {}), enabled: next};
                 setModFootswitchState(next);
+            });
+            document.getElementById('octaveFootswitch').addEventListener('click', () => {
+                const next = !deviceState.blocks.pre?.enabled;
+                sendBlockStatus(1, next ? 1 : 0);
+                deviceState.blocks.pre = {...(deviceState.blocks.pre || {}), enabled: next};
+                setOctaveFootswitchState(next);
             });
             
             // Close panel on backdrop click
@@ -3258,6 +3294,7 @@ body.editor-mode .preset-library { display:block !important; }
                     const statusText = enabled ? 'ON' : 'OFF';
                     if (block.name === 'dly') setDelayFootswitchState(enabled);
                     if (block.name === 'mod') setModFootswitchState(enabled);
+                    if (block.name === 'pre') setOctaveFootswitchState(enabled);
                     
                     const labelEl = btn.querySelector('.block-label');
                     const effectEl = btn.querySelector('.block-effect');
@@ -3301,6 +3338,7 @@ body.editor-mode .preset-library { display:block !important; }
             document.querySelectorAll('.preset-pedal').forEach(btn => { btn.disabled = !enabled; });
             document.getElementById('delayFootswitch').disabled = !enabled;
             document.getElementById('modFootswitch').disabled = !enabled;
+            document.getElementById('octaveFootswitch').disabled = !enabled;
             document.getElementById('tapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
             document.getElementById('modTapFootswitch').disabled = !enabled || connectionMode !== 'bluetooth';
             document.getElementById('readCurrentPresetButton').disabled = !enabled || connectionMode !== 'bluetooth' || presetScan.active || singlePresetRead.active;
@@ -3522,6 +3560,10 @@ function setDelayFootswitchState(enabled) {
 
 function setModFootswitchState(enabled) {
     document.getElementById('modFootswitch').classList.toggle('active', !!enabled);
+}
+
+function setOctaveFootswitchState(enabled) {
+    document.getElementById('octaveFootswitch').classList.toggle('active', !!enabled);
 }
 
         // ==================== INICIALIZAÇÃO ====================
