@@ -1582,7 +1582,7 @@ body.editor-mode .preset-library { display:block !important; }
             });
             document.getElementById('octaveFootswitch').addEventListener('click', () => {
                 const next = !deviceState.blocks.pre?.enabled;
-                sendBlockStatus(1, next ? 1 : 0);
+                sendBlockStatus(1, next ? '1' : '0');
                 deviceState.blocks.pre = {...(deviceState.blocks.pre || {}), enabled: next};
                 setOctaveFootswitchState(next);
             });
